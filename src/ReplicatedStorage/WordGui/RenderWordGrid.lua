@@ -23,6 +23,7 @@ local renderGrid = function(props)
 
     local lettersInWord = 3
     local scrollBarThickness = 30
+    -- local maxWordsInFrame = 2
     local maxWordsInFrame = 4
 
     if (#words <= maxWordsInFrame) then scrollBarThickness = 0 end
@@ -47,17 +48,19 @@ local renderGrid = function(props)
     local scrollingFrame = Utils.getFirstDescendantByName(sgui, "WordScroller")
     local scrollerWidth = rowWidth + scrollBarThickness + doublePad + 0
     local scrollerHeight = numWordsInFrame * totalRowHeight + paddingInPx
-    local guiWidth = scrollerWidth
+    local guiWidth = scrollerWidth + 0
     local guiHeight = scrollerHeight
 
     scrollingFrame.ScrollBarThickness = scrollBarThickness
 
-    scrollingFrame.Size = UDim2.new(0, scrollerWidth, 0, scrollerHeight)
+    local fixRoundingError = 10
+    scrollingFrame.Size = UDim2.new(0, scrollerWidth + fixRoundingError, 0,
+                                    scrollerHeight)
     scrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 
-    -- local scrollerCanvasHeight = #words * totalRowHeight + doublePad
-    -- scrollingFrame.CanvasSize = UDim2.new(0, scrollerWidth * 2, 0,
-    --                                       scrollerCanvasHeight)
+    local scrollerCanvasHeight = #words * totalRowHeight + doublePad - rowGapY
+    scrollingFrame.CanvasSize = UDim2.new(0, scrollerWidth - scrollBarThickness,
+                                          0, scrollerCanvasHeight)
 
     mainFrame.Size = UDim2.new(0, guiWidth, 0, guiHeight)
 
