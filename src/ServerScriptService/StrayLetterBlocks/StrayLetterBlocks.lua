@@ -11,6 +11,73 @@ local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local module = {}
 
+local function blockFound(tool, player)
+    local updateWordGuiRE = RS:WaitForChild(
+                                Const_Client.RemoteEvents.UpdateWordGuiRE)
+
+    local function destroyParts()
+        local explosionSound = '515938718'
+        Utils.playSound(explosionSound, 0.5)
+        Utils5.resetBlocks(tool)
+        Utils5.setActiveLetterGrabberBlock(tool)
+        Utils5.styleLetterGrabberBlocks(tool)
+
+        local wordModel = tool.Word
+        local targetWord = wordModel.TargetWord.Value
+
+        local gameState = PlayerStatManager.getGameState(player)
+        local levelConfig = gameState.levelConfig
+        local targetWordObj = Utils.getListItemByPropValue(
+                                  levelConfig.targetWords, "word", targetWord)
+
+        targetWordObj.found = targetWordObj.found + 1
+
+        updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
+    end
+    delay(1, destroyParts)
+end
+
+local function onTouchBlock(newLetterBlock2)
+    local db = {value = false}
+    local function closure(otherPart)
+        if not otherPart.Parent then return end
+        local humanoid = otherPart.Parent:FindFirstChildWhichIsA("Humanoid")
+        if not humanoid then return end
+
+        if not db.value then
+            db.value = true
+            local player = Utils.getPlayerFromHumanoid(humanoid)
+
+            local tool = Utils.getActiveTool(player, "LetterGrabber")
+
+            if tool then
+                local activeBlock = Utils5.getActiveLetterGrabberBlock(tool)
+                if activeBlock then
+                    local strayLetterChar = newLetterBlock2.Character.Value
+                    local activeLetterChar = activeBlock.Character.Value
+
+                    if strayLetterChar == activeLetterChar then
+                        activeBlock.IsFound.Value = true
+                        activeBlock.IsActive.Value = false
+                    end
+
+                    Utils5.styleLetterGrabberBlocks(tool)
+
+                    local newActiveBlock =
+                        Utils5.getActiveLetterGrabberBlock(tool)
+                    if not newActiveBlock then
+                        blockFound(tool, player)
+                    end
+                end
+            end
+
+            -- props.onTouchBlock(newLetterBlock2, player)
+            db.value = false
+        end
+    end
+    return closure
+end
+
 local function initStrays(props)
     local strayLetterBlockObjs = props.strayLetterBlockObjs
     local parentFolder = props.parentFolder
@@ -127,117 +194,51 @@ local function initStrays(props)
                 letterBlockType = "StrayLetter"
             })
 
-            local function blockFound(tool, player)
-                local updateWordGuiRE = RS:WaitForChild(
-                                            Const_Client.RemoteEvents
-                                                .UpdateWordGuiRE)
+            -- local function onTouchBlock(newLetterBlock2)
+            --     local db = {value = false}
+            --     local function closure(otherPart)
+            --         if not otherPart.Parent then return end
+            --         local humanoid = otherPart.Parent:FindFirstChildWhichIsA(
+            --                              "Humanoid")
+            --         if not humanoid then return end
 
-                local function destroyParts()
-                    local explosionSound = '515938718'
-                    Utils.playSound(explosionSound, 0.5)
-                    Utils5.resetBlocks(tool)
-                    Utils5.setActiveLetterGrabberBlock(tool)
-                    Utils5.styleLetterGrabberBlocks(tool)
+            --         if not db.value then
+            --             db.value = true
+            --             local player = Utils.getPlayerFromHumanoid(humanoid)
 
-                    local wordModel = tool.Word
-                    local targetWord = wordModel.TargetWord.Value
+            --             local tool =
+            --                 Utils.getActiveTool(player, "LetterGrabber")
 
-                    local gameState = PlayerStatManager.getGameState(player)
-                    local levelConfig = gameState.levelConfig
-                    local targetWordObj =
-                        Utils.getListItemByPropValue(levelConfig.targetWords,
-                                                     "word", targetWord)
+            --             if tool then
+            --                 local activeBlock =
+            --                     Utils5.getActiveLetterGrabberBlock(tool)
+            --                 if activeBlock then
+            --                     local strayLetterChar =
+            --                         newLetterBlock2.Character.Value
+            --                     local activeLetterChar =
+            --                         activeBlock.Character.Value
 
-                    targetWordObj.found = targetWordObj.found + 1
+            --                     if strayLetterChar == activeLetterChar then
+            --                         activeBlock.IsFound.Value = true
+            --                         activeBlock.IsActive.Value = false
+            --                     end
 
-                    updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
-                end
-                delay(1, destroyParts)
+            --                     Utils5.styleLetterGrabberBlocks(tool)
 
-            end
+            --                     local newActiveBlock =
+            --                         Utils5.getActiveLetterGrabberBlock(tool)
+            --                     if not newActiveBlock then
+            --                         blockFound(tool, player)
+            --                     end
+            --                 end
+            --             end
 
-            local function onTouchBlock(newLetterBlock2)
-                local db = {value = false}
-                local function closure(otherPart)
-                    if not otherPart.Parent then return end
-                    local humanoid = otherPart.Parent:FindFirstChildWhichIsA(
-                                         "Humanoid")
-                    if not humanoid then return end
-
-                    if not db.value then
-                        db.value = true
-                        local player = Utils.getPlayerFromHumanoid(humanoid)
-
-                        local tool =
-                            Utils.getActiveTool(player, "LetterGrabber")
-
-                        if tool then
-                            local activeBlock =
-                                Utils5.getActiveLetterGrabberBlock(tool)
-                            if activeBlock then
-                                local strayLetterChar =
-                                    newLetterBlock2.Character.Value
-                                local activeLetterChar =
-                                    activeBlock.Character.Value
-
-                                if strayLetterChar == activeLetterChar then
-                                    activeBlock.IsFound.Value = true
-                                    activeBlock.IsActive.Value = false
-                                end
-
-                                Utils5.styleLetterGrabberBlocks(tool)
-
-                                local newActiveBlock =
-                                    Utils5.getActiveLetterGrabberBlock(tool)
-                                if not newActiveBlock then
-                                    blockFound(tool, player)
-                                end
-
-                                -- if not newActiveBlock then
-                                --     local updateWordGuiRE =
-                                --         RS:WaitForChild(
-                                --             Const_Client.RemoteEvents
-                                --                 .UpdateWordGuiRE)
-
-                                --     local function destroyParts()
-                                --         local explosionSound = '515938718'
-                                --         Utils.playSound(explosionSound, 0.5)
-                                --         Utils5.resetBlocks(tool)
-                                --         Utils5.setActiveLetterGrabberBlock(tool)
-                                --         Utils5.styleLetterGrabberBlocks(tool)
-
-                                --         local wordModel = tool.Word
-
-                                --         local targetWord =
-                                --             wordModel.TargetWord.Value
-
-                                --         local gameState =
-                                --             PlayerStatManager.getGameState(
-                                --                 player)
-                                --         local levelConfig =
-                                --             gameState.levelConfig
-                                --         local targetWordObj =
-                                --             Utils.getListItemByPropValue(
-                                --                 levelConfig.targetWords, "word",
-                                --                 targetWord)
-
-                                --         targetWordObj.found =
-                                --             targetWordObj.found + 1
-
-                                --         updateWordGuiRE:FireAllClients(
-                                --             {levelConfig = levelConfig})
-                                --     end
-                                --     delay(1, destroyParts)
-                                -- end
-                            end
-                        end
-
-                        props.onTouchBlock(newLetterBlock2, player)
-                        db.value = false
-                    end
-                end
-                return closure
-            end
+            --             props.onTouchBlock(newLetterBlock2, player)
+            --             db.value = false
+            --         end
+            --     end
+            --     return closure
+            -- end
 
             newLetterBlock.Touched:Connect(onTouchBlock(newLetterBlock, props))
 
