@@ -8,6 +8,7 @@ local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
 
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
+local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local module = {}
 
@@ -145,35 +146,56 @@ local function initStrays(props)
                         if tool then
                             local activeBlock =
                                 Utils5.getActiveLetterGrabberBlock(tool)
-                            if not activeBlock then
-                                return
-                            end
+                            if activeBlock then
+                                local strayLetterChar =
+                                    newLetterBlock2.Character.Value
+                                local activeLetterChar =
+                                    activeBlock.Character.Value
 
-                            local strayLetterChar =
-                                newLetterBlock2.Character.Value
-                            local activeLetterChar = activeBlock.Character.Value
+                                if strayLetterChar == activeLetterChar then
+                                    activeBlock.IsFound.Value = true
+                                    activeBlock.IsActive.Value = false
+                                end
 
-                            if strayLetterChar == activeLetterChar then
-                                activeBlock.IsFound.Value = true
-                                activeBlock.IsActive.Value = false
-                            end
+                                Utils5.styleLetterGrabberBlocks(tool)
 
-                            Utils5.styleLetterGrabberBlocks(tool)
+                                local newActiveBlock =
+                                    Utils5.getActiveLetterGrabberBlock(tool)
+                                if not newActiveBlock then
 
-                            local newActiveBlock =
-                                Utils5.getActiveLetterGrabberBlock(tool)
-                            if not newActiveBlock then
-                                print('you spelled a word!');
+                                    local updateWordGuiRE =
+                                        RS:WaitForChild(
+                                            Const_Client.RemoteEvents
+                                                .UpdateWordGuiRE)
 
-                                local updateWordGuiRE =
-                                    RS:WaitForChild(
-                                        Const_Client.RemoteEvents
-                                            .UpdateWordGuiRE)
+                                    local levelConfig =
+                                        LevelConfigs.levelConfigs[1]
+                                    levelConfig.targetWords2[1]['word'] = "PIG"
 
-                                local levelConfig = LevelConfigs.levelConfigs[1]
-                                levelConfig.targetWords2[1]['word'] = "PIG"
-                                updateWordGuiRE:FireAllClients(
-                                    {levelConfig = levelConfig})
+                                    local gameState =
+                                        PlayerStatManager.getGameState(player)
+                                    print('gameState' .. ' - start');
+                                    print(gameState);
+                                    if not gameState.cat then
+                                        gameState.cat = 0
+                                    end
+                                    gameState.cat = gameState.cat + 1
+
+                                    local function destroyParts()
+                                        local explosionSound = '515938718'
+                                        Utils.playSound(explosionSound, 0.5)
+                                        Utils5.resetBlocks(tool)
+                                        Utils5.setActiveLetterGrabberBlock(tool)
+                                        Utils5.styleLetterGrabberBlocks(tool)
+
+                                        updateWordGuiRE:FireAllClients(
+                                            {levelConfig = levelConfig})
+
+                                    end
+
+                                    delay(1, destroyParts)
+
+                                end
                             end
                         end
 

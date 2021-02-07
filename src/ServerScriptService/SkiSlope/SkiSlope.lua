@@ -25,8 +25,9 @@ function module.initSlopes(props)
 
         local strayProps = {
             parentFolder = slope,
-            numBlocks = 10,
-            words = {"CAT", "CAT"},
+            numBlocks = 6,
+            words = {"CAT"},
+            -- words = {"AT"},
             blocks = {},
             region = slope.StrayRegion,
             onTouchBlock = function() end,
@@ -40,6 +41,7 @@ function module.initSlopes(props)
 
         for _, positioner in ipairs(positioners) do
             local grabbersConfig = {
+                -- word = "AT",
                 word = "CAT",
                 parentFolder = slope,
                 positioner = positioner

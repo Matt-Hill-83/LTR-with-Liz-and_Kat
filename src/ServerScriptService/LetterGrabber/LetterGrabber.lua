@@ -38,7 +38,8 @@ local function configWordLetters(props)
         LetterUtils.applyStyleFromTemplate(
             {targetLetterBlock = newLetter, templateName = "Grabber_normal"})
 
-        newLetter.Name = "wordLetter-" .. letterNameStub .. "xxxx"
+        newLetter.Name = "wordLetter-" .. letterNameStub .. "-qqq-" ..
+                             letterIndex .. "-ch-" .. char
         newLetter.Anchored = false
         newLetter.CanCollide = false
 
@@ -178,6 +179,7 @@ local function initWord(props, wordIndex, config)
 
     newReplicatorPart.Anchored = true
     Replicator.init(newReplicator)
+    Utils5.setActiveLetterGrabberBlock(lettterGrabber)
     Utils5.styleLetterGrabberBlocks(lettterGrabber)
 end
 

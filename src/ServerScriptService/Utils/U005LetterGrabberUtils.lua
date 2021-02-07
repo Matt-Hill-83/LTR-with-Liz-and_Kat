@@ -1,4 +1,4 @@
-local CS = game:GetService("CollectionService")
+-- local CS = game:GetService("CollectionService")
 local Sss = game:GetService("ServerScriptService")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
@@ -33,8 +33,38 @@ local function getActiveLetterGrabberBlock(tool)
     return activeBlock
 end
 
+local function setActiveLetterGrabberBlock(tool)
+    local letterBlocks = getSortedBlocks(tool)
+
+    for _, block in ipairs(letterBlocks) do
+        block.IsActive.Value = false
+        --  
+    end
+
+    for _, block in ipairs(letterBlocks) do
+        if block.IsFound.Value == false then
+            block.IsActive.Value = true
+            break
+        end
+    end
+end
+
+local function resetBlocks(tool)
+    local letterBlocks = getSortedBlocks(tool)
+
+    for _, block in ipairs(letterBlocks) do
+        block.IsActive.Value = false
+        block.IsFound.Value = false
+    end
+end
+
 local function styleLetterGrabberBlocks(tool)
     local letterBlocks = getSortedBlocks(tool)
+
+    for _, block in ipairs(letterBlocks) do
+        LetterUtils.applyStyleFromTemplate(
+            {targetLetterBlock = block, templateName = "Grabber_normal"})
+    end
 
     for _, block in ipairs(letterBlocks) do
         if block.IsFound.Value == true then
@@ -49,6 +79,8 @@ local function styleLetterGrabberBlocks(tool)
     end
 end
 
+module.setActiveLetterGrabberBlock = setActiveLetterGrabberBlock
 module.getActiveLetterGrabberBlock = getActiveLetterGrabberBlock
 module.styleLetterGrabberBlocks = styleLetterGrabberBlocks
+module.resetBlocks = resetBlocks
 return module
