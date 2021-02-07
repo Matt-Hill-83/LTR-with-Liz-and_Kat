@@ -25,8 +25,6 @@ local renderGrid = function(props)
     local scrollBarThickness = 30
     local maxWordsInFrame = 4
     local numWordsInFrame = math.min(maxWordsInFrame, #words)
-    -- 
-    -- 
 
     -- letter stuff
     local letterHeight = displayHeight / 20
@@ -36,9 +34,8 @@ local renderGrid = function(props)
     local letterBorderSizePixel = letterWidth / 10
 
     -- row stuff
-    local rowGapY = letterHeight * 0.1
+    local rowGapY = paddingInPx / 2
     local rowHeight = letterHeight
-    -- local totalRowHeight = letterHeight
     local totalRowHeight = letterHeight + rowGapY
     local rowWidth = (lettersInWord * letterWidth) + (lettersInWord - 1) *
                          letterGapX
@@ -48,6 +45,7 @@ local renderGrid = function(props)
     local scrollerWidth = rowWidth + scrollBarThickness + doublePad + 0
     local scrollerHeight = numWordsInFrame * totalRowHeight + paddingInPx
     local guiWidth = scrollerWidth
+    local guiHeight = scrollerWidth
 
     scrollingFrame.ScrollBarThickness = scrollBarThickness
     scrollingFrame.Size = UDim2.new(0, scrollerWidth, 0, scrollerHeight)
@@ -57,7 +55,7 @@ local renderGrid = function(props)
     -- scrollingFrame.CanvasSize = UDim2.new(0, scrollerWidth * 2, 0,
     --                                       scrollerCanvasHeight)
 
-    mainFrame.Size = UDim2.new(0, guiWidth, 0.5, 0)
+    mainFrame.Size = UDim2.new(0, guiWidth, 0, guiHeight)
 
     Utils.addPadding({
         parent = scrollingFrame,
@@ -102,7 +100,6 @@ local renderGrid = function(props)
 
         end
         imageLabelTemplate:Destroy()
-
     end
     rowTemplate:Destroy()
 end
