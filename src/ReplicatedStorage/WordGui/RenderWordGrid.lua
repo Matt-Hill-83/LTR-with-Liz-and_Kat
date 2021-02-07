@@ -1,5 +1,4 @@
 local RS = game:GetService("ReplicatedStorage")
--- local TextService = game:GetService("TextService")
 
 local Utils = require(RS.Source.Utils.RSU001GeneralUtils)
 
@@ -8,22 +7,21 @@ local module = {}
 local renderGrid = function(props)
     local levelConfig = props.levelConfig
     local sgui = props.sgui
-    local words = levelConfig.targetWords
+    -- local words = levelConfig.targetWords
+    local words = levelConfig.targetWords2
 
     local mainGui = sgui:WaitForChild("MainGui")
+    mainGui.Enabled = true
     local mainFrame = Utils.getFirstDescendantByName(mainGui, "MainFrame")
 
     -- Size up the mainFrame temporarily to get the viewport size
     local displayHeight = mainGui.AbsoluteSize.Y
-    -- local displayHeight = viewPortSize.Y
 
-    -- local paddingInPx = 0
     local paddingInPx = 10
     local doublePad = paddingInPx * 2
 
     local lettersInWord = 3
     local scrollBarThickness = 30
-    -- local maxWordsInFrame = 2
     local maxWordsInFrame = 4
 
     if (#words <= maxWordsInFrame) then scrollBarThickness = 0 end
@@ -77,7 +75,8 @@ local renderGrid = function(props)
 
     local rowTemplate = Utils.getFirstDescendantByName(sgui, "RowTemplate")
 
-    for wordIndex, word in ipairs(words) do
+    for wordIndex, item in ipairs(words) do
+        local word = item.word
         local newRow = rowTemplate:Clone()
         newRow.Parent = rowTemplate.Parent
         newRow.Name = rowTemplate.Name .. "--row--ooo--" .. wordIndex

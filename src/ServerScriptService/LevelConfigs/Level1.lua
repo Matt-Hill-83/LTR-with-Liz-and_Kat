@@ -73,4 +73,11 @@ module.targetWords = {
     "HAT" --
 }
 
+module.targetWords2 = {
+    {word = "RAT", target = 4, found = 0}, --
+    {word = "CAT", target = 4, found = 0}, --
+    {word = "BAT", target = 4, found = 0}, --
+    {word = "HAT", target = 4, found = 0} --
+}
+
 return module

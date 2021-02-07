@@ -8,19 +8,8 @@ local RenderWordGrid = require(RS.Source.WordGui.RenderWordGrid)
 
 local updateWordGuiRE = RS:WaitForChild(Const_Client.RemoteEvents
                                             .UpdateWordGuiRE)
-print('initWordGui' .. ' - start');
-print('initWordGui' .. ' - start');
-print('initWordGui' .. ' - start');
-print('initWordGui' .. ' - start');
-print('initWordGui' .. ' - start');
 
 local function onUpdateWordGuiRE(props)
-    print('PlayerGui' .. ' - start');
-    print('PlayerGui' .. ' - start');
-    print('PlayerGui' .. ' - start');
-    print('PlayerGui' .. ' - start');
-    print('PlayerGui' .. ' - start');
-    print('PlayerGui' .. ' - start');
     props.sgui = PlayerGui
     RenderWordGrid.renderGrid(props)
 end
