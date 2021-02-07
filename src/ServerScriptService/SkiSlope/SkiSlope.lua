@@ -20,20 +20,31 @@ function module.initSlopes(props)
             parentFolder = slope,
             numBlocks = 6,
             words = {"CAT"},
-            -- words = {"AT"},
-            blocks = {},
             region = slope.StrayRegion,
             onTouchBlock = function() end
-
         }
-        local strays = StrayLetterBlocks.initStrays(strayProps)
+
+        local strayPositioners = Utils.getByTagInParent(
+                                     {parent = slope, tag = "StrayPositioner"})
+
+        if strayPositioners then
+            for _, positioner in ipairs(strayPositioners) do
+                local char = positioner.Name
+                local newLetterBlock = StrayLetterBlocks.createStray(char,
+                                                                     parentFolder)
+                newLetterBlock.CFrame = positioner.CFrame
+                newLetterBlock.Anchored = true
+                newLetterBlock.CanCollide = false
+            end
+        else
+            StrayLetterBlocks.initStrays(strayProps)
+        end
 
         local positioners = Utils.getDescendantsByName(slope,
                                                        "LetterGrabberPositioner")
 
         for _, positioner in ipairs(positioners) do
             local grabbersConfig = {
-                -- word = "AT",
                 word = "CAT",
                 parentFolder = slope,
                 positioner = positioner
