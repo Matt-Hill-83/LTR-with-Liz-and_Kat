@@ -96,20 +96,12 @@ local function initStrays(props)
 
     -- This is a 2d array bc I recycled some other code, but it it just a 1d array
     local totalRows = numBlocks
-    local numCol = 1
     local numRow = totalRows
 
     for _ = 1, totalRows do
         table.insert(letterMatrix,
                      LetterUtils.getRandomLetter(lettersNotInWords))
     end
-    -- for _ = 1, totalRows do
-    --     local row = {}
-    --     for _ = 1, numCol do
-    --         table.insert(row, LetterUtils.getRandomLetter(lettersNotInWords))
-    --     end
-    --     table.insert(letterMatrix, row)
-    -- end
 
     local usedLocations = {}
     for _, word in ipairs(words) do
@@ -118,7 +110,6 @@ local function initStrays(props)
 
             local isDirtyLocation = true
             local randomRowIndex = nil
-            -- local randomColIndex = nil
             local locationCode = nil
 
             -- make sure you do not put 2 letters in the same location
@@ -134,10 +125,7 @@ local function initStrays(props)
         end
     end
 
-    -- local colIndex = 1
     for rowIndex = 1, numRow do
-        print('rowIndex' .. ' - start');
-        print(rowIndex);
         local newLetterBlock = letterBlockTemplate:Clone()
 
         newLetterBlock.Size = Vector3.new(rackLetterSize, rackLetterSize,
@@ -195,11 +183,6 @@ local function initStrays(props)
 
         newLetterBlock.Touched:Connect(onTouchBlock(newLetterBlock, props))
 
-        -- table.insert(strayLetterBlockObjs, {
-        --     part = newLetterBlock,
-        --     char = char,
-        --     coords = {row = rowIndex}
-        -- })
     end
     -- end
 
