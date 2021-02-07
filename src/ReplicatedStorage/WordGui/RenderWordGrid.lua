@@ -17,8 +17,8 @@ local renderGrid = function(props)
     local displayHeight = mainGui.AbsoluteSize.Y
     -- local displayHeight = viewPortSize.Y
 
+    -- local paddingInPx = 0
     local paddingInPx = 10
-    -- local paddingInPx = 10
     local doublePad = paddingInPx * 2
 
     local lettersInWord = 3
@@ -36,8 +36,9 @@ local renderGrid = function(props)
     local letterBorderSizePixel = letterWidth / 10
 
     -- row stuff
-    local rowGapY = letterHeight * 0.02
+    local rowGapY = letterHeight * 0.1
     local rowHeight = letterHeight
+    -- local totalRowHeight = letterHeight
     local totalRowHeight = letterHeight + rowGapY
     local rowWidth = (lettersInWord * letterWidth) + (lettersInWord - 1) *
                          letterGapX
@@ -45,7 +46,7 @@ local renderGrid = function(props)
     --  scroller stuff
     local scrollingFrame = Utils.getFirstDescendantByName(sgui, "WordScroller")
     local scrollerWidth = rowWidth + scrollBarThickness + doublePad + 0
-    local scrollerHeight = numWordsInFrame * totalRowHeight + doublePad
+    local scrollerHeight = numWordsInFrame * totalRowHeight + paddingInPx
     local guiWidth = scrollerWidth
 
     scrollingFrame.ScrollBarThickness = scrollBarThickness
@@ -77,7 +78,7 @@ local renderGrid = function(props)
         newRow.Name = rowTemplate.Name .. "--row--ooo--" .. wordIndex
         newRow.Size = UDim2.new(0, rowWidth, 0, rowHeight)
 
-        local rowOffsetY = (wordIndex - 1) * (totalRowHeight)
+        local rowOffsetY = (wordIndex - 1) * totalRowHeight
         newRow.Position = UDim2.new(0, 0, 0, rowOffsetY)
 
         local imageLabelTemplate = Utils.getFirstDescendantByName(newRow,
@@ -90,10 +91,7 @@ local renderGrid = function(props)
             local newTextLabel = imageLabelTemplate:Clone()
 
             newTextLabel.Name = "wordLetter-" .. letterNameStub
-            -- fix
-            -- fix
-            -- fix
-            newTextLabel.Size = UDim2.new(0, totalRowHeight, 0, totalRowHeight)
+            newTextLabel.Size = UDim2.new(0, letterHeight, 0, letterHeight)
             newTextLabel.Position = UDim2.new(0, (letterIndex - 1) *
                                                   totalLetterWidth, 0, 0)
             newTextLabel.Text = char
