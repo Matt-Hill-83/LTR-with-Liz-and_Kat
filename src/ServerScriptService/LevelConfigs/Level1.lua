@@ -69,11 +69,11 @@ module.sectorConfigs = sectorConfigs
 module.targetWords = {
     "RAT", --
     "CAT", --
-    "BAT", --
-    "HAT", --
-    "HAT", --
-    "HAT", --
-    "HAT" --
+    -- "BAT", --
+    -- "HAT", --
+    -- "HAT", --
+    -- "HAT", --
+    -- "HAT" --
 }
 
 return module

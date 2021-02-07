@@ -24,6 +24,9 @@ local renderGrid = function(props)
     local lettersInWord = 3
     local scrollBarThickness = 30
     local maxWordsInFrame = 4
+
+    if (#words <= maxWordsInFrame) then scrollBarThickness = 0 end
+
     local numWordsInFrame = math.min(maxWordsInFrame, #words)
 
     -- letter stuff
@@ -45,9 +48,10 @@ local renderGrid = function(props)
     local scrollerWidth = rowWidth + scrollBarThickness + doublePad + 0
     local scrollerHeight = numWordsInFrame * totalRowHeight + paddingInPx
     local guiWidth = scrollerWidth
-    local guiHeight = scrollerWidth
+    local guiHeight = scrollerHeight
 
     scrollingFrame.ScrollBarThickness = scrollBarThickness
+
     scrollingFrame.Size = UDim2.new(0, scrollerWidth, 0, scrollerHeight)
     scrollingFrame.Position = UDim2.new(0, 0, 0, 0)
 
