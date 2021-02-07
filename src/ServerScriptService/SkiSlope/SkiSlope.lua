@@ -24,8 +24,10 @@ function module.initSlopes(props)
             onTouchBlock = function() end
         }
 
-        local strayPositioners = Utils.getByTagInParent(
-                                     {parent = slope, tag = "StrayPositioner"})
+        local strayPositioners = nil
+
+        -- local strayPositioners = Utils.getByTagInParent(
+        --                              {parent = slope, tag = "StrayPositioner"})
 
         if strayPositioners then
             for _, positioner in ipairs(strayPositioners) do

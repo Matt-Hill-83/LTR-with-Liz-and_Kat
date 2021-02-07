@@ -77,7 +77,6 @@ local function onTouchBlock(newLetterBlock2)
 end
 
 local function createStray(char, parentFolder)
-    -- local parentFolder = props.parentFolder
     local rackLetterSize = 6
 
     local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
@@ -109,7 +108,6 @@ local function createStray(char, parentFolder)
 
     newLetterBlock.Parent = parentFolder
     newLetterBlock.Anchored = false
-    -- newLetterBlock.CanCollide = false
 
     LetterUtils.initLetterBlock({
         letterBlock = newLetterBlock,
@@ -138,29 +136,32 @@ local function initStrays(props)
                      LetterUtils.getRandomLetter(lettersNotInWords))
     end
 
-    local usedLocations = {}
+    -- local usedLocations = {}
     for _, word in ipairs(words) do
         for letterIndex = 1, #word do
             local letter = string.sub(word, letterIndex, letterIndex)
+            table.insert(letterMatrix, letter)
+            -- local isDirtyLocation = true
+            -- local randomRowIndex = nil
+            -- local locationCode = nil
 
-            local isDirtyLocation = true
-            local randomRowIndex = nil
-            local locationCode = nil
+            -- -- make sure you do not put 2 letters in the same location
+            -- while isDirtyLocation == true do
+            --     randomRowIndex = Utils.genRandom(1, totalRows)
+            --     locationCode = randomRowIndex
+            --     isDirtyLocation = usedLocations[locationCode]
+            -- end
 
-            -- make sure you do not put 2 letters in the same location
-            while isDirtyLocation == true do
-                randomRowIndex = Utils.genRandom(1, totalRows)
-                locationCode = randomRowIndex
-                isDirtyLocation = usedLocations[locationCode]
-            end
-
-            usedLocations[locationCode] = true
-            letterMatrix[randomRowIndex] = letter
+            -- usedLocations[locationCode] = true
+            -- letterMatrix[randomRowIndex] = letter
         end
     end
 
-    for rowIndex = 1, totalRows do
-        local char = letterMatrix[rowIndex]
+    print('letterMatrix' .. ' - start');
+    print(letterMatrix);
+    for _, char in ipairs(letterMatrix) do
+        -- for rowIndex = 1, totalRows do
+        -- local char = letterMatrix[rowIndex]
         local parentFolder = props.parentFolder
         local newLetterBlock = createStray(char, parentFolder)
 
