@@ -1,5 +1,5 @@
 local RS = game:GetService("ReplicatedStorage")
-local TextService = game:GetService("TextService")
+-- local TextService = game:GetService("TextService")
 
 local Utils = require(RS.Source.Utils.RSU001GeneralUtils)
 
@@ -8,45 +8,55 @@ local module = {}
 local renderGrid = function(props)
     local levelConfig = props.levelConfig
     local sgui = props.sgui
-    local targetWords = levelConfig.targetWords
+    local words = levelConfig.targetWords
 
     local mainGui = sgui:WaitForChild("MainGui")
     local mainFrame = Utils.getFirstDescendantByName(mainGui, "MainFrame")
 
     -- Size up the mainFrame temporarily to get the viewport size
-    local viewPortSize = mainGui.AbsoluteSize
-    print('viewPortSize' .. ' - start');
-    print(viewPortSize);
-    print('workspace.CurrentCamera.ViewportSize' .. ' - start');
-    print(workspace.CurrentCamera.ViewportSize);
-
-    local parentWidth = viewPortSize.X
-    local parentHeight = viewPortSize.Y
-    local rowHeight = parentHeight / 20
+    local displayHeight = mainGui.AbsoluteSize.Y
+    -- local displayHeight = viewPortSize.Y
 
     local paddingInPx = 10
-    local rowGap = rowHeight * 0.02
-
-    local letterWidth = rowHeight
-    local letterHeight = rowHeight
-    local letterOffsetX = letterWidth / 20
-    local leteterBorderSizePixel = letterWidth / 10
+    -- local paddingInPx = 10
+    local doublePad = paddingInPx * 2
 
     local lettersInWord = 3
     local scrollBarThickness = 30
+    local maxWordsInFrame = 4
+    local numWordsInFrame = math.min(maxWordsInFrame, #words)
+    -- 
+    -- 
 
-    local rowWidth = (lettersInWord + 2) * letterWidth + scrollBarThickness
-    local guiWidth = (lettersInWord + 2) * letterWidth
-    local guiWidth = (lettersInWord + 2) * letterWidth
+    -- letter stuff
+    local letterHeight = displayHeight / 20
+    local letterWidth = letterHeight
+    local letterGapX = letterWidth / 20
+    local totalLetterWidth = letterWidth + letterGapX
+    local letterBorderSizePixel = letterWidth / 10
 
-    mainFrame.Size = UDim2.new(0.5, 0, 0, guiWidth)
+    -- row stuff
+    local rowGapY = letterHeight * 0.02
+    local rowHeight = letterHeight
+    local totalRowHeight = letterHeight + rowGapY
+    local rowWidth = (lettersInWord * letterWidth) + (lettersInWord - 1) *
+                         letterGapX
 
+    --  scroller stuff
     local scrollingFrame = Utils.getFirstDescendantByName(sgui, "WordScroller")
+    local scrollerWidth = rowWidth + scrollBarThickness + doublePad + 0
+    local scrollerHeight = numWordsInFrame * totalRowHeight + doublePad
+    local guiWidth = scrollerWidth
 
     scrollingFrame.ScrollBarThickness = scrollBarThickness
-    -- scrollingFrame.CanvasSize = UDim2.new(0, 0, 20, 0)
-    scrollingFrame.Size = UDim2.new(0, rowWidth, 1, 0)
+    scrollingFrame.Size = UDim2.new(0, scrollerWidth, 0, scrollerHeight)
     scrollingFrame.Position = UDim2.new(0, 0, 0, 0)
+
+    -- local scrollerCanvasHeight = #words * totalRowHeight + doublePad
+    -- scrollingFrame.CanvasSize = UDim2.new(0, scrollerWidth * 2, 0,
+    --                                       scrollerCanvasHeight)
+
+    mainFrame.Size = UDim2.new(0, guiWidth, 0.5, 0)
 
     Utils.addPadding({
         parent = scrollingFrame,
@@ -61,13 +71,13 @@ local renderGrid = function(props)
 
     local rowTemplate = Utils.getFirstDescendantByName(sgui, "RowTemplate")
 
-    for wordIndex, word in ipairs(targetWords) do
+    for wordIndex, word in ipairs(words) do
         local newRow = rowTemplate:Clone()
         newRow.Parent = rowTemplate.Parent
         newRow.Name = rowTemplate.Name .. "--row--ooo--" .. wordIndex
-        newRow.Size = UDim2.new(1, 0, 0, rowHeight)
+        newRow.Size = UDim2.new(0, rowWidth, 0, rowHeight)
 
-        local rowOffsetY = (wordIndex - 1) * (rowHeight + paddingInPx)
+        local rowOffsetY = (wordIndex - 1) * (totalRowHeight)
         newRow.Position = UDim2.new(0, 0, 0, rowOffsetY)
 
         local imageLabelTemplate = Utils.getFirstDescendantByName(newRow,
@@ -77,18 +87,20 @@ local renderGrid = function(props)
             local letterNameStub = word .. "-L" .. letterIndex
             local char = string.sub(word, letterIndex, letterIndex)
 
-            local newImageLabel = imageLabelTemplate:Clone()
+            local newTextLabel = imageLabelTemplate:Clone()
 
-            newImageLabel.Name = "wordLetter-" .. letterNameStub
-            newImageLabel.Size = UDim2.new(0, rowHeight, 0, rowHeight)
-            newImageLabel.Position = UDim2.new(0, (letterIndex - 1) *
-                                                   (letterWidth + letterOffsetX),
-                                               0, 0)
-            newImageLabel.Text = char
-            newImageLabel.BorderSizePixel = leteterBorderSizePixel
+            newTextLabel.Name = "wordLetter-" .. letterNameStub
+            -- fix
+            -- fix
+            -- fix
+            newTextLabel.Size = UDim2.new(0, totalRowHeight, 0, totalRowHeight)
+            newTextLabel.Position = UDim2.new(0, (letterIndex - 1) *
+                                                  totalLetterWidth, 0, 0)
+            newTextLabel.Text = char
+            newTextLabel.BorderSizePixel = letterBorderSizePixel
 
             -- Do this last to avoid tweening
-            newImageLabel.Parent = newRow
+            newTextLabel.Parent = newRow
 
         end
         imageLabelTemplate:Destroy()
