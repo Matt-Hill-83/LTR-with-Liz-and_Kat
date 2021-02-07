@@ -16,20 +16,15 @@ function module.initSlopes(props)
                        {parent = skiSlopesFolder, tag = "SkiSlopeFolder"})
     for _, slope in ipairs(slopes) do
 
-        local strayProps = {
-            parentFolder = slope,
-            numBlocks = 6,
-            words = {"CAT"},
-            region = slope.StrayRegion,
-            onTouchBlock = function() end
-        }
+        -- local useStrayPositioners = false
+        local useStrayPositioners = true
 
-        local strayPositioners = nil
-
-        -- local strayPositioners = Utils.getByTagInParent(
-        --                              {parent = slope, tag = "StrayPositioner"})
-
-        if strayPositioners then
+        if useStrayPositioners then
+            local strayPositioners = Utils.getByTagInParent(
+                                         {
+                    parent = slope,
+                    tag = "StrayPositioner"
+                })
             for _, positioner in ipairs(strayPositioners) do
                 local char = positioner.Name
                 local newLetterBlock = StrayLetterBlocks.createStray(char,
@@ -37,9 +32,17 @@ function module.initSlopes(props)
                 newLetterBlock.CFrame = positioner.CFrame
                 newLetterBlock.Anchored = true
                 newLetterBlock.CanCollide = false
+                newLetterBlock.Size = Vector3.new(8, 8, 8)
             end
         else
-            StrayLetterBlocks.initStrays(strayProps)
+            StrayLetterBlocks.initStrays(
+                {
+                    parentFolder = slope,
+                    numBlocks = 6,
+                    words = {"CAT"},
+                    region = slope.StrayRegion,
+                    onTouchBlock = function() end
+                })
         end
 
         local positioners = Utils.getDescendantsByName(slope,

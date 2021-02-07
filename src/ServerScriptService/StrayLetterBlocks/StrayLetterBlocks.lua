@@ -76,16 +76,15 @@ local function onTouchBlock(newLetterBlock2)
     return closure
 end
 
-local function createStray(char, parentFolder)
-    local rackLetterSize = 6
+local function createStray(char, parentFolder, blockSize)
+    blockSize = blockSize or 6
 
     local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
     local letterBlockTemplate = Utils.getFirstDescendantByName(
                                     letterBlockFolder, "LB_4_blank")
     local newLetterBlock = letterBlockTemplate:Clone()
 
-    newLetterBlock.Size = Vector3.new(rackLetterSize, rackLetterSize,
-                                      rackLetterSize)
+    newLetterBlock.Size = Vector3.new(blockSize, blockSize, blockSize)
 
     local letterId = "ID--R"
 
@@ -136,32 +135,14 @@ local function initStrays(props)
                      LetterUtils.getRandomLetter(lettersNotInWords))
     end
 
-    -- local usedLocations = {}
     for _, word in ipairs(words) do
         for letterIndex = 1, #word do
             local letter = string.sub(word, letterIndex, letterIndex)
             table.insert(letterMatrix, letter)
-            -- local isDirtyLocation = true
-            -- local randomRowIndex = nil
-            -- local locationCode = nil
-
-            -- -- make sure you do not put 2 letters in the same location
-            -- while isDirtyLocation == true do
-            --     randomRowIndex = Utils.genRandom(1, totalRows)
-            --     locationCode = randomRowIndex
-            --     isDirtyLocation = usedLocations[locationCode]
-            -- end
-
-            -- usedLocations[locationCode] = true
-            -- letterMatrix[randomRowIndex] = letter
         end
     end
 
-    print('letterMatrix' .. ' - start');
-    print(letterMatrix);
     for _, char in ipairs(letterMatrix) do
-        -- for rowIndex = 1, totalRows do
-        -- local char = letterMatrix[rowIndex]
         local parentFolder = props.parentFolder
         local newLetterBlock = createStray(char, parentFolder)
 
