@@ -4,6 +4,8 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
+local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
+
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
 local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
 
@@ -200,7 +202,16 @@ local function initSingle(props)
     applyDecalsToCharacterFromWord({part = lettterGrabber, word = word})
     configWordLetters({part = lettterGrabber, word = word, wordNameStub = ""})
 
-    -- local breaker = Utils.getFirstDescendantByName(lettterGrabber, "Breaker")
+    local wordModel = lettterGrabber.Word
+
+    LetterUtils.createPropOnLetterBlock({
+        letterBlock = wordModel,
+        propName = "TargetWord",
+        -- propName = module.letterBlockPropNames.Character,
+        initialValue = word,
+        propType = "StringValue"
+    })
+
     newReplicatorPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
                                    {
             parent = positioner,

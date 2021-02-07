@@ -170,7 +170,7 @@ local function initStrays(props)
 
                                     local levelConfig =
                                         LevelConfigs.levelConfigs[1]
-                                    levelConfig.targetWords2[1]['word'] = "PIG"
+                                    levelConfig.targetWords[1]['word'] = "PIG"
 
                                     local gameState =
                                         PlayerStatManager.getGameState(player)
@@ -178,6 +178,7 @@ local function initStrays(props)
                                     print(gameState);
                                     if not gameState.cat then
                                         gameState.cat = 0
+                                        gameState.levelConfig = levelConfig
                                     end
                                     gameState.cat = gameState.cat + 1
 
@@ -187,6 +188,15 @@ local function initStrays(props)
                                         Utils5.resetBlocks(tool)
                                         Utils5.setActiveLetterGrabberBlock(tool)
                                         Utils5.styleLetterGrabberBlocks(tool)
+
+                                        local wordModel = tool.Word
+                                        print('wordModel' .. ' - start');
+                                        print(wordModel);
+
+                                        local targetWord =
+                                            wordModel.TargetWord.Value
+                                        print('targetWord' .. ' - start');
+                                        print(targetWord);
 
                                         updateWordGuiRE:FireAllClients(
                                             {levelConfig = levelConfig})

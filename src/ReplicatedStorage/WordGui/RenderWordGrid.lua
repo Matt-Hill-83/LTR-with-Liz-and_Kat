@@ -7,8 +7,7 @@ local module = {}
 local renderGrid = function(props)
     local levelConfig = props.levelConfig
     local sgui = props.sgui
-    -- local words = levelConfig.targetWords
-    local words = levelConfig.targetWords2
+    local words = levelConfig.targetWords
 
     local mainGui = sgui:WaitForChild("MainGui")
     mainGui.Enabled = true
