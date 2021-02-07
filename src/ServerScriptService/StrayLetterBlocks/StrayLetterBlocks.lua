@@ -89,7 +89,7 @@ local function initStrays(props)
                                     letterBlockFolder, "LB_4_blank")
 
     -- populate matrix with letters
-    local totalLetterMatrix = {}
+    local letterMatrix = {}
 
     -- combine all plates into a single matrix and populate matrix with random letters
     local lettersNotInWords = LetterUtils.getLettersNotInWords(words)
@@ -100,12 +100,16 @@ local function initStrays(props)
     local numRow = totalRows
 
     for _ = 1, totalRows do
-        local row = {}
-        for _ = 1, numCol do
-            table.insert(row, LetterUtils.getRandomLetter(lettersNotInWords))
-        end
-        table.insert(totalLetterMatrix, row)
+        table.insert(letterMatrix,
+                     LetterUtils.getRandomLetter(lettersNotInWords))
     end
+    -- for _ = 1, totalRows do
+    --     local row = {}
+    --     for _ = 1, numCol do
+    --         table.insert(row, LetterUtils.getRandomLetter(lettersNotInWords))
+    --     end
+    --     table.insert(letterMatrix, row)
+    -- end
 
     local usedLocations = {}
     for _, word in ipairs(words) do
@@ -114,26 +118,23 @@ local function initStrays(props)
 
             local isDirtyLocation = true
             local randomRowIndex = nil
-            local randomColIndex = nil
+            -- local randomColIndex = nil
             local locationCode = nil
 
             -- make sure you do not put 2 letters in the same location
             while isDirtyLocation == true do
                 randomRowIndex = Utils.genRandom(1, totalRows)
-                randomColIndex = Utils.genRandom(1, numCol)
-                locationCode = randomRowIndex .. "-" .. randomColIndex
+                -- randomColIndex = Utils.genRandom(1, numCol)
+                locationCode = randomRowIndex
                 isDirtyLocation = usedLocations[locationCode]
             end
 
             usedLocations[locationCode] = true
-            totalLetterMatrix[randomRowIndex][randomColIndex] = letter
+            letterMatrix[randomRowIndex] = letter
         end
     end
 
-    local letterMatrix = totalLetterMatrix
-
-    -- for colIndex = 1, numCol do
-    local colIndex = 1
+    -- local colIndex = 1
     for rowIndex = 1, numRow do
         print('rowIndex' .. ' - start');
         print(rowIndex);
@@ -143,7 +144,7 @@ local function initStrays(props)
                                           rackLetterSize)
 
         local letterId = "ID--R" .. rowIndex
-        local char = letterMatrix[rowIndex][colIndex]
+        local char = letterMatrix[rowIndex]
 
         local name = "strayLetter-ppp" .. char .. "-" .. letterId
         newLetterBlock.Name = name
