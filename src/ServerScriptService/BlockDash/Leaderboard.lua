@@ -37,8 +37,6 @@ local function updateLeaderboard(player)
                     end
                 end
                 local gems2 = PlayerStatManager.getSessionData(player).Gems
-                -- print('gems2' .. ' - start');
-                -- print(gems2);
                 if Wins and isOnLeaderboard == false then
                     local newLbFrame = game.ReplicatedStorage:WaitForChild(
                                            "LeaderboardFrame"):Clone()

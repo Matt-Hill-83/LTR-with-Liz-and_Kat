@@ -27,9 +27,9 @@ local function configPlayers()
     updateWordGuiRE.Name = Const_Client.RemoteEvents.UpdateWordGuiRE
 
     -- Create a RemoteEvent for when a player is added
-    local testCallbackRE = Instance.new("RemoteEvent")
-    testCallbackRE.Parent = RS
-    testCallbackRE.Name = "TestCallback"
+    local updateGuiFromServerRE = Instance.new("RemoteEvent")
+    updateGuiFromServerRE.Parent = RS
+    updateGuiFromServerRE.Name = "updateGuiFromServer"
 
     local function onCharacterAdded(character)
         character:WaitForChild("Humanoid").WalkSpeed =

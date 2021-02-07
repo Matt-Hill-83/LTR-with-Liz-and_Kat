@@ -1,8 +1,3 @@
--- print('SessionData.lua');
--- print('SessionData.lua');
--- print('SessionData.lua');
--- print('SessionData.lua');
--- print('SessionData.lua');
 -- -- Set up table to return to any script that requires this module script
 -- local PlayerStatManager = {}
 -- -- Table to hold player information for the current session

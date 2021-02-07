@@ -46,8 +46,6 @@ local function init(replicator, callBack)
             player.Character.Humanoid:UnequipTools()
             toGive.Parent = player.Backpack
             player.Character.Humanoid:EquipTool(toGive)
-            print('callBack' .. ' - start');
-            print(callBack);
             if callBack then callBack() end
         end
 

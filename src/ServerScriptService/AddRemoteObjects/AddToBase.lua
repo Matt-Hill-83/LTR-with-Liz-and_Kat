@@ -102,12 +102,6 @@ local function addRemoteObjects()
     islandTemplate:Destroy()
 
     local function onCreatePartFired(player, sgui, displayHeight)
-        print('sgui' .. ' - start');
-        print(sgui);
-        print('displayHeight' .. ' - start');
-        print(displayHeight);
-        print('displayHeight' .. ' - end');
-
         local gameState = PlayerStatManager.getGameState(player)
         local levelConfig = gameState.levelConfig
         RenderWordGrid.renderGrid({
@@ -115,10 +109,10 @@ local function addRemoteObjects()
             levelConfig = levelConfig,
             displayHeight = displayHeight
         })
-
     end
-    local testCallbackRE = RS:WaitForChild("TestCallback")
-    testCallbackRE.OnServerEvent:Connect(onCreatePartFired)
+
+    local updateGuiFromServerRE = RS:WaitForChild("updateGuiFromServer")
+    updateGuiFromServerRE.OnServerEvent:Connect(onCreatePartFired)
 end
 
 module.addRemoteObjects = addRemoteObjects

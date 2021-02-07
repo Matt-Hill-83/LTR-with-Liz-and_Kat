@@ -2,7 +2,6 @@ local Sss = game:GetService("ServerScriptService")
 local RS = game:GetService("ReplicatedStorage")
 local Const_Client = require(RS.Source.Constants.Constants_Client)
 
-local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
@@ -11,15 +10,6 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local module = {}
-
-local function onWordComplete(props)
-    print('props.sgui' .. ' - start');
-    print('props.sgui' .. ' - start');
-    print('props.sgui' .. ' - start');
-    print('props.sgui' .. ' - start');
-    print(props.sgui);
-    -- 
-end
 
 local function initStrays(props)
     local strayLetterBlockObjs = props.strayLetterBlockObjs
@@ -202,14 +192,8 @@ local function initStrays(props)
                                         targetWordObj.found =
                                             targetWordObj.found + 1
 
-                                        print('onWordComplete' .. ' - start');
-                                        print(onWordComplete);
                                         updateWordGuiRE:FireAllClients(
-                                            {
-                                                levelConfig = levelConfig,
-                                                callBack = onWordComplete,
-                                                cat = "asdfas"
-                                            })
+                                            {levelConfig = levelConfig})
                                     end
                                     delay(1, destroyParts)
                                 end
