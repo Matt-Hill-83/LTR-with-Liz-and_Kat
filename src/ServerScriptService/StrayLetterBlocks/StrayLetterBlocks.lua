@@ -183,8 +183,8 @@ local function initStrays(props)
                 })
 
             newLetterBlock.Parent = parentFolder
-            newLetterBlock.Anchored = false
-            newLetterBlock.CanCollide = true
+            newLetterBlock.Anchored = true
+            -- newLetterBlock.CanCollide = true
 
             LetterUtils.initLetterBlock({
                 letterBlock = newLetterBlock,
@@ -193,52 +193,6 @@ local function initStrays(props)
                 isTextLetter = true,
                 letterBlockType = "StrayLetter"
             })
-
-            -- local function onTouchBlock(newLetterBlock2)
-            --     local db = {value = false}
-            --     local function closure(otherPart)
-            --         if not otherPart.Parent then return end
-            --         local humanoid = otherPart.Parent:FindFirstChildWhichIsA(
-            --                              "Humanoid")
-            --         if not humanoid then return end
-
-            --         if not db.value then
-            --             db.value = true
-            --             local player = Utils.getPlayerFromHumanoid(humanoid)
-
-            --             local tool =
-            --                 Utils.getActiveTool(player, "LetterGrabber")
-
-            --             if tool then
-            --                 local activeBlock =
-            --                     Utils5.getActiveLetterGrabberBlock(tool)
-            --                 if activeBlock then
-            --                     local strayLetterChar =
-            --                         newLetterBlock2.Character.Value
-            --                     local activeLetterChar =
-            --                         activeBlock.Character.Value
-
-            --                     if strayLetterChar == activeLetterChar then
-            --                         activeBlock.IsFound.Value = true
-            --                         activeBlock.IsActive.Value = false
-            --                     end
-
-            --                     Utils5.styleLetterGrabberBlocks(tool)
-
-            --                     local newActiveBlock =
-            --                         Utils5.getActiveLetterGrabberBlock(tool)
-            --                     if not newActiveBlock then
-            --                         blockFound(tool, player)
-            --                     end
-            --                 end
-            --             end
-
-            --             props.onTouchBlock(newLetterBlock2, player)
-            --             db.value = false
-            --         end
-            --     end
-            --     return closure
-            -- end
 
             newLetterBlock.Touched:Connect(onTouchBlock(newLetterBlock, props))
 
