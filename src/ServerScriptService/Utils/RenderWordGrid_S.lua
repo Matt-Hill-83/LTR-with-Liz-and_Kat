@@ -11,13 +11,12 @@ local renderGrid = function(props)
 
     local words = levelConfig.targetWords
 
+    sgui.Enabled = true
     local mainGui = sgui
     -- local mainGui = sgui:WaitForChild("MainGui")
     mainGui.Enabled = true
     local mainFrame = Utils.getFirstDescendantByName(mainGui, "MainFrame")
 
-    -- Size up the mainFrame temporarily to get the viewport size
-    -- local displayHeight = mainGui.AbsoluteSize.Y
     print('displayHeight' .. ' - start');
     print(displayHeight);
 
@@ -77,11 +76,22 @@ local renderGrid = function(props)
     })
 
     local rowTemplate = Utils.getFirstDescendantByName(sgui, "RowTemplate")
+    rowTemplate.Position = UDim2.new(0, -100, 0, -100)
+    local rowFolder = Utils.getOrCreateFolder(
+                          {
+            name = "RunTimeWordFolder",
+            parent = rowTemplate.Parent
+        })
+
+    local oldRows = rowFolder:GetChildren()
+    -- remove previously created rows
+    for _, row in ipairs(oldRows) do row:Destroy() end
 
     for wordIndex, item in ipairs(words) do
         local word = item.word
         local newRow = rowTemplate:Clone()
-        newRow.Parent = rowTemplate.Parent
+
+        newRow.Parent = rowFolder
         newRow.Name = rowTemplate.Name .. "--row--ooo--" .. wordIndex
         newRow.Size = UDim2.new(0, rowWidth, 0, rowHeight)
 

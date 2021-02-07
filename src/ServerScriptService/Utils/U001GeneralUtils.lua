@@ -443,10 +443,10 @@ function module.setItemAndChildrenPropsByInst(myProps)
     setChildrenProps(item, props)
 end
 
-function module.setItemPropsByInst(myProps)
-    local item = myProps.item
-    local props = myProps.props
-end
+-- function module.setItemPropsByInst(myProps)
+--     local item = myProps.item
+--     local props = myProps.props
+-- end
 
 function module.getOrCreateFolder(props)
     local name = props.name
