@@ -9,6 +9,7 @@ local Players = game:GetService("Players")
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Constants = require(Sss.Source.Constants.Constants)
 local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
+local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local module = {}
 
@@ -44,10 +45,10 @@ local function configPlayers()
                                      Const_Client.RemoteEvents.UpdateWordGuiRE)
 
         print('FireAllClients');
-        print('FireAllClients');
-        print('FireAllClients');
-        print('FireAllClients');
         local levelConfig = LevelConfigs.levelConfigs[1]
+        local gameState = PlayerStatManager.getGameState(player)
+        gameState.levelConfig = levelConfig
+
         updateWordGuiRE2:FireAllClients({levelConfig = levelConfig})
     end
 

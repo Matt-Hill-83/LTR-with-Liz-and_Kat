@@ -168,19 +168,9 @@ local function initStrays(props)
                                             Const_Client.RemoteEvents
                                                 .UpdateWordGuiRE)
 
-                                    local levelConfig =
-                                        LevelConfigs.levelConfigs[1]
-                                    levelConfig.targetWords[1]['word'] = "PIG"
-
-                                    local gameState =
-                                        PlayerStatManager.getGameState(player)
-                                    print('gameState' .. ' - start');
-                                    print(gameState);
-                                    if not gameState.cat then
-                                        gameState.cat = 0
-                                        gameState.levelConfig = levelConfig
-                                    end
-                                    gameState.cat = gameState.cat + 1
+                                    -- local levelConfig =
+                                    --     LevelConfigs.levelConfigs[1]
+                                    -- levelConfig.targetWords[1]['word'] = "PIG"
 
                                     local function destroyParts()
                                         local explosionSound = '515938718'
@@ -198,6 +188,22 @@ local function initStrays(props)
                                         print('targetWord' .. ' - start');
                                         print(targetWord);
 
+                                        local gameState =
+                                            PlayerStatManager.getGameState(
+                                                player)
+                                        print('gameState' .. ' - start');
+                                        print(gameState);
+                                        local levelConfig =
+                                            gameState.levelConfig
+                                        local targetWordObj =
+                                            Utils.getListItemByPropValue(
+                                                levelConfig.targetWords, "word",
+                                                targetWord)
+
+                                        print('targetWordObj' .. ' - start');
+                                        print(targetWordObj);
+                                        targetWordObj.found =
+                                            targetWordObj.found + 1
                                         updateWordGuiRE:FireAllClients(
                                             {levelConfig = levelConfig})
 

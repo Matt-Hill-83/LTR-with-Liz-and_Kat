@@ -38,8 +38,12 @@ local renderGrid = function(props)
     local rowGapY = paddingInPx / 2
     local rowHeight = letterHeight
     local totalRowHeight = letterHeight + rowGapY
-    local rowWidth = (lettersInWord * letterWidth) + (lettersInWord - 1) *
-                         letterGapX
+    local foundLabelWidth = letterWidth * 2
+    local totalFoundLabelWidth = foundLabelWidth + paddingInPx
+    local wordWidth = (lettersInWord * letterWidth) + (lettersInWord - 1) *
+                          letterGapX
+
+    local rowWidth = wordWidth + totalFoundLabelWidth
 
     --  scroller stuff
     local scrollingFrame = Utils.getFirstDescendantByName(sgui, "WordScroller")
@@ -105,6 +109,13 @@ local renderGrid = function(props)
 
         end
         imageLabelTemplate:Destroy()
+
+        local foundLabel = newRow.Found
+        print('foundLabel' .. ' - start');
+        print(foundLabel);
+        foundLabel.Position = UDim2.new(0, wordWidth + paddingInPx, 0, 0)
+        foundLabel.Size = UDim2.new(0, foundLabelWidth, 0, letterHeight)
+        foundLabel.Text = item.found .. " of " .. item.target
     end
     -- rowTemplate:Destroy()
 end

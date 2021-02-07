@@ -94,6 +94,17 @@ local function removeListItemByUuid(items, uuid)
     end
 end
 
+local function getListItemByPropValue(items, propName, value)
+    local foundItem = nil
+    for _, item in ipairs(items) do
+        if item[propName] == value then
+            foundItem = item
+            break
+        end
+    end
+    return foundItem
+end
+
 function tablelength(T)
     local count = 0
     for _ in pairs(T) do count = count + 1 end
@@ -655,6 +666,7 @@ module.sortListByObjectKey = sortListByObjectKey
 module.tablelength = tablelength
 module.tableToString = tableToString
 module.getActiveTool = getActiveTool
+module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord
 module.applyDecalsToCharacterFromConfigName =
     applyDecalsToCharacterFromConfigName
