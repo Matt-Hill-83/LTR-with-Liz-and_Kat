@@ -70,8 +70,6 @@ local function onTouchBlock(newLetterBlock2)
                     end
                 end
             end
-
-            -- props.onTouchBlock(newLetterBlock2, player)
             db.value = false
         end
     end
@@ -184,7 +182,6 @@ local function initStrays(props)
 
             newLetterBlock.Parent = parentFolder
             newLetterBlock.Anchored = true
-            -- newLetterBlock.CanCollide = true
 
             LetterUtils.initLetterBlock({
                 letterBlock = newLetterBlock,
