@@ -107,7 +107,7 @@ local renderGrid = function(props)
         end
         imageLabelTemplate:Destroy()
     end
-    rowTemplate:Destroy()
+    -- rowTemplate:Destroy()
 end
 
 module.renderGrid = renderGrid

@@ -1,10 +1,13 @@
 local Sss = game:GetService("ServerScriptService")
+local RS = game:GetService("ReplicatedStorage")
+local Const_Client = require(RS.Source.Constants.Constants_Client)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
 
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
+local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
 
 local module = {}
 
@@ -161,6 +164,16 @@ local function initStrays(props)
                                 Utils5.getActiveLetterGrabberBlock(tool)
                             if not newActiveBlock then
                                 print('you spelled a word!');
+
+                                local updateWordGuiRE =
+                                    RS:WaitForChild(
+                                        Const_Client.RemoteEvents
+                                            .UpdateWordGuiRE)
+
+                                local levelConfig = LevelConfigs.levelConfigs[1]
+                                levelConfig.targetWords2[1]['word'] = "PIG"
+                                updateWordGuiRE:FireAllClients(
+                                    {levelConfig = levelConfig})
                             end
                         end
 

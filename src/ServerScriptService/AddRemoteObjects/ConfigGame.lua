@@ -48,7 +48,6 @@ local function configPlayers()
         print('FireAllClients');
         print('FireAllClients');
         local levelConfig = LevelConfigs.levelConfigs[1]
-
         updateWordGuiRE2:FireAllClients({levelConfig = levelConfig})
     end
 

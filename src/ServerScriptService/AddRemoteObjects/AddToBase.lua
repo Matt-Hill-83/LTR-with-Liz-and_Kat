@@ -1,7 +1,7 @@
 local module = {}
 local Sss = game:GetService("ServerScriptService")
-local RS = game:GetService("ReplicatedStorage")
-local Const_Client = require(RS.Source.Constants.Constants_Client)
+-- local RS = game:GetService("ReplicatedStorage")
+-- local Const_Client = require(RS.Source.Constants.Constants_Client)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Constants = require(Sss.Source.Constants.Constants)
@@ -13,11 +13,6 @@ local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
 local BlockDash = require(Sss.Source.BlockDash.BlockDash)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
-
--- Create a RemoteEvent for when a player is added
-local updateWordGuiRE = Instance.new("RemoteEvent")
-updateWordGuiRE.Parent = RS
-updateWordGuiRE.Name = Const_Client.RemoteEvents.UpdateWordGuiRE
 
 local function addRemoteObjects()
     local myStuff = workspace:FindFirstChild("MyStuff")
@@ -104,8 +99,6 @@ local function addRemoteObjects()
     PlayerStatManager.init()
 
     islandTemplate:Destroy()
-    -- local updateWordGuiRE = RS:WaitForChild(
-    --                             Const_Client.RemoteEvents.UpdateWordGuiRE)
 
 end
 
