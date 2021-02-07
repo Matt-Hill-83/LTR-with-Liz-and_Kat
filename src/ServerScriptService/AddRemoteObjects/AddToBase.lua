@@ -14,7 +14,7 @@ local BlockDash = require(Sss.Source.BlockDash.BlockDash)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 
-local RenderWordGrid = require(RS.Source.WordGui.RenderWordGrid)
+-- local RenderWordGrid = require(RS.Source.WordGui.RenderWordGrid)
 
 -- Create a RemoteEvent for when a player is added
 local updateWordGuiRE = Instance.new("RemoteEvent")
@@ -106,8 +106,8 @@ local function addRemoteObjects()
     PlayerStatManager.init()
 
     islandTemplate:Destroy()
-    local updateWordGuiRE = RS:WaitForChild(
-                                Const_Client.RemoteEvents.UpdateWordGuiRE)
+    -- local updateWordGuiRE = RS:WaitForChild(
+    --                             Const_Client.RemoteEvents.UpdateWordGuiRE)
 
 end
 

@@ -4,7 +4,7 @@ local PlayerGui = game:GetService('Players').LocalPlayer:WaitForChild(
 local Const_Client = require(RS.Source.Constants.Constants_Client)
 
 local RenderWordGrid = require(RS.Source.WordGui.RenderWordGrid)
-local Utils = require(RS.Source.Utils.RSU001GeneralUtils)
+-- local Utils = require(RS.Source.Utils.RSU001GeneralUtils)
 
 local updateWordGuiRE = RS:WaitForChild(Const_Client.RemoteEvents
                                             .UpdateWordGuiRE)

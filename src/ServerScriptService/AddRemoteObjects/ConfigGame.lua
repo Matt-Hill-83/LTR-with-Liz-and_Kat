@@ -40,8 +40,8 @@ local function configPlayers()
         local player = Players:GetPlayerFromCharacter(character)
         print(player);
 
-        local updateWordGuiRE = RS:WaitForChild(
-                                    Const_Client.RemoteEvents.UpdateWordGuiRE)
+        local updateWordGuiRE2 = RS:WaitForChild(
+                                     Const_Client.RemoteEvents.UpdateWordGuiRE)
 
         print('FireAllClients');
         print('FireAllClients');
@@ -49,7 +49,7 @@ local function configPlayers()
         print('FireAllClients');
         local levelConfig = LevelConfigs.levelConfigs[1]
 
-        updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
+        updateWordGuiRE2:FireAllClients({levelConfig = levelConfig})
     end
 
     local function onPlayerAdded(player)
@@ -252,6 +252,8 @@ function module.configGame()
     local allSpawnLocations = Utils.getDescendantsByType(workspace,
                                                          "SpawnLocation")
 
+    print('allSpawnLocations' .. ' - start');
+    print(allSpawnLocations);
     for _, item in ipairs(allSpawnLocations) do
         if item.Name == Constants.gameConfig.activeSpawn then
             item.Enabled = true
