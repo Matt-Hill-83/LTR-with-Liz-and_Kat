@@ -21,7 +21,7 @@ function module.initSlopes(props)
                        {parent = skiSlopesFolder, tag = "SkiSlopeFolder"})
     for _, slope in ipairs(slopes) do
 
-        local strayLetterBlockObjs = {}
+        -- local strayLetterBlockObjs = {}
 
         local strayProps = {
             parentFolder = slope,
@@ -30,8 +30,8 @@ function module.initSlopes(props)
             -- words = {"AT"},
             blocks = {},
             region = slope.StrayRegion,
-            onTouchBlock = function() end,
-            strayLetterBlockObjs = strayLetterBlockObjs
+            onTouchBlock = function() end
+            -- strayLetterBlockObjs = strayLetterBlockObjs
 
         }
         local strays = StrayLetterBlocks.initStrays(strayProps)
