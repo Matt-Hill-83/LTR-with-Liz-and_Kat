@@ -2,15 +2,24 @@ local Sss = game:GetService("ServerScriptService")
 local RS = game:GetService("ReplicatedStorage")
 local Const_Client = require(RS.Source.Constants.Constants_Client)
 
+local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
 
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
-local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
 local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local module = {}
+
+local function onWordComplete(props)
+    print('props.sgui' .. ' - start');
+    print('props.sgui' .. ' - start');
+    print('props.sgui' .. ' - start');
+    print('props.sgui' .. ' - start');
+    print(props.sgui);
+    -- 
+end
 
 local function initStrays(props)
     local strayLetterBlockObjs = props.strayLetterBlockObjs
@@ -168,10 +177,6 @@ local function initStrays(props)
                                             Const_Client.RemoteEvents
                                                 .UpdateWordGuiRE)
 
-                                    -- local levelConfig =
-                                    --     LevelConfigs.levelConfigs[1]
-                                    -- levelConfig.targetWords[1]['word'] = "PIG"
-
                                     local function destroyParts()
                                         local explosionSound = '515938718'
                                         Utils.playSound(explosionSound, 0.5)
@@ -180,19 +185,13 @@ local function initStrays(props)
                                         Utils5.styleLetterGrabberBlocks(tool)
 
                                         local wordModel = tool.Word
-                                        print('wordModel' .. ' - start');
-                                        print(wordModel);
 
                                         local targetWord =
                                             wordModel.TargetWord.Value
-                                        print('targetWord' .. ' - start');
-                                        print(targetWord);
 
                                         local gameState =
                                             PlayerStatManager.getGameState(
                                                 player)
-                                        print('gameState' .. ' - start');
-                                        print(gameState);
                                         local levelConfig =
                                             gameState.levelConfig
                                         local targetWordObj =
@@ -200,17 +199,19 @@ local function initStrays(props)
                                                 levelConfig.targetWords, "word",
                                                 targetWord)
 
-                                        print('targetWordObj' .. ' - start');
-                                        print(targetWordObj);
                                         targetWordObj.found =
                                             targetWordObj.found + 1
+
+                                        print('onWordComplete' .. ' - start');
+                                        print(onWordComplete);
                                         updateWordGuiRE:FireAllClients(
-                                            {levelConfig = levelConfig})
-
+                                            {
+                                                levelConfig = levelConfig,
+                                                callBack = onWordComplete,
+                                                cat = "asdfas"
+                                            })
                                     end
-
                                     delay(1, destroyParts)
-
                                 end
                             end
                         end

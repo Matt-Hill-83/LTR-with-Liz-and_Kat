@@ -1,6 +1,6 @@
 local module = {}
 local Sss = game:GetService("ServerScriptService")
--- local RS = game:GetService("ReplicatedStorage")
+local RS = game:GetService("ReplicatedStorage")
 -- local Const_Client = require(RS.Source.Constants.Constants_Client)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
@@ -13,6 +13,7 @@ local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
 local BlockDash = require(Sss.Source.BlockDash.BlockDash)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
+local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
     local myStuff = workspace:FindFirstChild("MyStuff")
@@ -100,6 +101,24 @@ local function addRemoteObjects()
 
     islandTemplate:Destroy()
 
+    local function onCreatePartFired(player, sgui, displayHeight)
+        print('sgui' .. ' - start');
+        print(sgui);
+        print('displayHeight' .. ' - start');
+        print(displayHeight);
+        print('displayHeight' .. ' - end');
+
+        local gameState = PlayerStatManager.getGameState(player)
+        local levelConfig = gameState.levelConfig
+        RenderWordGrid.renderGrid({
+            sgui = sgui,
+            levelConfig = levelConfig,
+            displayHeight = displayHeight
+        })
+
+    end
+    local testCallbackRE = RS:WaitForChild("TestCallback")
+    testCallbackRE.OnServerEvent:Connect(onCreatePartFired)
 end
 
 module.addRemoteObjects = addRemoteObjects

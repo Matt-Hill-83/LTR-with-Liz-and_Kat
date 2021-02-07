@@ -25,7 +25,7 @@ function tween(props)
     return tween
 end
 
-function setCFrameFromDesiredEdgeOffset(props)
+local function setCFrameFromDesiredEdgeOffset(props)
     local parent = props.parent
     local child = props.child
     local offsetConfig = props.offsetConfig

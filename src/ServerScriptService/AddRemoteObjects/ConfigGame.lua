@@ -25,10 +25,11 @@ local function configPlayers()
     local updateWordGuiRE = Instance.new("RemoteEvent")
     updateWordGuiRE.Parent = RS
     updateWordGuiRE.Name = Const_Client.RemoteEvents.UpdateWordGuiRE
-    print('set RE');
-    print('set RE');
-    print('set RE');
-    print('set RE');
+
+    -- Create a RemoteEvent for when a player is added
+    local testCallbackRE = Instance.new("RemoteEvent")
+    testCallbackRE.Parent = RS
+    testCallbackRE.Name = "TestCallback"
 
     local function onCharacterAdded(character)
         print('onCharacterAdded--------------------');

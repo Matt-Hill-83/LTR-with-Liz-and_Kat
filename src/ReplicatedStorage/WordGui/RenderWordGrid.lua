@@ -5,9 +5,20 @@ local Utils = require(RS.Source.Utils.RSU001GeneralUtils)
 local module = {}
 
 local renderGrid = function(props)
+    print('props' .. ' - start');
+    print(props);
     local levelConfig = props.levelConfig
     local sgui = props.sgui
+    local callBack = props.callBack
+    print('callBack' .. ' - start');
+    print('callBack' .. ' - start');
+    print('callBack' .. ' - start');
+    print('callBack' .. ' - start');
+    print(callBack);
+
     local words = levelConfig.targetWords
+
+    if callBack then callBack({sgui = sgui}) end
 
     local mainGui = sgui:WaitForChild("MainGui")
     mainGui.Enabled = true
@@ -71,11 +82,6 @@ local renderGrid = function(props)
         inPx = true
     })
 
-    -- local children = scrollingFrame:GetChildren()
-    -- for i, item in pairs(children) do
-    --     if item:IsA('TextLabel') then item:Destroy() end
-    -- end
-
     local rowTemplate = Utils.getFirstDescendantByName(sgui, "RowTemplate")
 
     for wordIndex, item in ipairs(words) do
@@ -111,8 +117,6 @@ local renderGrid = function(props)
         imageLabelTemplate:Destroy()
 
         local foundLabel = newRow.Found
-        print('foundLabel' .. ' - start');
-        print(foundLabel);
         foundLabel.Position = UDim2.new(0, wordWidth + paddingInPx, 0, 0)
         foundLabel.Size = UDim2.new(0, foundLabelWidth, 0, letterHeight)
         foundLabel.Text = item.found .. " of " .. item.target
