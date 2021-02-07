@@ -252,13 +252,6 @@ local function revertRackLetterBlocksToInit(miniGameState)
     for _, wordObj in ipairs(miniGameState.renderedWords) do
         wordObj.completed = false
         for _, letterObj in ipairs(wordObj.letters) do
-            print('RS file');
-            print('RS file');
-            print('RS file');
-            print('RS file');
-            print('RS file');
-            print('RS file');
-            print('RS file');
             local letterBlock = letterObj.instance
             module.applyStyleFromTemplateBD(
                 {

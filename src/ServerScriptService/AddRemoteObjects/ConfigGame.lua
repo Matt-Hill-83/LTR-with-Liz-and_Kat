@@ -32,20 +32,14 @@ local function configPlayers()
     testCallbackRE.Name = "TestCallback"
 
     local function onCharacterAdded(character)
-        print('onCharacterAdded--------------------');
         character:WaitForChild("Humanoid").WalkSpeed =
             Constants.gameConfig.walkSpeed
 
-        print('Constants.gameConfig.walkSpeed' .. ' - start');
-        print(Constants.gameConfig.walkSpeed);
-        print(character.Humanoid);
         local player = Players:GetPlayerFromCharacter(character)
-        print(player);
 
         local updateWordGuiRE2 = RS:WaitForChild(
                                      Const_Client.RemoteEvents.UpdateWordGuiRE)
 
-        print('FireAllClients');
         local levelConfig = LevelConfigs.levelConfigs[1]
         local gameState = PlayerStatManager.getGameState(player)
         gameState.levelConfig = levelConfig
@@ -54,8 +48,6 @@ local function configPlayers()
     end
 
     local function onPlayerAdded(player)
-        print('onPlayerAdded');
-        print(player.UserId);
         player.CharacterAdded:Connect(onCharacterAdded)
 
         -- newPlayerEvent:FireAllClients()
@@ -84,7 +76,6 @@ local function configGamePass()
         end
 
         if hasPass == true then
-            print(player.Name .. " owns the game pass with ID " .. gamePassID)
 
             -- Assign this player the ability or bonus related to the game pass
             local function onCharacterAdded(character)
@@ -111,9 +102,7 @@ function configBadges()
             player.CharacterAdded:Connect(
                 function(character)
                     character:WaitForChild("Humanoid").Died:Connect(
-                        function()
-                            print(player.Name .. " has died!")
-                        end)
+                        function() end)
                 end)
         end)
 end
@@ -244,7 +233,6 @@ local function setVisibility()
 end
 
 function module.configGame()
-    print('configGame');
     setVisibility()
     configPlayers()
     configGamePass()
@@ -253,8 +241,6 @@ function module.configGame()
     local allSpawnLocations = Utils.getDescendantsByType(workspace,
                                                          "SpawnLocation")
 
-    print('allSpawnLocations' .. ' - start');
-    print(allSpawnLocations);
     for _, item in ipairs(allSpawnLocations) do
         if item.Name == Constants.gameConfig.activeSpawn then
             item.Enabled = true

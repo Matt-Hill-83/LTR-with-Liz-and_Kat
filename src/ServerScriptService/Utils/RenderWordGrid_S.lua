@@ -11,14 +11,9 @@ local renderGrid = function(props)
 
     local words = levelConfig.targetWords
 
-    sgui.Enabled = true
     local mainGui = sgui
-    -- local mainGui = sgui:WaitForChild("MainGui")
     mainGui.Enabled = true
     local mainFrame = Utils.getFirstDescendantByName(mainGui, "MainFrame")
-
-    print('displayHeight' .. ' - start');
-    print(displayHeight);
 
     local paddingInPx = 10
     local doublePad = paddingInPx * 2

@@ -1,3 +1,8 @@
+-- This is the client version and is not used anyore
+-- This is the client version and is not used anyore
+-- This is the client version and is not used anyore
+-- This is the client version and is not used anyore
+-- This is the client version and is not used anyore
 local RS = game:GetService("ReplicatedStorage")
 
 local Utils = require(RS.Source.Utils.RSU001GeneralUtils)
@@ -5,16 +10,9 @@ local Utils = require(RS.Source.Utils.RSU001GeneralUtils)
 local module = {}
 
 local renderGrid = function(props)
-    print('props' .. ' - start');
-    print(props);
     local levelConfig = props.levelConfig
     local sgui = props.sgui
     local callBack = props.callBack
-    print('callBack' .. ' - start');
-    print('callBack' .. ' - start');
-    print('callBack' .. ' - start');
-    print('callBack' .. ' - start');
-    print(callBack);
 
     local words = levelConfig.targetWords
 
