@@ -76,17 +76,79 @@ local function onTouchBlock(newLetterBlock2)
     return closure
 end
 
-local function initStrays(props)
-    -- local strayLetterBlockObjs = props.strayLetterBlockObjs
+local function createLetterBlock(char, props)
     local parentFolder = props.parentFolder
-    local numBlocks = props.numBlocks
-    local region = props.region
-    local words = props.words
     local rackLetterSize = props.rackLetterSize or 6
 
     local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
     local letterBlockTemplate = Utils.getFirstDescendantByName(
                                     letterBlockFolder, "LB_4_blank")
+    local newLetterBlock = letterBlockTemplate:Clone()
+
+    newLetterBlock.Size = Vector3.new(rackLetterSize, rackLetterSize,
+                                      rackLetterSize)
+
+    local letterId = "ID--R"
+
+    local name = "strayLetter-ppp" .. char .. "-" .. letterId
+    newLetterBlock.Name = name
+
+    LetterUtils.createPropOnLetterBlock({
+        letterBlock = newLetterBlock,
+        propName = LetterUtils.letterBlockPropNames.IsLifted,
+        initialValue = false,
+        propType = "BoolValue"
+    })
+
+    LetterUtils.createPropOnLetterBlock({
+        letterBlock = newLetterBlock,
+        propName = LetterUtils.letterBlockPropNames.IsFound,
+        initialValue = false,
+        propType = "BoolValue"
+    })
+
+    -- local offsetX = Utils.genRandom(0, region.Size.X) - region.Size.X / 2
+    -- local offsetZ = Utils.genRandom(0, region.Size.Z) - region.Size.Z / 2
+
+    -- local offsetX = Utils.genRandom(0, 20)
+    -- local offsetZ = Utils.genRandom(0, 20)
+
+    -- newLetterBlock.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+    --                             {
+    --         parent = region,
+    --         child = newLetterBlock,
+    --         offsetConfig = {
+    --             useParentNearEdge = Vector3.new(0, 0, 0),
+    --             useChildNearEdge = Vector3.new(0, 0, 0),
+    --             offsetAdder = Vector3.new(offsetX, 0, offsetZ)
+    --         }
+    --     })
+
+    newLetterBlock.Parent = parentFolder
+    newLetterBlock.Anchored = false
+
+    LetterUtils.initLetterBlock({
+        letterBlock = newLetterBlock,
+        char = char,
+        templateName = "Stray_normal",
+        isTextLetter = true,
+        letterBlockType = "StrayLetter"
+    })
+
+    newLetterBlock.Touched:Connect(onTouchBlock(newLetterBlock, props))
+    return newLetterBlock
+end
+
+local function initStrays(props)
+    local numBlocks = props.numBlocks
+    local region = props.region
+    local words = props.words
+    -- local parentFolder = props.parentFolder
+    -- local rackLetterSize = props.rackLetterSize or 6
+
+    -- local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
+    -- local letterBlockTemplate = Utils.getFirstDescendantByName(
+    --                                 letterBlockFolder, "LB_4_blank")
 
     -- populate matrix with letters
     local letterMatrix = {}
@@ -115,7 +177,6 @@ local function initStrays(props)
             -- make sure you do not put 2 letters in the same location
             while isDirtyLocation == true do
                 randomRowIndex = Utils.genRandom(1, totalRows)
-                -- randomColIndex = Utils.genRandom(1, numCol)
                 locationCode = randomRowIndex
                 isDirtyLocation = usedLocations[locationCode]
             end
@@ -126,32 +187,19 @@ local function initStrays(props)
     end
 
     for rowIndex = 1, numRow do
-        local newLetterBlock = letterBlockTemplate:Clone()
-
-        newLetterBlock.Size = Vector3.new(rackLetterSize, rackLetterSize,
-                                          rackLetterSize)
-
-        local letterId = "ID--R" .. rowIndex
         local char = letterMatrix[rowIndex]
 
-        local name = "strayLetter-ppp" .. char .. "-" .. letterId
-        newLetterBlock.Name = name
-
-        LetterUtils.createPropOnLetterBlock(
-            {
-                letterBlock = newLetterBlock,
-                propName = LetterUtils.letterBlockPropNames.IsLifted,
-                initialValue = false,
-                propType = "BoolValue"
-            })
-
-        LetterUtils.createPropOnLetterBlock(
-            {
-                letterBlock = newLetterBlock,
-                propName = LetterUtils.letterBlockPropNames.IsFound,
-                initialValue = false,
-                propType = "BoolValue"
-            })
+        -- local cFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+        --                    {
+        --         parent = region,
+        --         child = newLetterBlock,
+        --         offsetConfig = {
+        --             useParentNearEdge = Vector3.new(0, 0, 0),
+        --             useChildNearEdge = Vector3.new(0, 0, 0),
+        --             offsetAdder = Vector3.new(offsetX, 0, offsetZ)
+        --         }
+        --     })
+        local newLetterBlock = createLetterBlock(char, props)
 
         local offsetX = Utils.genRandom(0, region.Size.X) - region.Size.X / 2
         local offsetZ = Utils.genRandom(0, region.Size.Z) - region.Size.Z / 2
@@ -169,23 +217,65 @@ local function initStrays(props)
                     offsetAdder = Vector3.new(offsetX, 0, offsetZ)
                 }
             })
-
-        newLetterBlock.Parent = parentFolder
-        newLetterBlock.Anchored = false
-
-        LetterUtils.initLetterBlock({
-            letterBlock = newLetterBlock,
-            char = char,
-            templateName = "Stray_normal",
-            isTextLetter = true,
-            letterBlockType = "StrayLetter"
-        })
-
-        newLetterBlock.Touched:Connect(onTouchBlock(newLetterBlock, props))
-
     end
-    -- end
+    -- for rowIndex = 1, numRow do
+    --     local newLetterBlock = letterBlockTemplate:Clone()
 
+    --     newLetterBlock.Size = Vector3.new(rackLetterSize, rackLetterSize,
+    --                                       rackLetterSize)
+
+    --     local letterId = "ID--R" .. rowIndex
+    --     local char = letterMatrix[rowIndex]
+
+    --     local name = "strayLetter-ppp" .. char .. "-" .. letterId
+    --     newLetterBlock.Name = name
+
+    --     LetterUtils.createPropOnLetterBlock(
+    --         {
+    --             letterBlock = newLetterBlock,
+    --             propName = LetterUtils.letterBlockPropNames.IsLifted,
+    --             initialValue = false,
+    --             propType = "BoolValue"
+    --         })
+
+    --     LetterUtils.createPropOnLetterBlock(
+    --         {
+    --             letterBlock = newLetterBlock,
+    --             propName = LetterUtils.letterBlockPropNames.IsFound,
+    --             initialValue = false,
+    --             propType = "BoolValue"
+    --         })
+
+    --     local offsetX = Utils.genRandom(0, region.Size.X) - region.Size.X / 2
+    --     local offsetZ = Utils.genRandom(0, region.Size.Z) - region.Size.Z / 2
+
+    --     -- local offsetX = Utils.genRandom(0, 20)
+    --     -- local offsetZ = Utils.genRandom(0, 20)
+
+    --     newLetterBlock.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+    --                                 {
+    --             parent = region,
+    --             child = newLetterBlock,
+    --             offsetConfig = {
+    --                 useParentNearEdge = Vector3.new(0, 0, 0),
+    --                 useChildNearEdge = Vector3.new(0, 0, 0),
+    --                 offsetAdder = Vector3.new(offsetX, 0, offsetZ)
+    --             }
+    --         })
+
+    --     newLetterBlock.Parent = parentFolder
+    --     newLetterBlock.Anchored = false
+
+    --     LetterUtils.initLetterBlock({
+    --         letterBlock = newLetterBlock,
+    --         char = char,
+    --         templateName = "Stray_normal",
+    --         isTextLetter = true,
+    --         letterBlockType = "StrayLetter"
+    --     })
+
+    --     newLetterBlock.Touched:Connect(onTouchBlock(newLetterBlock, props))
+    -- end
 end
 
 module.initStrays = initStrays
