@@ -41,7 +41,7 @@ function module.initSlopes(props)
         end
 
         -- Populate random letter gems
-        local strays = StrayLetterBlocks.initStrays(
+        local strays = StrayLetterBlocks.initStraysInRegion(
                            {
                 parentFolder = slope,
                 numBlocks = 6,

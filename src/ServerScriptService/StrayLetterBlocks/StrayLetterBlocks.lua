@@ -45,27 +45,24 @@ local function wordFound(tool, player)
 end
 
 local function blockTouchedByHuman(newLetterBlock2, player)
-
     local tool = Utils.getActiveTool(player, "LetterGrabber")
+    if not tool then return end
 
-    if tool then
-        local activeBlock = Utils5.getActiveLetterGrabberBlock(tool)
-        if activeBlock then
-            local strayLetterChar = newLetterBlock2.Character.Value
-            local activeLetterChar = activeBlock.Character.Value
+    local activeBlock = Utils5.getActiveLetterGrabberBlock(tool)
+    if activeBlock then
+        local strayLetterChar = newLetterBlock2.Character.Value
+        local activeLetterChar = activeBlock.Character.Value
 
-            if strayLetterChar == activeLetterChar then
-                activeBlock.IsFound.Value = true
-                activeBlock.IsActive.Value = false
-            end
-
-            Utils5.styleLetterGrabberBlocks(tool)
-
-            local newActiveBlock = Utils5.getActiveLetterGrabberBlock(tool)
-            if not newActiveBlock then wordFound(tool, player) end
+        if strayLetterChar == activeLetterChar then
+            activeBlock.IsFound.Value = true
+            activeBlock.IsActive.Value = false
         end
-    end
 
+        Utils5.styleLetterGrabberBlocks(tool)
+
+        local newActiveBlock = Utils5.getActiveLetterGrabberBlock(tool)
+        if not newActiveBlock then wordFound(tool, player) end
+    end
 end
 
 local function onTouchBlock(newLetterBlock2)
@@ -85,20 +82,11 @@ local function onTouchBlock(newLetterBlock2)
     return closure
 end
 
-local function createStray(char, parentFolder, blockSize)
-    blockSize = blockSize or 6
-
+local function createStray(char, parentFolder)
     local letterBlockTemplate = Utils.getFromTemplates("HexLetterGemTemplate")
-    -- local letterBlockTemplate = Utils.getFirstDescendantByName(
-    --                                 letterBlockFolder, "LB_4_blank")
-    -- local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
-    -- local letterBlockTemplate = Utils.getFirstDescendantByName(
-    --                                 letterBlockFolder, "LB_4_blank")
 
     local modelClone = letterBlockTemplate:Clone()
     local newLetterBlock = modelClone.PrimaryPart
-
-    -- newLetterBlock.Size = Vector3.new(blockSize, blockSize, blockSize)
 
     local letterId = "ID--R"
 
@@ -134,7 +122,7 @@ local function createStray(char, parentFolder, blockSize)
     return newLetterBlock
 end
 
-local function initStrays(props)
+local function initStraysInRegion(props)
     local numBlocks = props.numBlocks
     local region = props.region
     local words = props.words
@@ -182,7 +170,7 @@ local function initStrays(props)
     return strays
 end
 
-module.initStrays = initStrays
+module.initStraysInRegion = initStraysInRegion
 module.createStray = createStray
 
 return module
