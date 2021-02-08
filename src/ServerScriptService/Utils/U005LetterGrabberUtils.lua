@@ -77,10 +77,10 @@ local function styleLetterGrabberBlocks(tool)
                 {targetLetterBlock = block, templateName = "Grabber_found"})
         end
 
-        if block.IsActive.Value == true then
-            LetterUtils.applyStyleFromTemplate(
-                {targetLetterBlock = block, templateName = "Grabber_active"})
-        end
+        -- if block.IsActive.Value == true then
+        --     LetterUtils.applyStyleFromTemplate(
+        --         {targetLetterBlock = block, templateName = "Grabber_active"})
+        -- end
     end
 end
 
