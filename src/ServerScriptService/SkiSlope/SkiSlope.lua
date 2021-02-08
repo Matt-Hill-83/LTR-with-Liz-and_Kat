@@ -4,6 +4,7 @@ local StrayLetterBlocks =
     require(Sss.Source.StrayLetterBlocks.StrayLetterBlocks)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
+local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 
 local module = {}
 
@@ -16,8 +17,8 @@ function module.initSlopes(props)
                        {parent = skiSlopesFolder, tag = "SkiSlopeFolder"})
     for _, slope in ipairs(slopes) do
 
-        -- local useStrayPositioners = false
-        local useStrayPositioners = true
+        local useStrayPositioners = false
+        -- local useStrayPositioners = true
 
         if useStrayPositioners then
             local strayPositioners = Utils.getByTagInParent(
@@ -29,20 +30,33 @@ function module.initSlopes(props)
                 local char = positioner.Name
                 local newLetterBlock = StrayLetterBlocks.createStray(char,
                                                                      parentFolder)
-                newLetterBlock.CFrame = positioner.CFrame
+                -- newLetterBlock.CFrame = positioner.CFrame
+                newLetterBlock.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+                                            {
+                        parent = positioner,
+                        child = newLetterBlock,
+                        offsetConfig = {
+                            useParentNearEdge = Vector3.new(0, -1, 0),
+                            useChildNearEdge = Vector3.new(0, -1, 0),
+                            offsetAdder = nil
+                        }
+                    })
+
                 newLetterBlock.Anchored = true
                 newLetterBlock.CanCollide = false
-                newLetterBlock.Size = Vector3.new(8, 8, 8)
+                -- newLetterBlock.Size = Vector3.new(8, 8, 8)
             end
         else
-            StrayLetterBlocks.initStrays(
-                {
+            local strays = StrayLetterBlocks.initStrays(
+                               {
                     parentFolder = slope,
                     numBlocks = 6,
                     words = {"CAT"},
                     region = slope.StrayRegion,
                     onTouchBlock = function() end
                 })
+
+            for _, stray in ipairs(strays) do stray.CanCollide = true end
         end
 
         local positioners = Utils.getDescendantsByName(slope,

@@ -86,12 +86,17 @@ end
 local function createStray(char, parentFolder, blockSize)
     blockSize = blockSize or 6
 
-    local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
-    local letterBlockTemplate = Utils.getFirstDescendantByName(
-                                    letterBlockFolder, "LB_4_blank")
-    local newLetterBlock = letterBlockTemplate:Clone()
+    local letterBlockTemplate = Utils.getFromTemplates("HexLetterGemTemplate")
+    -- local letterBlockTemplate = Utils.getFirstDescendantByName(
+    --                                 letterBlockFolder, "LB_4_blank")
+    -- local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
+    -- local letterBlockTemplate = Utils.getFirstDescendantByName(
+    --                                 letterBlockFolder, "LB_4_blank")
 
-    newLetterBlock.Size = Vector3.new(blockSize, blockSize, blockSize)
+    local modelClone = letterBlockTemplate:Clone()
+    local newLetterBlock = modelClone.PrimaryPart
+
+    -- newLetterBlock.Size = Vector3.new(blockSize, blockSize, blockSize)
 
     local letterId = "ID--R"
 
@@ -112,7 +117,7 @@ local function createStray(char, parentFolder, blockSize)
         propType = "BoolValue"
     })
 
-    newLetterBlock.Parent = parentFolder
+    modelClone.Parent = parentFolder
     newLetterBlock.Anchored = false
 
     LetterUtils.initLetterBlock({
@@ -149,6 +154,7 @@ local function initStrays(props)
         end
     end
 
+    local strays = {}
     for _, char in ipairs(letterMatrix) do
         local parentFolder = props.parentFolder
         local newLetterBlock = createStray(char, parentFolder)
@@ -158,18 +164,20 @@ local function initStrays(props)
 
         -- local offsetX = Utils.genRandom(0, 20)
         -- local offsetZ = Utils.genRandom(0, 20)
-
+        table.insert(strays, newLetterBlock)
         newLetterBlock.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
                                     {
                 parent = region,
                 child = newLetterBlock,
                 offsetConfig = {
-                    useParentNearEdge = Vector3.new(0, 0, 0),
-                    useChildNearEdge = Vector3.new(0, 0, 0),
+                    useParentNearEdge = Vector3.new(0, -1, 0),
+                    useChildNearEdge = Vector3.new(0, -1, 0),
                     offsetAdder = Vector3.new(offsetX, 0, offsetZ)
                 }
             })
     end
+
+    return strays
 end
 
 module.initStrays = initStrays
