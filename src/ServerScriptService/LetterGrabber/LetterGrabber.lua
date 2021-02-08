@@ -1,13 +1,11 @@
 local Sss = game:GetService("ServerScriptService")
 local CS = game:GetService("CollectionService")
-local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
-local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
 
 local Replicator = require(Sss.Source.BlockDash.Replicator)
 
@@ -29,7 +27,9 @@ local function configWordLetters(props)
     local wordBench = Utils.getFirstDescendantByName(newWord, "WordBench")
     wordBench.Name = wordBench.Name .. "yyyy"
 
-    local spacingFactorX = 1.05
+    local spacingFactorX = 0.05
+    local letterGapX = letterBlockTemplate.Size.X * spacingFactorX
+    local spacingIncrementX = letterGapX + letterBlockTemplate.Size.X
 
     local lettersInWord = {}
     for letterIndex = 1, #word do
@@ -85,8 +85,11 @@ local function configWordLetters(props)
                 propType = "IntValue"
             })
 
-        local letterPositionX = newLetter.Size.X * (letterIndex - 1) *
-                                    spacingFactorX
+        local letterPositionX = (letterIndex - 1) * spacingIncrementX - 2 *
+                                    letterGapX
+
+        -- local letterPositionX = newLetter.Size.X * (letterIndex - 1) *
+        --                             spacingFactorX
 
         CS:AddTag(newLetter, "WordGrabberLetter")
         LetterUtils.applyLetterText({letterBlock = newLetter, char = char})
@@ -115,7 +118,8 @@ local function configWordLetters(props)
                      {char = char, found = false, instance = newLetter})
     end
 
-    local wordBenchSizeX = #word * letterBlockTemplate.Size.X * spacingFactorX
+    local wordBenchSizeX = (#word * letterBlockTemplate.Size.X) + (#word - 1) *
+                               letterGapX
 
     wordBench.Size = Vector3.new(wordBenchSizeX, wordBench.Size.Y,
                                  wordBench.Size.Z)
@@ -144,45 +148,6 @@ local function applyDecalsToCharacterFromWord(props)
             for _, decal in ipairs(decals) do decal.Image = decalUri end
         end
     end
-end
-
-local function initWord(props, wordIndex, config)
-    local parentFolder = props.parentFolder
-
-    local positioner = Utils.getFirstDescendantByName(parentFolder,
-                                                      "LetterGrabberPositioner")
-    local template = Utils.getFromTemplates("GrabberReplicatorTemplate")
-
-    local newReplicator = template:Clone()
-    local lettterGrabber = Utils.getFirstDescendantByName(newReplicator,
-                                                          "LetterGrabber")
-
-    newReplicator.Parent = parentFolder
-    local newReplicatorPart = newReplicator.PrimaryPart
-    local wordNameStub = "-W" .. wordIndex
-
-    configWordLetters({
-        part = lettterGrabber,
-        word = config,
-        wordNameStub = wordNameStub
-    })
-
-    local offsetX = wordIndex * 10
-    newReplicatorPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
-                                   {
-            parent = positioner,
-            child = newReplicatorPart,
-            offsetConfig = {
-                useParentNearEdge = Vector3.new(-1, -1, -1),
-                useChildNearEdge = Vector3.new(-1, -1, -1),
-                offsetAdder = Vector3.new(offsetX, 0, 0)
-            }
-        })
-
-    newReplicatorPart.Anchored = true
-    Replicator.init(newReplicator)
-    Utils5.setActiveLetterGrabberBlock(lettterGrabber)
-    Utils5.styleLetterGrabberBlocks(lettterGrabber)
 end
 
 local function initSingle(props)
@@ -227,14 +192,6 @@ local function initSingle(props)
 
     Replicator.init(newReplicator)
     return newReplicator
-end
-
-function module.initLetterGrabbers(props)
-    local words = props.words
-
-    for wordIndex, config in ipairs(words) do
-        initWord(props, wordIndex, config)
-    end
 end
 
 function module.initLetterGrabber(props)
