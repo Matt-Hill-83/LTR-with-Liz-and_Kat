@@ -17,6 +17,7 @@ function module.initSlopes(props)
                        {parent = skiSlopesFolder, tag = "SkiSlopeFolder"})
     for _, slope in ipairs(slopes) do
 
+        -- populate specific letter gems
         local strayPositioners = Utils.getByTagInParent(
                                      {parent = slope, tag = "StrayPositioner"})
         for _, positioner in ipairs(strayPositioners) do
