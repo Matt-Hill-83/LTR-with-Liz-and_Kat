@@ -24,7 +24,7 @@ function module.initSlopes(props)
             local char = positioner.Name
             local newLetterBlock = StrayLetterBlocks.createStray(char,
                                                                  parentFolder)
-            -- newLetterBlock.CFrame = positioner.CFrame
+
             newLetterBlock.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
                                         {
                     parent = positioner,
@@ -38,7 +38,6 @@ function module.initSlopes(props)
 
             newLetterBlock.Anchored = true
             newLetterBlock.CanCollide = false
-            -- newLetterBlock.Size = Vector3.new(8, 8, 8)
         end
 
         -- Populate random letter gems

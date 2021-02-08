@@ -44,6 +44,30 @@ local function wordFound(tool, player)
     delay(1, destroyParts)
 end
 
+local function blockTouchedByHuman(newLetterBlock2, player)
+
+    local tool = Utils.getActiveTool(player, "LetterGrabber")
+
+    if tool then
+        local activeBlock = Utils5.getActiveLetterGrabberBlock(tool)
+        if activeBlock then
+            local strayLetterChar = newLetterBlock2.Character.Value
+            local activeLetterChar = activeBlock.Character.Value
+
+            if strayLetterChar == activeLetterChar then
+                activeBlock.IsFound.Value = true
+                activeBlock.IsActive.Value = false
+            end
+
+            Utils5.styleLetterGrabberBlocks(tool)
+
+            local newActiveBlock = Utils5.getActiveLetterGrabberBlock(tool)
+            if not newActiveBlock then wordFound(tool, player) end
+        end
+    end
+
+end
+
 local function onTouchBlock(newLetterBlock2)
     local db = {value = false}
     local function closure(otherPart)
@@ -54,29 +78,7 @@ local function onTouchBlock(newLetterBlock2)
         if not db.value then
             db.value = true
             local player = Utils.getPlayerFromHumanoid(humanoid)
-
-            local tool = Utils.getActiveTool(player, "LetterGrabber")
-
-            if tool then
-                local activeBlock = Utils5.getActiveLetterGrabberBlock(tool)
-                if activeBlock then
-                    local strayLetterChar = newLetterBlock2.Character.Value
-                    local activeLetterChar = activeBlock.Character.Value
-
-                    if strayLetterChar == activeLetterChar then
-                        activeBlock.IsFound.Value = true
-                        activeBlock.IsActive.Value = false
-                    end
-
-                    Utils5.styleLetterGrabberBlocks(tool)
-
-                    local newActiveBlock =
-                        Utils5.getActiveLetterGrabberBlock(tool)
-                    if not newActiveBlock then
-                        wordFound(tool, player)
-                    end
-                end
-            end
+            blockTouchedByHuman(newLetterBlock2, player)
             db.value = false
         end
     end
