@@ -16,21 +16,6 @@ local module = {}
 local function configPlayers()
     Players.RespawnTime = 0
 
-    -- Create a RemoteEvent for when a player is added
-    local newPlayerEvent = Instance.new("RemoteEvent")
-    newPlayerEvent.Parent = RS
-    newPlayerEvent.Name = Const_Client.RemoteEvents.NewPlayerEvent
-
-    -- Create a RemoteEvent for when a player is added
-    local updateWordGuiRE = Instance.new("RemoteEvent")
-    updateWordGuiRE.Parent = RS
-    updateWordGuiRE.Name = Const_Client.RemoteEvents.UpdateWordGuiRE
-
-    -- Create a RemoteEvent for when a player is added
-    local updateGuiFromServerRE = Instance.new("RemoteEvent")
-    updateGuiFromServerRE.Parent = RS
-    updateGuiFromServerRE.Name = "updateGuiFromServer"
-
     local function onCharacterAdded(character)
         character:WaitForChild("Humanoid").WalkSpeed =
             Constants.gameConfig.walkSpeed
@@ -96,7 +81,7 @@ local function configGamePass()
     Players.PlayerAdded:Connect(onPlayerAdded)
 end
 
-function configBadges()
+local function configBadges()
     game:GetService('Players').PlayerAdded:Connect(
         function(player)
             player.CharacterAdded:Connect(

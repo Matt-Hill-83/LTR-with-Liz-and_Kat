@@ -1,6 +1,6 @@
 local module = {}
 local Sss = game:GetService("ServerScriptService")
-local RS = game:GetService("ReplicatedStorage")
+-- local RS = game:GetService("ReplicatedStorage")
 -- local Const_Client = require(RS.Source.Constants.Constants_Client)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
@@ -10,12 +10,16 @@ local initStatues = require(Sss.Source.WordWheelIsland.InitStatues)
 
 local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
+local ConfigRemoteEvents = require(Sss.Source.AddRemoteObjects
+                                       .ConfigRemoteEvents)
 local BlockDash = require(Sss.Source.BlockDash.BlockDash)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
-local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
+-- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
+    ConfigRemoteEvents.configRemoteEvents()
+
     local myStuff = workspace:FindFirstChild("MyStuff")
 
     local statueProps = {
@@ -51,7 +55,6 @@ local function addRemoteObjects()
 
     for levelIndex, level in ipairs(levels) do
         -- if levelIndex == 2 then break end
-
         local islandPositioners = Utils.getByTagInParent(
                                       {parent = level, tag = "IslandPositioner"})
 
@@ -95,24 +98,13 @@ local function addRemoteObjects()
             end
         end
     end
-    -- Do this last after everything has been created/deleted
-    ConfigGame.configGame()
-    PlayerStatManager.init()
-
     islandTemplate:Destroy()
 
-    local function onCreatePartFired(player, sgui, displayHeight)
-        local gameState = PlayerStatManager.getGameState(player)
-        local levelConfig = gameState.levelConfig
-        RenderWordGrid.renderGrid({
-            sgui = sgui,
-            levelConfig = levelConfig,
-            displayHeight = displayHeight
-        })
-    end
+    PlayerStatManager.init()
+    ConfigRemoteEvents.initRemoteEvents()
 
-    local updateGuiFromServerRE = RS:WaitForChild("updateGuiFromServer")
-    updateGuiFromServerRE.OnServerEvent:Connect(onCreatePartFired)
+    -- Do this last after everything has been created/deleted
+    ConfigGame.configGame()
 end
 
 module.addRemoteObjects = addRemoteObjects

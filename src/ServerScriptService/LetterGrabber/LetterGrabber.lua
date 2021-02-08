@@ -156,13 +156,12 @@ local function onTouch(tool)
         if not humanoid then return end
         if not otherPart:FindFirstChild("Type") then return end
         if otherPart.Type.Value ~= "StrayLetter" then return end
+        if db.value == true then return end
 
-        if not db.value then
-            db.value = true
-            local player = Utils.getPlayerFromHumanoid(humanoid)
-            Utils5.partTouched(otherPart, player)
-            db.value = false
-        end
+        db.value = true
+        local player = Utils.getPlayerFromHumanoid(humanoid)
+        Utils5.partTouched(otherPart, player)
+        db.value = false
     end
     return closure
 end
