@@ -158,11 +158,11 @@ local function partTouched(touchedBlock, player)
     end
 end
 
-module.wordFound = wordFound
 module.blockTouchedByHuman = blockTouchedByHuman
-module.setActiveLetterGrabberBlock = setActiveLetterGrabberBlock
 module.getActiveLetterGrabberBlock = getActiveLetterGrabberBlock
-module.styleLetterGrabberBlocks = styleLetterGrabberBlocks
 module.partTouched = partTouched
 module.resetBlocks = resetBlocks
+module.setActiveLetterGrabberBlock = setActiveLetterGrabberBlock
+module.styleLetterGrabberBlocks = styleLetterGrabberBlocks
+module.wordFound = wordFound
 return module
