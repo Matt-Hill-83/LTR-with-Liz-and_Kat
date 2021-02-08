@@ -149,12 +149,12 @@ local function partTouched(touchedBlock, player)
         if strayLetterChar == activeLetterChar then
             activeBlock.IsFound.Value = true
             activeBlock.IsActive.Value = false
+
+            module.styleLetterGrabberBlocks(tool)
+
+            local newActiveBlock = module.getActiveLetterGrabberBlock(tool)
+            if not newActiveBlock then wordFound(tool, player) end
         end
-
-        module.styleLetterGrabberBlocks(tool)
-
-        local newActiveBlock = module.getActiveLetterGrabberBlock(tool)
-        if not newActiveBlock then wordFound(tool, player) end
     end
 end
 
