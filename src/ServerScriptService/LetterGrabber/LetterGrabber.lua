@@ -150,21 +150,17 @@ end
 
 local function onTouch(tool)
     local db = {value = false}
+
     local function closure(otherPart)
+        local humanoid = tool.Parent:FindFirstChildWhichIsA("Humanoid")
+        if not humanoid then return end
         if not otherPart:FindFirstChild("Type") then return end
-        print('otherPart.Type' .. ' - start');
-        print(otherPart.Type);
         if otherPart.Type.Value ~= "StrayLetter" then return end
 
         if not db.value then
             db.value = true
-            local humanoid = tool.Parent:FindFirstChildWhichIsA("Humanoid")
-            if humanoid then
-                print('otherPart' .. ' - start');
-                print(otherPart);
-                local player = Utils.getPlayerFromHumanoid(humanoid)
-                Utils5.partTouched(otherPart, player)
-            end
+            local player = Utils.getPlayerFromHumanoid(humanoid)
+            Utils5.partTouched(otherPart, player)
             db.value = false
         end
     end
@@ -172,8 +168,6 @@ local function onTouch(tool)
 end
 
 local function afterReplication(replicatedPart)
-    print('replicatedPart' .. ' - start');
-    print(replicatedPart);
     local touchRegion = Utils.getFirstDescendantByName(replicatedPart,
                                                        "TouchRegion")
     touchRegion.Touched:Connect(onTouch(replicatedPart))
