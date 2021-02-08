@@ -169,7 +169,6 @@ local function initSingle(props)
     LetterUtils.createPropOnLetterBlock({
         letterBlock = wordModel,
         propName = "TargetWord",
-        -- propName = module.letterBlockPropNames.Character,
         initialValue = word,
         propType = "StringValue"
     })

@@ -33,9 +33,7 @@ local function onTouchBlock(touchedBlock, callBack)
         if not db.value then
             db.value = true
             local player = module.getPlayerFromHumanoid(humanoid)
-            -- Utils5.blockTouchedByHuman(touchedBlock, player)
             callBack(touchedBlock, player)
-
             db.value = false
         end
     end

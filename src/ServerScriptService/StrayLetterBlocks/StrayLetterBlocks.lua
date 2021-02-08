@@ -7,23 +7,6 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
 local module = {}
 
--- local function onTouchBlock(newLetterBlock2)
---     local db = {value = false}
---     local function closure(otherPart)
---         if not otherPart.Parent then return end
---         local humanoid = otherPart.Parent:FindFirstChildWhichIsA("Humanoid")
---         if not humanoid then return end
-
---         if not db.value then
---             db.value = true
---             local player = Utils.getPlayerFromHumanoid(humanoid)
---             Utils5.blockTouchedByHuman(newLetterBlock2, player)
---             db.value = false
---         end
---     end
---     return closure
--- end
-
 local function createStray(char, parentFolder)
     local letterBlockTemplate = Utils.getFromTemplates("HexLetterGemTemplate")
 
