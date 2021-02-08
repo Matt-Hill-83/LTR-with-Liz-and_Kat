@@ -12,7 +12,7 @@ local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local module = {}
 
-local function blockFound(tool, player)
+local function wordFound(tool, player)
     local updateWordGuiRE = RS:WaitForChild(
                                 Const_Client.RemoteEvents.UpdateWordGuiRE)
 
@@ -73,7 +73,7 @@ local function onTouchBlock(newLetterBlock2)
                     local newActiveBlock =
                         Utils5.getActiveLetterGrabberBlock(tool)
                     if not newActiveBlock then
-                        blockFound(tool, player)
+                        wordFound(tool, player)
                     end
                 end
             end
