@@ -88,9 +88,6 @@ local function configWordLetters(props)
         local letterPositionX = (letterIndex - 1) * spacingIncrementX - 2 *
                                     letterGapX
 
-        -- local letterPositionX = newLetter.Size.X * (letterIndex - 1) *
-        --                             spacingFactorX
-
         CS:AddTag(newLetter, "WordGrabberLetter")
         LetterUtils.applyLetterText({letterBlock = newLetter, char = char})
         newLetter.Character.Value = char

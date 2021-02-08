@@ -17,10 +17,6 @@ function module.initSlopes(props)
                        {parent = skiSlopesFolder, tag = "SkiSlopeFolder"})
     for _, slope in ipairs(slopes) do
 
-        local useStrayPositioners = false
-        -- local useStrayPositioners = true
-
-        -- if useStrayPositioners then
         local strayPositioners = Utils.getByTagInParent(
                                      {parent = slope, tag = "StrayPositioner"})
         for _, positioner in ipairs(strayPositioners) do
@@ -43,7 +39,8 @@ function module.initSlopes(props)
             newLetterBlock.CanCollide = false
             -- newLetterBlock.Size = Vector3.new(8, 8, 8)
         end
-        -- else
+
+        -- Populate random letter gems
         local strays = StrayLetterBlocks.initStrays(
                            {
                 parentFolder = slope,
@@ -54,7 +51,6 @@ function module.initSlopes(props)
             })
 
         for _, stray in ipairs(strays) do stray.CanCollide = true end
-        -- end
 
         local positioners = Utils.getDescendantsByName(slope,
                                                        "LetterGrabberPositioner")
