@@ -1,7 +1,12 @@
 -- local CS = game:GetService("CollectionService")
 local Sss = game:GetService("ServerScriptService")
+local RS = game:GetService("ReplicatedStorage")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
+local Const_Client = require(RS.Source.Constants.Constants_Client)
+local Const4 = require(Sss.Source.Constants.Const_04_Characters)
+
+local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
@@ -79,6 +84,61 @@ local function styleLetterGrabberBlocks(tool)
     end
 end
 
+local function wordFound(tool, player)
+    local updateWordGuiRE = RS:WaitForChild(
+                                Const_Client.RemoteEvents.UpdateWordGuiRE)
+
+    local function destroyParts()
+        -- local explosionSound = '515938718'
+        -- Utils.playSound(explosionSound, 0.5)
+        module.resetBlocks(tool)
+        module.setActiveLetterGrabberBlock(tool)
+        module.styleLetterGrabberBlocks(tool)
+
+        local wordModel = tool.Word
+        local targetWord = wordModel.TargetWord.Value
+
+        local gameState = PlayerStatManager.getGameState(player)
+        local levelConfig = gameState.levelConfig
+        local targetWordObj = Utils.getListItemByPropValue(
+                                  levelConfig.targetWords, "word", targetWord)
+
+        local fireSound = '5207654419'
+        local currentWord2 = Const4.wordConfigs[targetWord]
+        if currentWord2 then
+            local soundId = currentWord2.soundId or fireSound
+            Utils.playSound(soundId)
+        end
+
+        targetWordObj.found = targetWordObj.found + 1
+        updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
+    end
+    delay(1, destroyParts)
+end
+
+local function blockTouchedByHuman(newLetterBlock2, player)
+    local tool = Utils.getActiveTool(player, "LetterGrabber")
+    if not tool then return end
+
+    local activeBlock = module.getActiveLetterGrabberBlock(tool)
+    if activeBlock then
+        local strayLetterChar = newLetterBlock2.Character.Value
+        local activeLetterChar = activeBlock.Character.Value
+
+        if strayLetterChar == activeLetterChar then
+            activeBlock.IsFound.Value = true
+            activeBlock.IsActive.Value = false
+        end
+
+        module.styleLetterGrabberBlocks(tool)
+
+        local newActiveBlock = module.getActiveLetterGrabberBlock(tool)
+        if not newActiveBlock then wordFound(tool, player) end
+    end
+end
+
+module.wordFound = wordFound
+module.blockTouchedByHuman = blockTouchedByHuman
 module.setActiveLetterGrabberBlock = setActiveLetterGrabberBlock
 module.getActiveLetterGrabberBlock = getActiveLetterGrabberBlock
 module.styleLetterGrabberBlocks = styleLetterGrabberBlocks
