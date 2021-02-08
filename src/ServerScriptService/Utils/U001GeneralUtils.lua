@@ -23,6 +23,25 @@ local getInstancesByNameStub = function(props)
     return output
 end
 
+local function onTouchBlock(touchedBlock, callBack)
+    local db = {value = false}
+    local function closure(otherPart)
+        if not otherPart.Parent then return end
+        local humanoid = otherPart.Parent:FindFirstChildWhichIsA("Humanoid")
+        if not humanoid then return end
+
+        if not db.value then
+            db.value = true
+            local player = module.getPlayerFromHumanoid(humanoid)
+            -- Utils5.blockTouchedByHuman(touchedBlock, player)
+            callBack(touchedBlock, player)
+
+            db.value = false
+        end
+    end
+    return closure
+end
+
 function getUuid() return HttpService:GenerateGUID(false) end
 
 local function destroyTools(player, toolNameStub)
@@ -660,6 +679,7 @@ module.destroyTools = destroyTools
 module.sortListByObjectKey = sortListByObjectKey
 module.tablelength = tablelength
 module.tableToString = tableToString
+module.onTouchBlock = onTouchBlock
 module.getActiveTool = getActiveTool
 module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord
