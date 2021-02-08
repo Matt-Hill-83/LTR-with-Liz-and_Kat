@@ -7,9 +7,26 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local module = {}
 
 local function createStray(char, parentFolder)
-    local letterBlockTemplate = Utils.getFromTemplates("HexLetterGemTemplate")
 
-    local modelClone = letterBlockTemplate:Clone()
+    local isGem = false
+    -- local isGem = true
+    local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
+
+    local modelClone
+
+    if isGem then
+        local letterBlockTemplate = Utils.getFromTemplates(
+                                        "HexLetterGemTemplate")
+        modelClone = letterBlockTemplate:Clone()
+    else
+        local letterBlockTemplate = Utils.getFirstDescendantByName(
+                                        letterBlockFolder, "BD_8_blank")
+        local dummyModel = Instance.new("Model", letterBlockFolder)
+        letterBlockTemplate.Parent = dummyModel
+        dummyModel.PrimaryPart = letterBlockTemplate
+        modelClone = dummyModel:Clone()
+    end
+
     local newLetterBlock = modelClone.PrimaryPart
 
     local letterId = "ID--R"
