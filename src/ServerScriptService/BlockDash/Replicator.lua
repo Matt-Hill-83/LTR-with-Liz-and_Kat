@@ -41,12 +41,14 @@ local function init(replicator, callBack)
                 end
             end
 
-            -- Player have have touched the clone or the original, so unequip all.
+            -- Player may have touched the clone or the original, so unequip all.
             -- Then put the correct one in the backpack and equip it, so the other is not grabbed.
             player.Character.Humanoid:UnequipTools()
             toGive.Parent = player.Backpack
             player.Character.Humanoid:EquipTool(toGive)
-            if callBack then callBack() end
+            print('callBack' .. ' - start');
+            print(callBack);
+            if callBack then callBack(toGive) end
         end
 
     end

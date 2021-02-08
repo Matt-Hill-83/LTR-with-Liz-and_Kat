@@ -25,6 +25,20 @@ end
 
 local function onTouchBlock(touchedBlock, callBack)
     local db = {value = false}
+
+    local function closure(otherPart)
+        if not db.value then
+            db.value = true
+
+            callBack(touchedBlock, player)
+            db.value = false
+        end
+    end
+    return closure
+end
+
+local function onTouchHuman(touchedBlock, callBack)
+    local db = {value = false}
     local function closure(otherPart)
         if not otherPart.Parent then return end
         local humanoid = otherPart.Parent:FindFirstChildWhichIsA("Humanoid")
@@ -679,6 +693,7 @@ module.tablelength = tablelength
 module.tableToString = tableToString
 module.onTouchBlock = onTouchBlock
 module.getActiveTool = getActiveTool
+module.onTouchHuman = onTouchHuman
 module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord
 module.applyDecalsToCharacterFromConfigName =

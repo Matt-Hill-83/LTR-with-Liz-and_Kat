@@ -4,6 +4,7 @@ local CS = game:GetService("CollectionService")
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
+local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
 
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
 
@@ -147,6 +148,37 @@ local function applyDecalsToCharacterFromWord(props)
     end
 end
 
+local function onTouch(tool)
+    local db = {value = false}
+    local function closure(otherPart)
+        if not otherPart:FindFirstChild("Type") then return end
+        print('otherPart.Type' .. ' - start');
+        print(otherPart.Type);
+        if otherPart.Type.Value ~= "StrayLetter" then return end
+
+        if not db.value then
+            db.value = true
+            local humanoid = tool.Parent:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                print('otherPart' .. ' - start');
+                print(otherPart);
+                local player = Utils.getPlayerFromHumanoid(humanoid)
+                Utils5.partTouched(otherPart, player)
+            end
+            db.value = false
+        end
+    end
+    return closure
+end
+
+local function afterReplication(replicatedPart)
+    print('replicatedPart' .. ' - start');
+    print(replicatedPart);
+    local touchRegion = Utils.getFirstDescendantByName(replicatedPart,
+                                                       "TouchRegion")
+    touchRegion.Touched:Connect(onTouch(replicatedPart))
+end
+
 local function initSingle(props)
     local parentFolder = props.parentFolder
     local positioner = props.positioner
@@ -186,7 +218,7 @@ local function initSingle(props)
 
     newReplicatorPart.Anchored = true
 
-    Replicator.init(newReplicator)
+    Replicator.init(newReplicator, afterReplication)
     return newReplicator
 end
 

@@ -2,7 +2,7 @@ local Sss = game:GetService("ServerScriptService")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
-local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
+-- local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
 local module = {}
@@ -42,8 +42,8 @@ local function createStray(char, parentFolder)
         isTextLetter = true,
         letterBlockType = "StrayLetter"
     })
-    local callback = Utils5.blockTouchedByHuman
-    newLetterBlock.Touched:Connect(Utils.onTouchBlock(newLetterBlock, callback))
+    -- local callback = Utils5.blockTouchedByHuman
+    -- newLetterBlock.Touched:Connect(Utils.onTouchBlock(newLetterBlock, callback))
     return newLetterBlock
 end
 

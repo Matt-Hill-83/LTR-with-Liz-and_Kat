@@ -137,10 +137,32 @@ local function blockTouchedByHuman(newLetterBlock2, player)
     end
 end
 
+local function partTouched(touchedBlock, player)
+    local tool = Utils.getActiveTool(player, "LetterGrabber")
+    if not tool then return end
+
+    local activeBlock = module.getActiveLetterGrabberBlock(tool)
+    if activeBlock then
+        local strayLetterChar = touchedBlock.Character.Value
+        local activeLetterChar = activeBlock.Character.Value
+
+        if strayLetterChar == activeLetterChar then
+            activeBlock.IsFound.Value = true
+            activeBlock.IsActive.Value = false
+        end
+
+        module.styleLetterGrabberBlocks(tool)
+
+        local newActiveBlock = module.getActiveLetterGrabberBlock(tool)
+        if not newActiveBlock then wordFound(tool, player) end
+    end
+end
+
 module.wordFound = wordFound
 module.blockTouchedByHuman = blockTouchedByHuman
 module.setActiveLetterGrabberBlock = setActiveLetterGrabberBlock
 module.getActiveLetterGrabberBlock = getActiveLetterGrabberBlock
 module.styleLetterGrabberBlocks = styleLetterGrabberBlocks
+module.partTouched = partTouched
 module.resetBlocks = resetBlocks
 return module
