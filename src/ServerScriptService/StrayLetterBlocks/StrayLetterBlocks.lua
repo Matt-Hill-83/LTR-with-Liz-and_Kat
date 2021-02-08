@@ -5,6 +5,7 @@ local Const_Client = require(RS.Source.Constants.Constants_Client)
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Utils5 = require(Sss.Source.Utils.U005LetterGrabberUtils)
+local Const4 = require(Sss.Source.Constants.Const_04_Characters)
 
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
@@ -16,8 +17,8 @@ local function blockFound(tool, player)
                                 Const_Client.RemoteEvents.UpdateWordGuiRE)
 
     local function destroyParts()
-        local explosionSound = '515938718'
-        Utils.playSound(explosionSound, 0.5)
+        -- local explosionSound = '515938718'
+        -- Utils.playSound(explosionSound, 0.5)
         Utils5.resetBlocks(tool)
         Utils5.setActiveLetterGrabberBlock(tool)
         Utils5.styleLetterGrabberBlocks(tool)
@@ -30,8 +31,14 @@ local function blockFound(tool, player)
         local targetWordObj = Utils.getListItemByPropValue(
                                   levelConfig.targetWords, "word", targetWord)
 
-        targetWordObj.found = targetWordObj.found + 1
+        local fireSound = '5207654419'
+        local currentWord2 = Const4.wordConfigs[targetWord]
+        if currentWord2 then
+            local soundId = currentWord2.soundId or fireSound
+            Utils.playSound(soundId)
+        end
 
+        targetWordObj.found = targetWordObj.found + 1
         updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
     end
     delay(1, destroyParts)

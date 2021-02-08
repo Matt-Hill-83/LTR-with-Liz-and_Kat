@@ -157,8 +157,8 @@ local function setVisibility()
         for _, wall in ipairs(tagBaseWallTransparent) do
             Utils.setItemHeight({item = wall, height = realWallHeight})
             local newWallHeight = invisiWallHeight
-            wall.Transparency = 1
-            -- wall.Transparency = 0.8
+            -- wall.Transparency = 1
+            wall.Transparency = 0.8
             wall.CanCollide = true
             wall.Anchored = true
 
@@ -172,7 +172,7 @@ local function setVisibility()
                                                -(wall.Size.Y - newWall.Size.Y) /
                                                    2, 0)
             -- newWall.Transparency = 0
-            CS:RemoveTag(newWall, "ConveyorWallTransparent")
+            -- CS:RemoveTag(newWall, "ConveyorWallTransparent")
         end
     end
 
@@ -200,7 +200,7 @@ local function setVisibility()
                                                -(wall.Size.Y - newWall.Size.Y) /
                                                    2, 0)
             -- newWall.Transparency = 0
-            CS:RemoveTag(newWall, "ConveyorWallTransparent")
+            -- CS:RemoveTag(newWall, "ConveyorWallTransparent")
         end
     end
 
