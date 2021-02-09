@@ -52,12 +52,15 @@ function module.initSlopes(props)
 
         for _, stray in ipairs(strays) do stray.CanCollide = true end
 
-        local positioners = Utils.getDescendantsByName(slope,
-                                                       "LetterGrabberPositioner")
+        local positioners = Utils.getByTagInParent(
+                                {
+                parent = slope,
+                tag = "LetterGrabberPositioner"
+            })
 
         for _, positioner in ipairs(positioners) do
             local grabbersConfig = {
-                word = "CAT",
+                word = positioner.Name,
                 parentFolder = slope,
                 positioner = positioner
             }
