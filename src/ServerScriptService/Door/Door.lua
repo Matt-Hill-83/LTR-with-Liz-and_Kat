@@ -6,45 +6,23 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
 local module = {}
 
-local function openDoor(door, key, player)
-    print('openDoor' .. ' - start');
-    print('openDoor' .. ' - start');
-    print('openDoor' .. ' - start');
-    print('openDoor' .. ' - start');
-    print('openDoor' .. ' - start');
-    print(openDoor);
-    key:Destroy()
+local function openDoor(door, key)
+    -- key:Destroy()
 
     local doorPart = door.PrimaryPart
     local hiddenParts = Utils.hideItemAndChildren2({item = door, hide = true})
-
-    -- doorPart.Transparency = 0.8
     doorPart.CanCollide = false
     wait(5)
     Utils.unhideHideItems({items = hiddenParts})
-    -- doorPart.Transparency = 0
     doorPart.CanCollide = true
 end
 
 local function onTouch(door)
-
-    print('door' .. ' - start');
-    print(door);
-    print(door.KeyName);
     local db = {value = false}
 
     local function closure(key)
-        print('key' .. ' - start');
-        print(key);
-        print('key.Parent' .. ' - start');
-        print(key.Parent);
         local humanoid = key.Parent.Parent:FindFirstChildWhichIsA("Humanoid")
         if not humanoid then return end
-        print('humanoid' .. ' - start');
-        print('humanoid' .. ' - start');
-        print('humanoid' .. ' - start');
-        print('humanoid' .. ' - start');
-        print(humanoid);
         if not key:FindFirstChild("KeyName") then return end
         if key.KeyName.Value ~= door.KeyName.Value then return end
         -- if key.Name ~= "Tool" then return end
@@ -65,11 +43,7 @@ function module.initDoors(props)
     local doorPositioners = Utils.getByTagInParent(
                                 {parent = parentFolder, tag = "DoorPositioner"})
 
-    print('doorPositioners' .. ' - start');
-    print(doorPositioners);
     local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
-    print('doorTemplate' .. ' - start');
-    print(doorTemplate);
 
     local doors = {}
     for _, model in ipairs(doorPositioners) do
@@ -83,6 +57,7 @@ function module.initDoors(props)
         newDoor.Parent = parentFolder.Parent
         local doorPart = newDoor.PrimaryPart
         doorPart.Name = "ggg"
+        LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})
 
         LetterUtils.createPropOnLetterBlock(
             {
@@ -117,11 +92,7 @@ function module.initKeys(props)
     local keyPositioners = Utils.getByTagInParent(
                                {parent = parentFolder, tag = "KeyPositioner"})
 
-    print('keyPositioners' .. ' - start');
-    print(keyPositioners);
     local keyTemplate = Utils.getFromTemplates("HexLetterGemTool")
-    print('keyTemplate' .. ' - start');
-    print(keyTemplate);
 
     local doors = {}
     for _, model in ipairs(keyPositioners) do
@@ -134,7 +105,7 @@ function module.initKeys(props)
         local newKey = keyTemplate:Clone()
         newKey.Parent = parentFolder.Parent
         local keyPart = newKey.PrimaryPart
-        -- keyPart.Name = "jjj"
+        LetterUtils.applyLetterText({letterBlock = newKey, char = keyName})
 
         LetterUtils.createPropOnLetterBlock(
             {
@@ -154,9 +125,6 @@ function module.initKeys(props)
                     offsetAdder = Vector3.new(0, 0, 0)
                 }
             })
-
-        -- doorPart.Touched:Connect(onTouch(newKey))
-        -- doorPart.Anchored = true
 
         table.insert(doors, newKey)
     end
