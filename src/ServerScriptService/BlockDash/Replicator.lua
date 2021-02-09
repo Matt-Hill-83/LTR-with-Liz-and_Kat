@@ -29,6 +29,8 @@ local function init(replicator, callBack)
         local player = game.Players:GetPlayerFromCharacter(obj.Parent)
         if not player then return end
 
+        print('reward.Name' .. ' - start');
+        print(reward.Name);
         -- If it's not in the backpack and if you are not holding it, clone it
         if not player.Backpack:FindFirstChild(reward.Name) and player.Character and
             not player.Character:FindFirstChild(reward.Name) then
