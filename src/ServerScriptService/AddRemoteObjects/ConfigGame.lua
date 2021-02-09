@@ -224,7 +224,7 @@ function module.configGame()
     configGamePass()
     configBadges()
 
-    InvisiWall.setInvisiWallsFront({
+    InvisiWall.setAllInvisiWalls({
         parentFolder = workspace,
         thickness = 3,
         -- thickness = 1,

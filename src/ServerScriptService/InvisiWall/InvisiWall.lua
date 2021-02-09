@@ -48,7 +48,7 @@ local configs = {
     }
 }
 
-function module.setInvisiWallsFront(props)
+function module.setAllInvisiWalls(props)
     module.setInvisiWalls(props, "FRONT")
     module.setInvisiWalls(props, "BACK")
     module.setInvisiWalls(props, "LEFT")
@@ -73,6 +73,7 @@ function module.setInvisiWalls(props, sideName)
         local newWall = Instance.new("Part")
 
         newWall.Parent = part.Parent
+        newWall.Color = part.Color
         newWall.Size = getSize(part, height, thickness)
         newWall.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
                              {
