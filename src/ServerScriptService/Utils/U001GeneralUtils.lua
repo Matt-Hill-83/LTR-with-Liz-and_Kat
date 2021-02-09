@@ -35,12 +35,12 @@ local function hideItemAndChildren2(props)
         end
         if part:IsA("Decal") and part.Transparency ~= 1 then
             part.Transparency = 1
-            part.CanCollide = false
+            -- part.CanCollide = false
             table.insert(hiddenParts, part)
         end
         if part:IsA("TextLabel") and part.Transparency ~= 1 then
             part.Transparency = 1
-            part.CanCollide = false
+            -- part.CanCollide = false
             table.insert(hiddenParts, part)
         end
     end
@@ -54,7 +54,7 @@ end
 local function unhideHideItems(props)
     local items = props.items
     for _, part in ipairs(items) do
-        part.CanCollide = true
+        if part:FindFirstChild("CanCollide") then part.CanCollide = true end
         part.Transparency = 0
         -- 
     end

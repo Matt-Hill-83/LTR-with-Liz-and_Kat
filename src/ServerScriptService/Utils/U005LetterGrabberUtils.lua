@@ -130,11 +130,12 @@ local function wordFound(tool, player)
     })
     print('newKey' .. ' - start');
     print(newKey);
-    newKey.Name = "ttt"
+    -- newKey.Name = "ttt"
+    local keyOffset = 30
 
     newKey:SetPrimaryPartCFrame(CFrame.new(
                                     player.Character.PrimaryPart.CFrame.Position +
-                                        (20 *
+                                        (keyOffset *
                                             player.Character.PrimaryPart.CFrame
                                                 .LookVector),
                                     player.Character.PrimaryPart.Position))
