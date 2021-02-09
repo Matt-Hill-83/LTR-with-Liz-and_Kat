@@ -25,8 +25,6 @@ local function onTouch(door)
         if not humanoid then return end
         if not key:FindFirstChild("KeyName") then return end
         if key.KeyName.Value ~= door.KeyName.Value then return end
-        -- if key.Name ~= "Tool" then return end
-        -- if key.Name ~= door.KeyName.Value then return end
         if db.value == true then return end
 
         db.value = true
