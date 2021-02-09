@@ -5,7 +5,7 @@ local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 
 local module = {}
 
-local edgeOffsetConfigs = {
+local configs = {
     FRONT = {
         offsetConfig = {
             useParentNearEdge = Vector3.new(0, 1, -1),
@@ -38,15 +38,17 @@ function module.setInvisiWallsFront(props)
     local parts = Utils.getByTagInParent(
                       {parent = parentFolder, tag = "InvisiWallFront"})
 
-    local edgeOffsetConfigs = edgeOffsetConfigs.FRONT.offsetConfig
+    local config = configs.FRONT
+    local offsetConfig = config.offsetConfig
 
     for _, part in ipairs(parts) do
-        local size = Vector3.new(part.Size.X, height, thickness)
-        module.setInvisiWall(part, wallProps, size, edgeOffsetConfigs)
+        local size = config.getSize(part, height, thickness)
+        -- local size = Vector3.new(part.Size.X, height, thickness)
+        module.setInvisiWall(part, wallProps, size, offsetConfig)
     end
 end
 
-function module.setInvisiWall(part, wallProps, size, edgeOffsetConfigs)
+function module.setInvisiWall(part, wallProps, size, offsetConfig)
     local newWall = Instance.new("Part")
     Utils.mergeTables(newWall, wallProps)
 
@@ -56,7 +58,7 @@ function module.setInvisiWall(part, wallProps, size, edgeOffsetConfigs)
                          {
             parent = part,
             child = newWall,
-            offsetConfig = edgeOffsetConfigs
+            offsetConfig = offsetConfig
         })
     -- part.Transparency = 1
     newWall.Transparency = 0.8
