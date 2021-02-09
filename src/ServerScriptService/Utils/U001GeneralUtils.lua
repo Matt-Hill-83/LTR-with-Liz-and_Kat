@@ -23,6 +23,36 @@ local getInstancesByNameStub = function(props)
     return output
 end
 
+local function hideItemAndChildren2(props)
+    local parent = props.item
+
+    local hiddenParts = {}
+
+    local function hideItem2(part)
+        if part:IsA("BasePart") and part.Transparency ~= 1 then
+            part.Transparency = 1
+            table.insert(hiddenParts, part)
+        end
+        if part:IsA("Decal") and part.Transparency ~= 1 then
+            part.Transparency = 1
+            table.insert(hiddenParts, part)
+        end
+    end
+
+    hideItem2(parent)
+    local children = parent:GetDescendants()
+    for i, item in ipairs(children) do hideItem2(item) end
+    return hiddenParts
+end
+
+local function unhideHideItems(props)
+    local items = props.items
+    for _, part in ipairs(items) do
+        if part:IsA("BasePart") then part.Transparency = 0 end
+        if part:IsA("Decal") then part.Transparency = 0 end
+    end
+end
+
 local function onTouchBlock(touchedBlock, callBack)
     local db = {value = false}
 
@@ -693,6 +723,10 @@ module.tablelength = tablelength
 module.tableToString = tableToString
 module.onTouchBlock = onTouchBlock
 module.getActiveTool = getActiveTool
+
+module.hideItemAndChildren2 = hideItemAndChildren2
+module.unhideHideItems = unhideHideItems
+
 module.onTouchHuman = onTouchHuman
 module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord

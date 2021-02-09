@@ -16,11 +16,14 @@ local function openDoor(door, key, player)
     key:Destroy()
 
     local doorPart = door.PrimaryPart
-    doorPart.Transparency = 0.8
+    local hiddenParts = Utils.hideItemAndChildren2({item = door, hide = true})
+
+    -- doorPart.Transparency = 0.8
     doorPart.CanCollide = false
-    wait(3)
+    wait(5)
+    Utils.unhideHideItems({items = hiddenParts})
     -- doorPart.Transparency = 0
-    -- doorPart.CanCollide = true
+    doorPart.CanCollide = true
 end
 
 local function onTouch(door)
