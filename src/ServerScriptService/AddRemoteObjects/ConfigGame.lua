@@ -229,7 +229,7 @@ function module.configGame()
         thickness = 3,
         -- thickness = 1,
         height = 16,
-        wallProps = {Transparency = 0.2}
+        wallProps = {Transparency = 1}
     })
 
     local allSpawnLocations = Utils.getDescendantsByType(workspace,
