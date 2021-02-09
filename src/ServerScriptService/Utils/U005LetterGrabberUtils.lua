@@ -131,26 +131,6 @@ local function wordFound(tool, player)
     print('newKey' .. ' - start');
     print(newKey);
     newKey.Name = "ttt"
-    -- keyPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
-    --                      {
-    --         parent = parent,
-    --         child = keyPart,
-    --         offsetConfig = {
-    --             useParentNearEdge = Vector3.new(1, -1, 0),
-    --             useChildNearEdge = Vector3.new(-1, 1, 0),
-    --             offsetAdder = Vector3.new(-10, 15, 0)
-    --         }
-    --     })
-
-    -- local offset = Vector3.new() -- in your case, Vector3.new(0,0,5), or something like that
-    -- keyPart.CFrame = root.CFrame*CFrame.new(offset) 
-
-    local Head = player.Character.Head
-
-    -- keyPart.Position = Head.Position + Head.CFrame.lookVector * 10
-
-    local test = player.Character.HumanoidRootPart.Position +
-                     Vector3.new(1, 0, 0)
 
     newKey:SetPrimaryPartCFrame(CFrame.new(
                                     player.Character.PrimaryPart.CFrame.Position +
@@ -160,7 +140,7 @@ local function wordFound(tool, player)
                                     player.Character.PrimaryPart.Position))
 
     newKey.Parent = workspace
-    keyPart.Anchored = true
+    keyPart.Anchored = false
 end
 
 local function partTouched(touchedBlock, player)
