@@ -30,21 +30,27 @@ local function hideItemAndChildren2(props)
     local function hideItem2(part)
         if part:IsA("BasePart") and part.Transparency ~= 1 then
             part.Transparency = 1
+            part.CanCollide = false
             table.insert(hiddenParts, part)
         end
         if part:IsA("Decal") and part.Transparency ~= 1 then
             part.Transparency = 1
+            part.CanCollide = false
             table.insert(hiddenParts, part)
         end
         if part:IsA("TextLabel") and part.Transparency ~= 1 then
             part.Transparency = 1
+            part.CanCollide = false
             table.insert(hiddenParts, part)
         end
     end
 
     hideItem2(parent)
     local children = parent:GetDescendants()
-    for i, item in ipairs(children) do hideItem2(item) end
+    for i, item in ipairs(children) do
+        hideItem2(item)
+        item.CanCollide = true
+    end
     return hiddenParts
 end
 
