@@ -25,7 +25,6 @@ end
 
 local function hideItemAndChildren2(props)
     local parent = props.item
-
     local hiddenParts = {}
 
     local function hideItem2(part)
@@ -34,6 +33,10 @@ local function hideItemAndChildren2(props)
             table.insert(hiddenParts, part)
         end
         if part:IsA("Decal") and part.Transparency ~= 1 then
+            part.Transparency = 1
+            table.insert(hiddenParts, part)
+        end
+        if part:IsA("TextLabel") and part.Transparency ~= 1 then
             part.Transparency = 1
             table.insert(hiddenParts, part)
         end
@@ -48,8 +51,8 @@ end
 local function unhideHideItems(props)
     local items = props.items
     for _, part in ipairs(items) do
-        if part:IsA("BasePart") then part.Transparency = 0 end
-        if part:IsA("Decal") then part.Transparency = 0 end
+        part.Transparency = 0
+        -- 
     end
 end
 
