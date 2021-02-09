@@ -47,16 +47,14 @@ local function hideItemAndChildren2(props)
 
     hideItem2(parent)
     local children = parent:GetDescendants()
-    for i, item in ipairs(children) do
-        hideItem2(item)
-        item.CanCollide = true
-    end
+    for i, item in ipairs(children) do hideItem2(item) end
     return hiddenParts
 end
 
 local function unhideHideItems(props)
     local items = props.items
     for _, part in ipairs(items) do
+        part.CanCollide = true
         part.Transparency = 0
         -- 
     end

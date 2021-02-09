@@ -3,6 +3,7 @@ local Sss = game:GetService("ServerScriptService")
 local RS = game:GetService("ReplicatedStorage")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
+local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Const_Client = require(RS.Source.Constants.Constants_Client)
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
 
@@ -77,10 +78,6 @@ local function styleLetterGrabberBlocks(tool)
                 {targetLetterBlock = block, templateName = "Grabber_found"})
         end
 
-        -- if block.IsActive.Value == true then
-        --     LetterUtils.applyStyleFromTemplate(
-        --         {targetLetterBlock = block, templateName = "Grabber_active"})
-        -- end
     end
 end
 
@@ -88,15 +85,15 @@ local function wordFound(tool, player)
     local updateWordGuiRE = RS:WaitForChild(
                                 Const_Client.RemoteEvents.UpdateWordGuiRE)
 
+    local wordModel = tool.Word
+    local targetWord = wordModel.TargetWord.Value
+
     local function destroyParts()
         -- local explosionSound = '515938718'
         -- Utils.playSound(explosionSound, 0.5)
         module.resetBlocks(tool)
         module.setActiveLetterGrabberBlock(tool)
         module.styleLetterGrabberBlocks(tool)
-
-        local wordModel = tool.Word
-        local targetWord = wordModel.TargetWord.Value
 
         local gameState = PlayerStatManager.getGameState(player)
         local levelConfig = gameState.levelConfig
@@ -114,6 +111,56 @@ local function wordFound(tool, player)
         updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
     end
     delay(1, destroyParts)
+
+    local keyTemplate = Utils.getFromTemplates("HexLetterGemTool")
+    local parent = player.Character.PrimaryPart
+
+    local newKey = keyTemplate:Clone()
+    -- This is temporary
+    newKey.Parent = parent
+
+    local keyPart = newKey.PrimaryPart
+    LetterUtils.applyLetterText({letterBlock = newKey, char = targetWord})
+
+    LetterUtils.createPropOnLetterBlock({
+        letterBlock = keyPart,
+        propName = "KeyName",
+        initialValue = targetWord,
+        propType = "StringValue"
+    })
+    print('newKey' .. ' - start');
+    print(newKey);
+    newKey.Name = "ttt"
+    -- keyPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+    --                      {
+    --         parent = parent,
+    --         child = keyPart,
+    --         offsetConfig = {
+    --             useParentNearEdge = Vector3.new(1, -1, 0),
+    --             useChildNearEdge = Vector3.new(-1, 1, 0),
+    --             offsetAdder = Vector3.new(-10, 15, 0)
+    --         }
+    --     })
+
+    -- local offset = Vector3.new() -- in your case, Vector3.new(0,0,5), or something like that
+    -- keyPart.CFrame = root.CFrame*CFrame.new(offset) 
+
+    local Head = player.Character.Head
+
+    -- keyPart.Position = Head.Position + Head.CFrame.lookVector * 10
+
+    local test = player.Character.HumanoidRootPart.Position +
+                     Vector3.new(1, 0, 0)
+
+    newKey:SetPrimaryPartCFrame(CFrame.new(
+                                    player.Character.PrimaryPart.CFrame.Position +
+                                        (20 *
+                                            player.Character.PrimaryPart.CFrame
+                                                .LookVector),
+                                    player.Character.PrimaryPart.Position))
+
+    newKey.Parent = workspace
+    keyPart.Anchored = true
 end
 
 local function partTouched(touchedBlock, player)

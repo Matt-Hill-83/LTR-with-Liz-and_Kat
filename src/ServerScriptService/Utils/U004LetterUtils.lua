@@ -538,6 +538,7 @@ module.getAvailWords = getAvailWords
 module.getRandomLetter = getRandomLetter
 module.getCharFromLetterBlock2 = getCharFromLetterBlock2
 module.getLettersNotInWords = getLettersNotInWords
+module.dropGem = dropGem
 module.styleImageLabelsInBlock = styleImageLabelsInBlock
 module.getAllLettersInWords = getAllLettersInWords
 module.playWordSound = playWordSound
