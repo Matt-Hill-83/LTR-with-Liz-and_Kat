@@ -10,6 +10,7 @@ local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Constants = require(Sss.Source.Constants.Constants)
 local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
 local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
+local InvisiWall = require(Sss.Source.InvisiWall.InvisiWall)
 
 local module = {}
 
@@ -222,6 +223,13 @@ function module.configGame()
     configPlayers()
     configGamePass()
     configBadges()
+
+    InvisiWall.setInvisiWallsFront({
+        parentFolder = workspace,
+        thickness = 1,
+        height = 16,
+        wallProps = {Transparency = 0.4}
+    })
 
     local allSpawnLocations = Utils.getDescendantsByType(workspace,
                                                          "SpawnLocation")
