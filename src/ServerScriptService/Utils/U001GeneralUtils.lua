@@ -35,12 +35,10 @@ local function hideItemAndChildren2(props)
         end
         if part:IsA("Decal") and part.Transparency ~= 1 then
             part.Transparency = 1
-            -- part.CanCollide = false
             table.insert(hiddenParts, part)
         end
         if part:IsA("TextLabel") and part.Transparency ~= 1 then
             part.Transparency = 1
-            -- part.CanCollide = false
             table.insert(hiddenParts, part)
         end
     end
