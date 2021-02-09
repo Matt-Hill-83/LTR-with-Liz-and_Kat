@@ -8,13 +8,15 @@ local module = {}
 
 local function initStatues(props)
     local statusDefs = props.statusDefs
-    local myStuff = workspace:FindFirstChild("MyStuff")
+    -- local myStuff = workspace:FindFirstChild("MyStuff")
 
-    local wordWheelIsland = Utils.getFirstDescendantByName(myStuff,
-                                                           "WordWheelIsland")
+    -- local wordWheelIsland = Utils.getFirstDescendantByName(myStuff,
+    --                                                        "WordWheelIsland")
     local statuePositioners = CS:GetTagged("StatuePositioner")
-    local statueTemplate = Utils.getFirstDescendantByName(wordWheelIsland,
-                                                          "StatueTemplate")
+    -- local statueTemplate = Utils.getFirstDescendantByName(wordWheelIsland,
+    --                                                       "StatueTemplate")
+
+    local statueTemplate = Utils.getFromTemplates("StatueTemplate")
 
     for statueIndex, statuePositioner in ipairs(statuePositioners) do
         local statusDef = statusDefs[(statueIndex % #statusDefs) + 1]
