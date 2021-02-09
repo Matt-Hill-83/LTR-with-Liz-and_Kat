@@ -106,13 +106,13 @@ local function addBlockDash(sectorConfig)
     -- Do some acrobatics here because InitLetterRack needs to attach
     -- itself as an event to the blocks it creates.
 
-    -- Entrance.initEntrance(sectorFolder)
-    -- Conveyor.initConveyors(miniGameState)
-    -- InitLetterRack.initLetterRack(miniGameState)
-    -- InitWord.initWords(miniGameState)
+    Entrance.initEntrance(sectorFolder)
+    Conveyor.initConveyors(miniGameState)
+    InitLetterRack.initLetterRack(miniGameState)
+    InitWord.initWords(miniGameState)
 
-    -- LetterUtils.styleLetterBlocksBD({miniGameState = miniGameState})
-    -- initPowerUps(miniGameState)
+    LetterUtils.styleLetterBlocksBD({miniGameState = miniGameState})
+    initPowerUps(miniGameState)
     -- DoorKey.init(miniGameState)
 end
 

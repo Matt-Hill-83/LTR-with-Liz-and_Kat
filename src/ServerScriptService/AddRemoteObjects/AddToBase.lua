@@ -66,11 +66,12 @@ local function addRemoteObjects()
 
         Entrance.initEntrance(level)
         local doors = Door.initDoors({parentFolder = level})
-        print('doors' .. ' - start');
-        print(doors);
+        local keys = Door.initKeys({parentFolder = level})
+        print('keys' .. ' - start');
+        print(keys);
 
-        if false then
-            -- if true then
+        -- if false then
+        if true then
             for islandIndex, islandPositioner in ipairs(myPositioners) do
                 -- if islandIndex == 3 then break end
                 local newIsland = islandTemplate:Clone()
@@ -103,7 +104,7 @@ local function addRemoteObjects()
     end
     islandTemplate:Destroy()
 
-    -- PlayerStatManager.init()
+    PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()
 
     -- Do this last after everything has been created/deleted

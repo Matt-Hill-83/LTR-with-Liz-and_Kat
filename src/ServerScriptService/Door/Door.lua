@@ -7,15 +7,27 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local module = {}
 
 local function openDoor(door, key, player)
+    print('openDoor' .. ' - start');
+    print('openDoor' .. ' - start');
+    print('openDoor' .. ' - start');
+    print('openDoor' .. ' - start');
+    print('openDoor' .. ' - start');
+    print(openDoor);
     key:Destroy()
-    door.Transparency = 0.8
-    door.CanCollide = false
+
+    local doorPart = door.PrimaryPart
+    doorPart.Transparency = 0.8
+    doorPart.CanCollide = false
     wait(3)
-    door.Transparency = 0
-    door.CanCollide = true
+    -- doorPart.Transparency = 0
+    -- doorPart.CanCollide = true
 end
 
 local function onTouch(door)
+
+    print('door' .. ' - start');
+    print(door);
+    print(door.KeyName);
     local db = {value = false}
 
     local function closure(key)
@@ -23,10 +35,17 @@ local function onTouch(door)
         print(key);
         print('key.Parent' .. ' - start');
         print(key.Parent);
-        local humanoid = key.Parent:FindFirstChildWhichIsA("Humanoid")
+        local humanoid = key.Parent.Parent:FindFirstChildWhichIsA("Humanoid")
         if not humanoid then return end
+        print('humanoid' .. ' - start');
+        print('humanoid' .. ' - start');
+        print('humanoid' .. ' - start');
+        print('humanoid' .. ' - start');
+        print(humanoid);
         if not key:FindFirstChild("KeyName") then return end
         if key.KeyName.Value ~= door.KeyName.Value then return end
+        -- if key.Name ~= "Tool" then return end
+        -- if key.Name ~= door.KeyName.Value then return end
         if db.value == true then return end
 
         db.value = true
@@ -46,6 +65,8 @@ function module.initDoors(props)
     print('doorPositioners' .. ' - start');
     print(doorPositioners);
     local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
+    print('doorTemplate' .. ' - start');
+    print(doorTemplate);
 
     local doors = {}
     for _, model in ipairs(doorPositioners) do
@@ -58,7 +79,7 @@ function module.initDoors(props)
         local newDoor = doorTemplate:Clone()
         newDoor.Parent = parentFolder.Parent
         local doorPart = newDoor.PrimaryPart
-        doorPart.Anchored = true
+        doorPart.Name = "ggg"
 
         LetterUtils.createPropOnLetterBlock(
             {
@@ -80,8 +101,61 @@ function module.initDoors(props)
             })
 
         doorPart.Touched:Connect(onTouch(newDoor))
+        doorPart.Anchored = true
 
         table.insert(doors, newDoor)
+    end
+    return doors
+end
+
+function module.initKeys(props)
+    local parentFolder = props.parentFolder
+
+    local keyPositioners = Utils.getByTagInParent(
+                               {parent = parentFolder, tag = "KeyPositioner"})
+
+    print('keyPositioners' .. ' - start');
+    print(keyPositioners);
+    local keyTemplate = Utils.getFromTemplates("HexLetterGemTool")
+    print('keyTemplate' .. ' - start');
+    print(keyTemplate);
+
+    local doors = {}
+    for _, model in ipairs(keyPositioners) do
+        local keyName = model.name
+        local positioner = model.Positioner
+
+        local dummy = Utils.getFirstDescendantByName(model, "Dummy")
+        if dummy then dummy:Destroy() end
+
+        local newKey = keyTemplate:Clone()
+        newKey.Parent = parentFolder.Parent
+        local keyPart = newKey.PrimaryPart
+        -- keyPart.Name = "jjj"
+
+        LetterUtils.createPropOnLetterBlock(
+            {
+                letterBlock = keyPart,
+                propName = "KeyName",
+                initialValue = keyName,
+                propType = "StringValue"
+            })
+
+        keyPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+                             {
+                parent = positioner,
+                child = keyPart,
+                offsetConfig = {
+                    useParentNearEdge = Vector3.new(0, -1, 0),
+                    useChildNearEdge = Vector3.new(0, -1, 0),
+                    offsetAdder = Vector3.new(0, 0, 0)
+                }
+            })
+
+        -- doorPart.Touched:Connect(onTouch(newKey))
+        -- doorPart.Anchored = true
+
+        table.insert(doors, newKey)
     end
     return doors
 end
