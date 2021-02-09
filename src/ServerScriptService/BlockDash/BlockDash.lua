@@ -1,15 +1,11 @@
 local Sss = game:GetService("ServerScriptService")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
--- local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
-
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local InitLetterRack = require(Sss.Source.BlockDash.InitLetterRackBD)
 local InitWord = require(Sss.Source.BlockDash.InitWordBD)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local HandleClick = require(Sss.Source.BlockDash.HandleClick)
--- local LetterGrabber = require(Sss.Source.LetterGrabber.LetterGrabber)
--- local DoorKey = require(Sss.Source.BlockDash.DoorKey)
 local Conveyor = require(Sss.Source.Conveyor.Conveyor)
 
 local module = {}
@@ -110,13 +106,13 @@ local function addBlockDash(sectorConfig)
     -- Do some acrobatics here because InitLetterRack needs to attach
     -- itself as an event to the blocks it creates.
 
-    Entrance.initEntrance(sectorFolder)
-    Conveyor.initConveyors(miniGameState)
-    InitLetterRack.initLetterRack(miniGameState)
-    InitWord.initWords(miniGameState)
+    -- Entrance.initEntrance(sectorFolder)
+    -- Conveyor.initConveyors(miniGameState)
+    -- InitLetterRack.initLetterRack(miniGameState)
+    -- InitWord.initWords(miniGameState)
 
-    LetterUtils.styleLetterBlocksBD({miniGameState = miniGameState})
-    initPowerUps(miniGameState)
+    -- LetterUtils.styleLetterBlocksBD({miniGameState = miniGameState})
+    -- initPowerUps(miniGameState)
     -- DoorKey.init(miniGameState)
 end
 

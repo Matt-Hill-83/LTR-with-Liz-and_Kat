@@ -1,7 +1,5 @@
 local module = {}
 local Sss = game:GetService("ServerScriptService")
--- local RS = game:GetService("ReplicatedStorage")
--- local Const_Client = require(RS.Source.Constants.Constants_Client)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Constants = require(Sss.Source.Constants.Constants)
@@ -15,6 +13,7 @@ local ConfigRemoteEvents = require(Sss.Source.AddRemoteObjects
 local BlockDash = require(Sss.Source.BlockDash.BlockDash)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
+local Door = require(Sss.Source.Door.Door)
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
@@ -66,8 +65,12 @@ local function addRemoteObjects()
                                   {islandPositioners[1]} or islandPositioners
 
         Entrance.initEntrance(level)
+        local doors = Door.initDoors({parentFolder = level})
+        print('doors' .. ' - start');
+        print(doors);
 
-        if true then
+        if false then
+            -- if true then
             for islandIndex, islandPositioner in ipairs(myPositioners) do
                 -- if islandIndex == 3 then break end
                 local newIsland = islandTemplate:Clone()
@@ -100,7 +103,7 @@ local function addRemoteObjects()
     end
     islandTemplate:Destroy()
 
-    PlayerStatManager.init()
+    -- PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()
 
     -- Do this last after everything has been created/deleted
