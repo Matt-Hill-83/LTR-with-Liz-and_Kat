@@ -49,6 +49,26 @@ local function hideItemAndChildren2(props)
     return hiddenParts
 end
 
+local function hideFrontLabels(parent)
+    local hiddenParts = {}
+
+    local function hideItem2(part)
+        if part:IsA("TextLabel") and part.Transparency ~= 1 then
+            -- if part.Text == "Front" then
+            part.Visible = false
+            table.insert(hiddenParts, part)
+            -- end
+        end
+    end
+
+    hideItem2(parent)
+    local children = parent:GetDescendants()
+    for i, item in ipairs(children) do hideItem2(item) end
+    print('hiddenParts' .. ' - start');
+    print(hiddenParts);
+    return hiddenParts
+end
+
 local function unhideHideItems(props)
     local items = props.items
     for _, part in ipairs(items) do
@@ -733,6 +753,7 @@ module.hideItemAndChildren2 = hideItemAndChildren2
 module.unhideHideItems = unhideHideItems
 
 module.onTouchHuman = onTouchHuman
+module.hideFrontLabels = hideFrontLabels
 module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord
 module.applyDecalsToCharacterFromConfigName =

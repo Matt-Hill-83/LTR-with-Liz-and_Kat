@@ -232,6 +232,7 @@ function module.configGame()
         wallProps = {Transparency = 0.5}
     })
 
+    Utils.hideFrontLabels(workspace)
     local allSpawnLocations = Utils.getDescendantsByType(workspace,
                                                          "SpawnLocation")
 
