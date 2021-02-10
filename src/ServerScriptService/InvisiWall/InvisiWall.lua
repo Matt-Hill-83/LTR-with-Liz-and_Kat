@@ -60,7 +60,7 @@ function module.setInvisiWalls(props, sideName)
     local height = props.height or 16
     local thickness = props.thickness or 1
     local wallProps = props.wallProps or {}
-    local shortHeight = props.shortHeight or 4
+    local shortHeight = props.shortHeight or 2
     local transparency = props.transparency or 0.8
 
     local config = configs[sideName]
@@ -94,11 +94,6 @@ function module.setInvisiWalls(props, sideName)
         shortWall.Size = Vector3.new(shortWall.Size.X, shortHeight,
                                      shortWall.Size.Z)
 
-        -- shortWall.Position = Vector3.new(shortWall.Position.X, newWall.Position
-        --                                      .Y - newWall.Position.Y / 2 +
-        --                                      shortWall.Position.Y / 2,
-        --                                  shortWall.Position.Z)
-
         local weld = Instance.new("WeldConstraint")
         weld.Name = "WeldConstraint-wall"
         weld.Parent = newWall
@@ -112,9 +107,6 @@ function module.setInvisiWalls(props, sideName)
                 offsetConfig = {
                     useParentNearEdge = Vector3.new(0, -1, 0),
                     useChildNearEdge = Vector3.new(0, -1, 0)
-                    -- offsetAdder = Vector3.new(0, newWall.Position.Y -
-                    --                               newWall.Position.Y / 2 +
-                    --                               shortWall.Position.Y / 2, 0)
                 }
 
             })
