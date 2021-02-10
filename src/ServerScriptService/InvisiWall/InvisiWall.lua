@@ -60,6 +60,8 @@ function module.setInvisiWalls(props, sideName)
     local height = props.height or 16
     local thickness = props.thickness or 1
     local wallProps = props.wallProps or {}
+    local shortHeight = props.shortHeight or 4
+    local transparency = props.transparency or 0.8
 
     local config = configs[sideName]
 
@@ -82,16 +84,45 @@ function module.setInvisiWalls(props, sideName)
                 offsetConfig = offsetConfig
             })
 
-        newWall.Transparency = 0.8
         newWall.CanCollide = true
         newWall.Anchored = false
+        local shortWall = newWall:Clone()
+
         Utils.mergeTables(newWall, wallProps)
+
+        shortWall.Parent = newWall.Parent
+        shortWall.Size = Vector3.new(shortWall.Size.X, shortHeight,
+                                     shortWall.Size.Z)
+
+        -- shortWall.Position = Vector3.new(shortWall.Position.X, newWall.Position
+        --                                      .Y - newWall.Position.Y / 2 +
+        --                                      shortWall.Position.Y / 2,
+        --                                  shortWall.Position.Z)
 
         local weld = Instance.new("WeldConstraint")
         weld.Name = "WeldConstraint-wall"
         weld.Parent = newWall
         weld.Part0 = newWall
         weld.Part1 = part
+
+        shortWall.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+                               {
+                parent = newWall,
+                child = shortWall,
+                offsetConfig = {
+                    useParentNearEdge = Vector3.new(0, -1, 0),
+                    useChildNearEdge = Vector3.new(0, -1, 0)
+                    -- offsetAdder = Vector3.new(0, newWall.Position.Y -
+                    --                               newWall.Position.Y / 2 +
+                    --                               shortWall.Position.Y / 2, 0)
+                }
+
+            })
+
+        newWall.Transparency = transparency
+        shortWall.Transparency = 0
+        shortWall.Anchored = true
+        shortWall.Material = Enum.Material.Cobblestone
     end
 end
 

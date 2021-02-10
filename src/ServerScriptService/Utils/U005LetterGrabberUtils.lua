@@ -3,13 +3,12 @@ local Sss = game:GetService("ServerScriptService")
 local RS = game:GetService("ReplicatedStorage")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
--- local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Const_Client = require(RS.Source.Constants.Constants_Client)
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
 
-local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
-
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
+
+local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 
 local module = {}
 
@@ -106,11 +105,12 @@ local function wordFound(tool, player)
             local soundId = currentWord2.soundId or fireSound
             Utils.playSound(soundId)
         end
-
-        targetWordObj.found = targetWordObj.found + 1
-        updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
+        if targetWordObj then
+            targetWordObj.found = targetWordObj.found + 1
+            updateWordGuiRE:FireAllClients({levelConfig = levelConfig})
+        end
     end
-    delay(1, destroyParts)
+    delay(2, destroyParts)
 
     local keyTemplate = Utils.getFromTemplates("HexLetterGemTool")
     local parent = player.Character.PrimaryPart
@@ -130,7 +130,6 @@ local function wordFound(tool, player)
     })
     print('newKey' .. ' - start');
     print(newKey);
-    -- newKey.Name = "ttt"
     local keyOffset = 30
 
     newKey:SetPrimaryPartCFrame(CFrame.new(
@@ -162,6 +161,12 @@ local function partTouched(touchedBlock, player)
             local newActiveBlock = module.getActiveLetterGrabberBlock(tool)
             if not newActiveBlock then wordFound(tool, player) end
 
+            print('destroy');
+            print('destroy');
+            print('destroy');
+            print('destroy');
+            print('destroy');
+            print('destroy');
             touchedBlock.Parent:Destroy()
         end
     end

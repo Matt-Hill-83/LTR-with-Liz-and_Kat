@@ -226,10 +226,11 @@ function module.configGame()
 
     InvisiWall.setAllInvisiWalls({
         parentFolder = workspace,
-        thickness = 3,
+        thickness = 1,
         -- thickness = 1,
         height = 16,
-        wallProps = {Transparency = 1}
+        -- wallProps = {Transparency = 0.9}
+        wallProps = {Transparency = 0.5}
     })
 
     local allSpawnLocations = Utils.getDescendantsByType(workspace,

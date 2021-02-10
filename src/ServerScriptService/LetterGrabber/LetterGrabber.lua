@@ -167,8 +167,6 @@ local function onTouch(tool)
 end
 
 local function afterReplication(replicatedPart)
-    print('replicatedPart.Name' .. ' - start');
-    print(replicatedPart.Name);
     local touchRegion = Utils.getFirstDescendantByName(replicatedPart,
                                                        "TouchRegion")
     touchRegion.Touched:Connect(onTouch(replicatedPart))
@@ -213,8 +211,6 @@ local function initSingle(props)
         })
 
     newReplicatorPart.Anchored = true
-    print('newReplicator.Name' .. ' - start');
-    print(newReplicator.Name);
     Replicator.init(newReplicator, afterReplication)
     return newReplicator
 end

@@ -7,7 +7,6 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local module = {}
 
 local function createStray(char, parentFolder)
-
     local isGem = false
     -- local isGem = true
     local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
@@ -103,6 +102,16 @@ local function initStraysInRegion(props)
                     useChildNearEdge = Vector3.new(0, -1, 0),
                     offsetAdder = Vector3.new(offsetX, 0, offsetZ)
                 }
+            })
+    end
+
+    for _, block in ipairs(strays) do
+        LetterUtils.createPropOnLetterBlock(
+            {
+                letterBlock = block,
+                propName = "DestroyOnTouch",
+                initialValue = true,
+                propType = "BoolValue"
             })
     end
 
