@@ -40,25 +40,35 @@ function module.initSlopes(props)
             newLetterBlock.CanCollide = false
         end
 
-        -- Populate random letter gems
-        local strays = StrayLetterBlocks.initStraysInRegion(
-                           {
-                parentFolder = slope,
-                numBlocks = 100,
-                words = {
-                    "CAT", --
-                    "RAT", --
-                    "BAT", --
-                    "HAT", --
-                    "MAT", --
-                    "SAT" --
+        local strayRegions = Utils.getDescendantsByName(slope, "StrayRegion")
 
-                },
-                region = slope.StrayRegion,
-                onTouchBlock = function() end
-            })
+        for _, region in ipairs(strayRegions) do
 
-        for _, stray in ipairs(strays) do stray.CanCollide = true end
+            -- Populate random letter gems
+            local strays = StrayLetterBlocks.initStraysInRegion(
+                               {
+                    parentFolder = slope,
+                    numBlocks = 10,
+                    words = {
+                        "CAT", --
+                        "RAT", --
+                        "BAT" --
+                        -- "HAT", --
+                        -- "MAT", --
+                        -- "SAT" --
+
+                    },
+                    region = region,
+                    -- region = slope.StrayRegion,
+                    onTouchBlock = function() end
+                })
+
+            for _, stray in ipairs(strays) do
+                stray.CanCollide = true
+
+                stray.Size = Vector3.new(4, 4, 4)
+            end
+        end
 
         local positioners = Utils.getByTagInParent(
                                 {

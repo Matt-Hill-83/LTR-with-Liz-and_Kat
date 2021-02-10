@@ -224,6 +224,33 @@ function module.configGame()
     configGamePass()
     configBadges()
 
+    local bridgeProxys = Utils.getDescendantsByName(workspace, "BridgeProxy")
+    print('bridgeProxys' .. ' - start');
+    print(bridgeProxys);
+    local bridgeProxy = bridgeProxys[1]
+    local welds = Utils.getDescendantsByName(bridgeProxy, "WeldConstraint")
+    local points = {}
+    for _, weld in ipairs(welds) do
+        if weld.Part0.Name ~= "BridgeProxy" then
+            table.insert(points, weld.Part0)
+        end
+        if weld.Part1.Name ~= "BridgeProxy" then
+            table.insert(points, weld.Part1)
+        end
+    end
+    print('points' .. ' - start');
+    print(points);
+
+    local part = Instance.new("Part", workspace)
+    part.Name = "rrr"
+    local p0 = points[1].Position
+    local p1 = points[2].Position
+    -- local p1 = Vector3.new(10, 20, 30)
+    -- local p0 = Vector3.new(50, 20, 70)
+    -- local p1 = Vector3.new(10, 20, 30)
+
+    Utils.stretchPart({part = part, p0 = p0, p1 = p1})
+
     InvisiWall.setAllInvisiWalls({
         parentFolder = workspace,
         thickness = 1,

@@ -23,6 +23,18 @@ local getInstancesByNameStub = function(props)
     return output
 end
 
+local function stretchPart(props)
+    local part = props.part
+    local p0 = props.p0
+    local p1 = props.p1
+
+    local Distance = (p0 - p1).Magnitude
+    part.CFrame = CFrame.new(p0, p1) * CFrame.new(0, 0, -Distance / 2)
+    part.Size = Vector3.new(1, 1, Distance)
+
+    part.Anchored = true
+end
+
 local function hideItemAndChildren2(props)
     local parent = props.item
     local hiddenParts = {}
@@ -54,10 +66,10 @@ local function hideFrontLabels(parent)
 
     local function hideItem2(part)
         if part:IsA("TextLabel") and part.Transparency ~= 1 then
-            -- if part.Text == "Front" then
-            part.Visible = false
-            table.insert(hiddenParts, part)
-            -- end
+            if part.Text == "Front" then
+                part.Visible = false
+                table.insert(hiddenParts, part)
+            end
         end
     end
 
@@ -753,6 +765,7 @@ module.hideItemAndChildren2 = hideItemAndChildren2
 module.unhideHideItems = unhideHideItems
 
 module.onTouchHuman = onTouchHuman
+module.stretchPart = stretchPart
 module.hideFrontLabels = hideFrontLabels
 module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord
