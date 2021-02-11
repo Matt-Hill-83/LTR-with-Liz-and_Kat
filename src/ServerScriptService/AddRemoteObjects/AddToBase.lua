@@ -25,15 +25,15 @@ local function addRemoteObjects()
     local statueProps = {
         statusDefs = {
             {sentence = {"OK", "MOM"}, character = "raven"}, {
-                sentence = {"NOT", "A", "CAT"},
+                sentence = {"NOT", "A", "BEE"},
                 character = "katScared",
                 songId = "6342102168"
             }, --
-            {
-                sentence = {"TROLL", "NEED", "GOLD"},
-                character = "babyTroll04",
-                songId = "6338745550"
-            }, --
+            -- {
+            --     sentence = {"TROLL", "NEED", "GOLD"},
+            --     character = "babyTroll04",
+            --     songId = "6338745550"
+            -- }, --
             {
                 sentence = {"I", "SEE", "A", "BEE"},
                 character = "lizHappy"
@@ -66,10 +66,8 @@ local function addRemoteObjects()
                                   {islandPositioners[1]} or islandPositioners
 
         Entrance.initEntrance(level)
-        local doors = Door.initDoors({parentFolder = level})
+        local doors = Door.initDoors({parentFolder = myStuff})
         local keys = Door.initKeys({parentFolder = level})
-        print('keys' .. ' - start');
-        print(keys);
 
         -- if false then
         if true then

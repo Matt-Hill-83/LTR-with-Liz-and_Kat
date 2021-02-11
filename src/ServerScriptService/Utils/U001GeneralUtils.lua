@@ -86,8 +86,6 @@ local function convertItemAndChildrenToTerrain(props)
         if part:IsA("BasePart") and part.CanCollide == true then
             part.Transparency = 1
             part.CanCollide = false
-            print('part.Name' .. ' - start');
-            print(part.Name);
             game.Workspace.Terrain:FillBlock(part.CFrame, part.Size, material)
         end
     end
@@ -112,8 +110,6 @@ local function hideFrontLabels(parent)
     hideItem2(parent)
     local children = parent:GetDescendants()
     for i, item in ipairs(children) do hideItem2(item) end
-    print('hiddenParts' .. ' - start');
-    print(hiddenParts);
     return hiddenParts
 end
 
@@ -220,7 +216,6 @@ local function removeListItemByUuid(items, uuid)
     for index, item in ipairs(items) do
         if item.uuid == uuid then
 
-            print('removing');
             table.remove(items, index)
             -- 
         end
@@ -599,8 +594,6 @@ function module.reportPlayerLocation()
             local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
             while humanoidRootPart do
                 local test2 = workspace.CurrentCamera.CFrame.Position
-                print(test2);
-                print(player.Name, "is at", tostring(humanoidRootPart.Position))
                 wait(4)
             end
         end)
@@ -613,9 +606,7 @@ function module.getDecalIdFromName(props)
         return Const4.characters[name]["decalId"]
     else
 
-        if (name ~= "blank" and name ~= "empty" and name ~= "") then
-            -- print("----------------- decalId not found: ------------" .. name)
-        end
+        if (name ~= "blank" and name ~= "empty" and name ~= "") then end
         return '5999465084'
     end
 end
@@ -625,9 +616,6 @@ function module.getDisplayNameFromName(props)
     if (Const4.characters[name] and Const4.characters[name]["displayName"]) then
         return Const4.characters[name]["displayName"]
     else
-        -- print("---------------------- name not found: ------------" .. name)
-        -- print('Const4.characters[name]' .. ' - start');
-        -- print(Const4.characters[name]);
         return name
     end
 end
