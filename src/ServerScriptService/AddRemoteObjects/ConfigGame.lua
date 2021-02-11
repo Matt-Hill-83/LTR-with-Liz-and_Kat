@@ -235,6 +235,9 @@ function module.configGame()
         print(welds);
         local points = {}
         for _, weld in ipairs(welds) do
+            if not weld.Part0 then return end
+            if not weld.Part1 then return end
+
             if weld.Part0.Name ~= "BridgeProxy" then
                 table.insert(points, weld.Part0)
             end
