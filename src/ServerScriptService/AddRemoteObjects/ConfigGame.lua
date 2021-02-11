@@ -228,34 +228,32 @@ function module.configGame()
     -- local bridgeProxy = bridgeProxys[1]
 
     for _, bridgeProxy in ipairs(bridgeProxys) do
-        print('bridgeProxy' .. ' - start');
-        print(bridgeProxy);
         local welds = Utils.getDescendantsByName(bridgeProxy, "WeldConstraint")
-        print('welds' .. ' - start');
-        print(welds);
         local points = {}
         for _, weld in ipairs(welds) do
-            if not weld.Part0 then return end
-            if not weld.Part1 then return end
+            if weld.Part0 and weld.Part1 then
 
-            if weld.Part0.Name ~= "BridgeProxy" then
-                table.insert(points, weld.Part0)
-            end
-            if weld.Part1.Name ~= "BridgeProxy" then
-                table.insert(points, weld.Part1)
+                if weld.Part0.Name ~= "BridgeProxy" then
+                    table.insert(points, weld.Part0)
+                end
+                if weld.Part1.Name ~= "BridgeProxy" then
+                    table.insert(points, weld.Part1)
+                end
             end
         end
 
-        local part = Instance.new("Part", workspace)
-        local p0 = points[1].Position
-        local p1 = points[2].Position
+        if points[1] and points[2] then
+            local part = Instance.new("Part", workspace)
+            local p0 = points[1].Position
+            local p1 = points[2].Position
 
-        Utils.stretchPart({
-            part = part,
-            p0 = p0,
-            p1 = p1,
-            templateName = "Bridge"
-        })
+            Utils.stretchPart({
+                part = part,
+                p0 = p0,
+                p1 = p1,
+                templateName = "Bridge"
+            })
+        end
     end
 
     InvisiWall.setAllInvisiWalls({
@@ -271,6 +269,7 @@ function module.configGame()
                                                          "SpawnLocation")
 
     for _, item in ipairs(allSpawnLocations) do
+        print(item.Name);
         if item.Name == Constants.gameConfig.activeSpawn then
             item.Enabled = true
         else
