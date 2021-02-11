@@ -41,6 +41,11 @@ local function stretchPart(props)
         Vector3.new(bridgePart.Size.X, bridgePart.Size.Y, Distance)
 
     bridgePart.Anchored = true
+    local walls = module.getDescendantsByName(newBridge, "Wall")
+
+    for _, wall in ipairs(walls) do
+        wall.Size = Vector3.new(wall.Size.X, wall.Size.Y, Distance)
+    end
 end
 
 local function hideItemAndChildren2(props)
