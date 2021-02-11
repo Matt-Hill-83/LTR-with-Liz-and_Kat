@@ -45,6 +45,9 @@ local function stretchPart(props)
 
     for _, wall in ipairs(walls) do
         wall.Size = Vector3.new(wall.Size.X, wall.Size.Y, Distance)
+        game.Workspace.Terrain:FillBlock(wall.CFrame, wall.Size,
+                                         Enum.Material.Grass)
+
     end
 end
 
