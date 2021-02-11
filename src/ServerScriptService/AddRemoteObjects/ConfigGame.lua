@@ -240,16 +240,13 @@ function module.configGame()
     end
     print('points' .. ' - start');
     print(points);
-
+    -- local islandTemplate = Utils.getFromTemplates("IslandTemplate")
     local part = Instance.new("Part", workspace)
-    part.Name = "rrr"
+    -- part.Name = "rrr"
     local p0 = points[1].Position
     local p1 = points[2].Position
-    -- local p1 = Vector3.new(10, 20, 30)
-    -- local p0 = Vector3.new(50, 20, 70)
-    -- local p1 = Vector3.new(10, 20, 30)
 
-    Utils.stretchPart({part = part, p0 = p0, p1 = p1})
+    Utils.stretchPart({part = part, p0 = p0, p1 = p1, templateName = "Bridge"})
 
     InvisiWall.setAllInvisiWalls({
         parentFolder = workspace,

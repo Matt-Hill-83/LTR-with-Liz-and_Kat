@@ -24,15 +24,23 @@ local getInstancesByNameStub = function(props)
 end
 
 local function stretchPart(props)
-    local part = props.part
+    -- local part = props.part
+    local templateName = props.templateName
     local p0 = props.p0
     local p1 = props.p1
 
-    local Distance = (p0 - p1).Magnitude
-    part.CFrame = CFrame.new(p0, p1) * CFrame.new(0, 0, -Distance / 2)
-    part.Size = Vector3.new(1, 1, Distance)
+    local bridgeTemplate = module.getFromTemplates(templateName)
 
-    part.Anchored = true
+    local newBridge = bridgeTemplate:Clone()
+    newBridge.Parent = workspace
+    local bridgePart = newBridge.PrimaryPart
+
+    local Distance = (p0 - p1).Magnitude
+    bridgePart.CFrame = CFrame.new(p0, p1) * CFrame.new(0, 0, -Distance / 2)
+    bridgePart.Size =
+        Vector3.new(bridgePart.Size.X, bridgePart.Size.Y, Distance)
+
+    bridgePart.Anchored = true
 end
 
 local function hideItemAndChildren2(props)
@@ -66,7 +74,7 @@ local function hideFrontLabels(parent)
 
     local function hideItem2(part)
         if part:IsA("TextLabel") and part.Transparency ~= 1 then
-            if part.Text == "Front" then
+            if part.Text == "Front" or part.Text == "Label" then
                 part.Visible = false
                 table.insert(hiddenParts, part)
             end
