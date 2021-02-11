@@ -77,6 +77,26 @@ local function hideItemAndChildren2(props)
     return hiddenParts
 end
 
+local function convertItemAndChildrenToTerrain(props)
+    local parent = props.parent
+
+    local material = props.material or Enum.Material.Grass
+
+    local function convert(part)
+        if part:IsA("BasePart") and part.CanCollide == true then
+            part.Transparency = 1
+            part.CanCollide = false
+            print('part.Name' .. ' - start');
+            print(part.Name);
+            game.Workspace.Terrain:FillBlock(part.CFrame, part.Size, material)
+        end
+    end
+
+    convert(parent)
+    local children = parent:GetDescendants()
+    for i, item in ipairs(children) do convert(item) end
+end
+
 local function hideFrontLabels(parent)
     local hiddenParts = {}
 
@@ -776,6 +796,7 @@ module.tablelength = tablelength
 module.tableToString = tableToString
 module.onTouchBlock = onTouchBlock
 module.getActiveTool = getActiveTool
+module.convertItemAndChildrenToTerrain = convertItemAndChildrenToTerrain
 
 module.hideItemAndChildren2 = hideItemAndChildren2
 module.unhideHideItems = unhideHideItems

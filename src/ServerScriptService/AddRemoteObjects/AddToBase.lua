@@ -14,6 +14,7 @@ local BlockDash = require(Sss.Source.BlockDash.BlockDash)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 local Door = require(Sss.Source.Door.Door)
+local HexJunction = require(Sss.Source.HexJunction.HexJunction)
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
@@ -106,7 +107,7 @@ local function addRemoteObjects()
 
     PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()
-
+    HexJunction.initHexJunctions({})
     -- Do this last after everything has been created/deleted
     ConfigGame.configGame()
 end
