@@ -425,13 +425,7 @@ local function styleLetterBlocksBD(props)
             targetLetterBlock = letterBlock,
             templateName = templateName
         })
-
-        -- module.applyStyleFromTemplateBD({
-        --     targetLetterBlock = letterBlock,
-        --     templateName = templateName
-        -- })
     end
-
 end
 
 local function colorLetterText(props)

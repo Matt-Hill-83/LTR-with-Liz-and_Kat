@@ -185,7 +185,8 @@ local function initSingle(props)
 
     newReplicator.Parent = parentFolder
     local newReplicatorPart = newReplicator.PrimaryPart
-    lettterGrabber.Name = lettterGrabber.Name .. "-" .. word
+    lettterGrabber.Name = word
+    -- lettterGrabber.Name = lettterGrabber.Name .. "-" .. word
 
     applyDecalsToCharacterFromWord({part = lettterGrabber, word = word})
     configWordLetters({part = lettterGrabber, word = word, wordNameStub = ""})

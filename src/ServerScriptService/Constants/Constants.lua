@@ -1,12 +1,8 @@
 -- local isDev = true
 local isDev = false
 -- 
--- local activeSpawn = "Spawn_Level2"
--- local activeSpawn = "Spawn_Level1"
 local activeSpawn
-activeSpawn = "Spawn_Slope3"
-activeSpawn = "Spawn_Temp_2"
-activeSpawn = "Spawn_Temp"
+activeSpawn = "Spawn_Slope"
 
 local devGameConfig = {
     singleIsland = false,

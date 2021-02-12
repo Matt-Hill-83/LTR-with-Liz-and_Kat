@@ -1,9 +1,9 @@
 local CS = game:GetService("CollectionService")
 local Sss = game:GetService("ServerScriptService")
+
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
--- local Constants = require(Sss.Source.Constants.Constants)
--- local Const3 = require(Sss.Source.Constants.Const_03_Letters)
+local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
 
 local LetterFallUtils = require(Sss.Source.LetterFall.LetterFallUtils)
@@ -41,7 +41,8 @@ local function configWord(props)
     local imageFound = Utils.applyDecalsToCharacterFromWord(
                            {part = newWord, word = word})
 
-    if not imageFound then
+    local noImage = true
+    if not imageFound or noImage then
         newWord.CharacterImage:Destroy()
         -- 
     end
@@ -85,6 +86,8 @@ local function initWord(props)
         local letterNameStub = wordNameStub .. "-L" .. letterIndex
         local letter = string.sub(word, letterIndex, letterIndex)
         local newLetter = letterBlockTemplate:Clone()
+        LetterUtils.applyStyleFromTemplate(
+            {targetLetterBlock = newLetter, templateName = "Grabber_normal"})
 
         local cd = Instance.new("ClickDetector", newLetter)
         cd.MouseClick:Connect(playWordSound(word))
@@ -93,7 +96,7 @@ local function initWord(props)
 
         local letterPositionX = -totalLetterWidth * (letterIndex - 1)
 
-        CS:AddTag(newLetter, "WordGrabberLetter")
+        -- CS:AddTag(newLetter, "WordGrabberLetter")
         LetterFallUtils.applyLetterText({letterBlock = newLetter, char = letter})
 
         newLetter.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(

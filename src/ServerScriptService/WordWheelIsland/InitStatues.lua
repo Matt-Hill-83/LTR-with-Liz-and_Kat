@@ -53,7 +53,7 @@ local function initStatues(props)
 
         local letterBlockFolder = Utils.getFromTemplates("LetterBlockTemplates")
         local letterBlockTemplate = Utils.getFirstDescendantByName(
-                                        letterBlockFolder, "LBPurpleLight")
+                                        letterBlockFolder, "LB_2_blank")
 
         local letterWidth = letterBlockTemplate.Size.X
         local wordSpacer = letterWidth
@@ -68,7 +68,11 @@ local function initStatues(props)
         base.Size = Vector3.new(sentenceLength, base.Size.Y, base.Size.Z)
 
         local offsetX = sentenceLength / 2
-        local currentWordPosition = {value = -letterWidth / 2}
+        -- local currentWordPosition = {value = 0}
+        local currentWordPosition = {value = -letterWidth}
+        -- local currentWordPosition = {value = -letterWidth / 2}
+
+        local hexLetterGem = Utils.getFromTemplates("HexLetterGem")
 
         for wordIndex, word in ipairs(sentence) do
             local wordProps = {
@@ -83,7 +87,17 @@ local function initStatues(props)
                 wordSpacer = wordSpacer,
                 currentWordPosition = currentWordPosition
             }
-            InitWord.initWord(wordProps)
+            local newWordObj = InitWord.initWord(wordProps)
+            local wordModel = newWordObj.word
+            local newGem = hexLetterGem:Clone()
+            newGem.Parent = base
+
+            local gemPart = newGem.PrimaryPart
+            gemPart.Anchored = true
+
+            local orientation, size = wordModel:GetBoundingBox()
+
+            newGem.PrimaryPart.CFrame = orientation
         end
         -- sentencePositioner:Destroy()
         -- positionerModel:Destroy()
