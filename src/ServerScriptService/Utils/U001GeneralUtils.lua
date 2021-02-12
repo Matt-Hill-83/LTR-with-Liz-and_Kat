@@ -180,6 +180,23 @@ local function getActiveTool(player, toolNameStub)
     return false
 end
 
+local function getActiveToolByToolType(player, toolType)
+    local children2 = player.Character:GetChildren()
+    print('children2' .. ' - start');
+    print(children2);
+    for _, child in ipairs(children2) do
+        local isTool = child:IsA("Tool")
+        print('child' .. ' - start');
+        print(child);
+        local hasProp = module.getFirstDescendantByName(child, "ToolType")
+        if hasProp and isTool then
+            local correctType = child.ToolType.Value == toolType
+            if correctType then return child end
+        end
+    end
+    return false
+end
+
 local function listIncludes(tab, val)
     for _, value in ipairs(tab) do
         if value == val then
@@ -790,6 +807,7 @@ module.unhideHideItems = unhideHideItems
 
 module.onTouchHuman = onTouchHuman
 module.stretchPart = stretchPart
+module.getActiveToolByToolType = getActiveToolByToolType
 module.hideFrontLabels = hideFrontLabels
 module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord

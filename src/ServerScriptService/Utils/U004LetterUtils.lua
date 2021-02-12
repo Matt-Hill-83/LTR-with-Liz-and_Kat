@@ -190,59 +190,6 @@ local function initLetterBlock(props)
     end
 end
 
-local function initLetterGem(props)
-    local letterBlock = props.letterBlock
-    local char = props.char
-    local templateName = props.templateName
-    local letterBlockType = props.letterBlockType
-
-    module.applyLetterText({letterBlock = letterBlock, char = char})
-
-    createPropOnLetterBlock({
-        letterBlock = letterBlock,
-        propName = module.letterBlockPropNames.Type,
-        initialValue = letterBlockType,
-        propType = "StringValue"
-    })
-
-    createPropOnLetterBlock({
-        letterBlock = letterBlock,
-        propName = module.letterBlockPropNames.Character,
-        initialValue = char,
-        propType = "StringValue"
-    })
-
-    createPropOnLetterBlock({
-        letterBlock = letterBlock,
-        propName = module.letterBlockPropNames.CurrentStyle,
-        initialValue = "zzz",
-        propType = "StringValue"
-    })
-
-    createPropOnLetterBlock({
-        letterBlock = letterBlock,
-        propName = module.letterBlockPropNames.Uuid,
-        initialValue = Utils.getUuid(),
-        propType = "StringValue"
-    })
-
-    createPropOnLetterBlock({
-        letterBlock = letterBlock,
-        propName = module.letterBlockPropNames.IsFound,
-        initialValue = false,
-        propType = "BoolValue"
-    })
-
-    -- This seems redundant.
-    -- I assume we do this after everything is created.
-    if templateName then
-        module.applyStyleFromTemplate({
-            targetLetterBlock = letterBlock,
-            templateName = templateName
-        })
-    end
-end
-
 local function applyLetterImage(letterBlock, char)
     local imageId = Const3.alphabet[char]['decalId']
     local imageUri = 'rbxassetid://' .. imageId

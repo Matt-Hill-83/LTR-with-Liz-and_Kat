@@ -65,7 +65,7 @@ function module.initSlopes(props)
             for _, stray in ipairs(strays) do
                 stray.CanCollide = true
 
-                stray.Size = Vector3.new(4, 4, 4)
+                -- stray.Size = Vector3.new(4, 4, 4)
             end
         end
 

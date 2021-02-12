@@ -3,7 +3,9 @@ local CS = game:GetService("CollectionService")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local InitWord = require(Sss.Source.WordWheelIsland.InitWord)
+local LetterGem = require(Sss.Source.LetterGem.LetterGem)
 local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
+local GemUtils = require(Sss.Source.Utils.U006LetterGemUtils)
 
 local module = {}
 
@@ -100,12 +102,15 @@ local function initStatues(props)
             local offsetY = -(gemPart.Size.Y / 2 + letterWidth / 2)
             gemPart.CFrame = orientation + Vector3.new(0, offsetY, 0)
 
-            LetterUtils.initLetterGem({
+            LetterGem.initLetterGem({
                 letterBlock = gemPart,
                 char = word,
                 templateName = "Stray_normal",
                 letterBlockType = "StatueGem"
             })
+
+            gemPart.Touched:Connect(Utils.onTouchHuman(gemPart,
+                                                       GemUtils.partTouched))
 
         end
         -- sentencePositioner:Destroy()
