@@ -59,7 +59,6 @@ function module.initSlopes(props)
 
                     },
                     region = region,
-                    -- region = slope.StrayRegion,
                     onTouchBlock = function() end
                 })
 
