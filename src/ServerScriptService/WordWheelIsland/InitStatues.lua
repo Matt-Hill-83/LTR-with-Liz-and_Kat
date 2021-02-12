@@ -3,6 +3,7 @@ local CS = game:GetService("CollectionService")
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local InitWord = require(Sss.Source.WordWheelIsland.InitWord)
+local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 
 local module = {}
 
@@ -97,7 +98,15 @@ local function initStatues(props)
 
             local orientation, size = wordModel:GetBoundingBox()
 
-            newGem.PrimaryPart.CFrame = orientation
+            gemPart.CFrame = orientation
+
+            LetterUtils.initLetterGem({
+                letterBlock = gemPart,
+                char = word,
+                templateName = "Stray_normal",
+                letterBlockType = "StatueGem"
+            })
+
         end
         -- sentencePositioner:Destroy()
         -- positionerModel:Destroy()

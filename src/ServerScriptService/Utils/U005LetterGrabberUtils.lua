@@ -1,4 +1,3 @@
--- local CS = game:GetService("CollectionService")
 local Sss = game:GetService("ServerScriptService")
 local RS = game:GetService("ReplicatedStorage")
 
