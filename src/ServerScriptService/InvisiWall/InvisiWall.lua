@@ -115,6 +115,7 @@ function module.setInvisiWalls(props, sideName)
         shortWall.Transparency = 0
         shortWall.Anchored = true
         shortWall.Material = Enum.Material.Cobblestone
+        shortWall.BrickColor = BrickColor.new("Pastel green")
     end
 end
 

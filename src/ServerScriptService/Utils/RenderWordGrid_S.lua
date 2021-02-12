@@ -62,6 +62,7 @@ local renderGrid = function(props)
                                           0, scrollerCanvasHeight)
 
     mainFrame.Size = UDim2.new(0, guiWidth, 0, guiHeight)
+    mainFrame.Position = UDim2.new(0, 0, 0, 0)
 
     Utils.addPadding({
         parent = scrollingFrame,

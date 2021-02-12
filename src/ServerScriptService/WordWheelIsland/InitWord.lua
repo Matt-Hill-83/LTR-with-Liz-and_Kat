@@ -28,18 +28,15 @@ local function playWordSound(word)
 end
 
 local function configWord(props)
-    local newStatueScene = props.newStatueScene
     local word = props.word
     local sentencePositioner = props.sentencePositioner
-    -- local offsetX = 0
+
     local offsetX = props.offsetX
     local totalLetterWidth = props.totalLetterWidth
     local wordSpacer = props.wordSpacer
     local currentWordPosition = props.currentWordPosition
 
-    local wordTemplate = Utils.getFirstDescendantByName(newStatueScene,
-                                                        "WordTemplate")
-
+    local wordTemplate = Utils.getFromTemplates("StatueWordTemplate")
     local newWord = wordTemplate:Clone()
     local imageFound = Utils.applyDecalsToCharacterFromWord(
                            {part = newWord, word = word})
