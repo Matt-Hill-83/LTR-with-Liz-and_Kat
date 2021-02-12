@@ -182,12 +182,8 @@ end
 
 local function getActiveToolByToolType(player, toolType)
     local children2 = player.Character:GetChildren()
-    print('children2' .. ' - start');
-    print(children2);
     for _, child in ipairs(children2) do
         local isTool = child:IsA("Tool")
-        print('child' .. ' - start');
-        print(child);
         local hasProp = module.getFirstDescendantByName(child, "ToolType")
         if hasProp and isTool then
             local correctType = child.ToolType.Value == toolType
