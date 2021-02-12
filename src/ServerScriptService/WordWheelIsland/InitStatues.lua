@@ -71,7 +71,6 @@ local function initStatues(props)
         local offsetX = sentenceLength / 2
         -- local currentWordPosition = {value = 0}
         local currentWordPosition = {value = -letterWidth}
-        -- local currentWordPosition = {value = -letterWidth / 2}
 
         local hexLetterGem = Utils.getFromTemplates("HexLetterGem")
 
@@ -98,7 +97,8 @@ local function initStatues(props)
 
             local orientation, size = wordModel:GetBoundingBox()
 
-            gemPart.CFrame = orientation
+            local offsetY = -(gemPart.Size.Y / 2 + letterWidth / 2)
+            gemPart.CFrame = orientation + Vector3.new(0, offsetY, 0)
 
             LetterUtils.initLetterGem({
                 letterBlock = gemPart,
