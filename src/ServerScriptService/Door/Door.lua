@@ -37,13 +37,9 @@ end
 
 function module.initDoors(props)
     local parentFolder = props.parentFolder
-    print('parentFolder' .. ' - start');
-    print(parentFolder);
 
     local doorPositioners = Utils.getByTagInParent(
                                 {parent = parentFolder, tag = "DoorPositioner"})
-    print('doorPositioners' .. ' - start');
-    print(doorPositioners);
     local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
 
     local doors = {}

@@ -12,7 +12,7 @@ local function initStatues(props)
 
     local statueTemplate = Utils.getFromTemplates("StatueTemplate")
 
-    for statueIndex, statuePositioner in ipairs(statuePositioners) do
+    for statueIndex, positionerModel in ipairs(statuePositioners) do
         local statusDef = statusDefs[(statueIndex % #statusDefs) + 1]
 
         local sentence = statusDef.sentence
@@ -20,8 +20,14 @@ local function initStatues(props)
         local songId = statusDef.songId
 
         local newStatueScene = statueTemplate:Clone()
-        newStatueScene.Parent = statuePositioner.Parent
-        newStatueScene.PrimaryPart.CFrame = statuePositioner.CFrame
+
+        local positioner = positionerModel.Positioner
+
+        local dummy = Utils.getFirstDescendantByName(positionerModel, "Dummy")
+        if dummy then dummy:Destroy() end
+
+        newStatueScene.Parent = positioner.Parent
+        newStatueScene.PrimaryPart.CFrame = positioner.CFrame
         newStatueScene.PrimaryPart.Anchored = true
 
         local sentencePositioner = Utils.getFirstDescendantByName(
@@ -58,8 +64,11 @@ local function initStatues(props)
             sentenceLength = sentenceLength + #word * totalLetterWidth
         end
 
+        local base = Utils.getFirstDescendantByName(newStatueScene, "Base")
+        base.Size = Vector3.new(sentenceLength, base.Size.Y, base.Size.Z)
+
         local offsetX = sentenceLength / 2
-        local currentWordPosition = {value = 0}
+        local currentWordPosition = {value = -letterWidth / 2}
 
         for wordIndex, word in ipairs(sentence) do
             local wordProps = {
@@ -77,6 +86,7 @@ local function initStatues(props)
             InitWord.initWord(wordProps)
         end
         -- sentencePositioner:Destroy()
+        -- positionerModel:Destroy()
     end
     statueTemplate:Destroy()
 end
