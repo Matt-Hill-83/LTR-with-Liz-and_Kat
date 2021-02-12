@@ -79,7 +79,6 @@ end
 
 local function convertItemAndChildrenToTerrain(props)
     local parent = props.parent
-
     local material = props.material or Enum.Material.Grass
 
     local function convert(part)

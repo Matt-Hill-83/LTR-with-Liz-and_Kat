@@ -10,12 +10,8 @@ function module.initHexJunctions(props)
     local hexJunctions = Utils.getDescendantsByName(parent, "HexJunction")
 
     for _, hex in ipairs(hexJunctions) do
-        print('hex' .. ' - start');
-        print(hex);
         Utils.convertItemAndChildrenToTerrain({parent = hex})
-
     end
-
 end
 
 return module
