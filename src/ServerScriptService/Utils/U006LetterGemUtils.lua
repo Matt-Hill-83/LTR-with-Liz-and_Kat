@@ -67,5 +67,4 @@ end
 module.partTouched = partTouched
 module.wordFound = wordFound
 module.styleGems = styleGems
-module.initLetterGem = initLetterGem
 return module
