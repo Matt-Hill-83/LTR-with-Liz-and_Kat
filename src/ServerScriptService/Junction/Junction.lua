@@ -23,10 +23,25 @@ function module.initJunctions(props)
         newHex.Parent = positioner.Parent
 
         local newHexPart = newHex.PrimaryPart
+
+        local packageBases = Utils.getDescendantsByName(newHex, "PackageBase")
+        for _, packageBase in ipairs(packageBases) do
+
+            local weld = Instance.new("WeldConstraint")
+            weld.Name = "WeldConstraintHex-eee"
+            weld.Parent = newHexPart
+            weld.Part0 = newHexPart
+            weld.Part1 = packageBase
+
+        end
+
+        -- Weld packages to parent, b/c packages break extrenal welds when they update
+
+        print('packageBases' .. ' - start');
+        print(packageBases);
+
         newHexPart.Name = "eee"
         local freeParts = Utils.freeAnchoredParts({item = newHex})
-        print('freeParts' .. ' - start');
-        print(freeParts);
 
         local positionerPart = positioner.HexIsland_001_Md_Shell.PrimaryPart
         print('newHexPart' .. ' - start');
