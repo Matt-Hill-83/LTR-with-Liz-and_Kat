@@ -247,7 +247,7 @@ function module.configGame()
             local p0 = points[1].Position
             local p1 = points[2].Position
 
-            Utils.stretchPart({
+            Utils.createBridge({
                 part = part,
                 p0 = p0,
                 p1 = p1,

@@ -23,7 +23,7 @@ local getInstancesByNameStub = function(props)
     return output
 end
 
-local function stretchPart(props)
+local function createBridge(props)
     -- local part = props.part
     local templateName = props.templateName
     local p0 = props.p0
@@ -33,6 +33,7 @@ local function stretchPart(props)
 
     local newBridge = bridgeTemplate:Clone()
     newBridge.Parent = workspace
+    newBridge.Name = "ttt"
     local bridgePart = newBridge.PrimaryPart
 
     local Distance = (p0 - p1).Magnitude
@@ -52,7 +53,6 @@ local function stretchPart(props)
         --     {parent = wall, material = Enum.Material.Grass})
         game.Workspace.Terrain:FillBlock(wall.CFrame, wall.Size,
                                          Enum.Material.Grass)
-
     end
 end
 
@@ -837,7 +837,7 @@ module.unhideHideItems = unhideHideItems
 
 module.onTouchHuman = onTouchHuman
 module.freeAnchoredParts = freeAnchoredParts
-module.stretchPart = stretchPart
+module.createBridge = createBridge
 module.anchorFreedParts = anchorFreedParts
 module.getActiveToolByToolType = getActiveToolByToolType
 module.hideFrontLabels = hideFrontLabels

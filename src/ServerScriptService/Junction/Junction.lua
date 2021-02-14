@@ -3,6 +3,8 @@ local Sss = game:GetService("ServerScriptService")
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 
+local Bridge = require(Sss.Source.Bridge.Bridge)
+
 local module = {}
 
 function module.initJunctions(props)
@@ -12,6 +14,8 @@ function module.initJunctions(props)
     local template = Utils.getFromTemplates("HexJunction")
 
     for _, positioner in ipairs(positioners) do
+        Bridge.initBridge({rodParent = positioner})
+
         local newHex = template:Clone()
         newHex.Parent = positioner.Parent
 
@@ -27,7 +31,6 @@ function module.initJunctions(props)
             weld.Part1 = packageBase
         end
 
-        -- newHexPart.Name = "eee"
         local freeParts = Utils.freeAnchoredParts({item = newHex})
 
         local positionerPart = positioner.HexIsland_001_Md_Shell.PrimaryPart
