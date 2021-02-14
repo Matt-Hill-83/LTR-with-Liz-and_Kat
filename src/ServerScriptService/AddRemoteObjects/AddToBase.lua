@@ -15,6 +15,8 @@ local Entrance = require(Sss.Source.BlockDash.Entrance)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 local Door = require(Sss.Source.Door.Door)
 local HexJunction = require(Sss.Source.HexJunction.HexJunction)
+local Junction = require(Sss.Source.Junction.Junction)
+
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
@@ -66,6 +68,7 @@ local function addRemoteObjects()
                                   {islandPositioners[1]} or islandPositioners
 
         Entrance.initEntrance(level)
+        Junction.initJunctions({parentFolder = level})
         local doors = Door.initDoors({parentFolder = myStuff})
         local keys = Door.initKeys({parentFolder = level})
 
