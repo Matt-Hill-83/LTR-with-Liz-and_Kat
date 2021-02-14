@@ -224,37 +224,37 @@ function module.configGame()
     configGamePass()
     configBadges()
 
-    local bridgeProxys = Utils.getDescendantsByName(workspace, "BridgeProxy")
-    -- local bridgeProxy = bridgeProxys[1]
+    -- local bridgeProxys = Utils.getDescendantsByName(workspace, "BridgeProxy")
+    -- -- local bridgeProxy = bridgeProxys[1]
 
-    for _, bridgeProxy in ipairs(bridgeProxys) do
-        local welds = Utils.getDescendantsByName(bridgeProxy, "WeldConstraint")
-        local points = {}
-        for _, weld in ipairs(welds) do
-            if weld.Part0 and weld.Part1 then
+    -- for _, bridgeProxy in ipairs(bridgeProxys) do
+    --     local welds = Utils.getDescendantsByName(bridgeProxy, "WeldConstraint")
+    --     local points = {}
+    --     for _, weld in ipairs(welds) do
+    --         if weld.Part0 and weld.Part1 then
 
-                if weld.Part0.Name ~= "BridgeProxy" then
-                    table.insert(points, weld.Part0)
-                end
-                if weld.Part1.Name ~= "BridgeProxy" then
-                    table.insert(points, weld.Part1)
-                end
-            end
-        end
+    --             if weld.Part0.Name ~= "BridgeProxy" then
+    --                 table.insert(points, weld.Part0)
+    --             end
+    --             if weld.Part1.Name ~= "BridgeProxy" then
+    --                 table.insert(points, weld.Part1)
+    --             end
+    --         end
+    --     end
 
-        if points[1] and points[2] then
-            local part = Instance.new("Part", workspace)
-            local p0 = points[1].Position
-            local p1 = points[2].Position
+    --     if points[1] and points[2] then
+    --         local part = Instance.new("Part", workspace)
+    --         local p0 = points[1].Position
+    --         local p1 = points[2].Position
 
-            Utils.createBridge({
-                part = part,
-                p0 = p0,
-                p1 = p1,
-                templateName = "Bridge"
-            })
-        end
-    end
+    --         Utils.createBridge({
+    --             part = part,
+    --             p0 = p0,
+    --             p1 = p1,
+    --             templateName = "Bridge"
+    --         })
+    --     end
+    -- end
 
     InvisiWall.setAllInvisiWalls({
         parentFolder = workspace,
