@@ -108,10 +108,10 @@ local function addRemoteObjects()
 
     PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()
-    -- HexJunction.initHexJunctions({})
+    Junction.initJunctions({parentFolder = myStuff})
+    HexJunction.initHexJunctions({})
     -- Do this last after everything has been created/deleted
     ConfigGame.configGame()
-    Junction.initJunctions({parentFolder = myStuff})
 end
 
 module.addRemoteObjects = addRemoteObjects
