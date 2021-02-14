@@ -56,6 +56,35 @@ local function stretchPart(props)
     end
 end
 
+local function freeAnchoredParts(props)
+    local parent = props.item
+    local anchoredParts = {}
+
+    local function freeParts(part)
+        -- local hasProp = true
+        -- local hasProp = module.getFirstDescendantByName(part, "Anchored")
+        -- local hasProp = part:FindFirstChild("Anchored")
+        local hasProp = part:IsA("BasePart")
+
+        if hasProp and part.Anchored == true then
+            part.Anchored = false
+            table.insert(anchoredParts, part)
+        end
+    end
+
+    freeParts(parent)
+    local children = parent:GetDescendants()
+    for _, item in ipairs(children) do freeParts(item) end
+    return anchoredParts
+end
+
+local function anchorFreedParts(items)
+    for _, item in pairs(items) do
+        item.Anchored = true
+        -- 
+    end
+end
+
 local function hideItemAndChildren2(props)
     local parent = props.item
     local hiddenParts = {}
@@ -807,7 +836,9 @@ module.hideItemAndChildren2 = hideItemAndChildren2
 module.unhideHideItems = unhideHideItems
 
 module.onTouchHuman = onTouchHuman
+module.freeAnchoredParts = freeAnchoredParts
 module.stretchPart = stretchPart
+module.anchorFreedParts = anchorFreedParts
 module.getActiveToolByToolType = getActiveToolByToolType
 module.hideFrontLabels = hideFrontLabels
 module.getListItemByPropValue = getListItemByPropValue

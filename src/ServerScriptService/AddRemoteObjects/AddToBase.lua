@@ -68,7 +68,7 @@ local function addRemoteObjects()
                                   {islandPositioners[1]} or islandPositioners
 
         Entrance.initEntrance(level)
-        Junction.initJunctions({parentFolder = level})
+
         local doors = Door.initDoors({parentFolder = myStuff})
         local keys = Door.initKeys({parentFolder = level})
 
@@ -108,9 +108,10 @@ local function addRemoteObjects()
 
     PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()
-    HexJunction.initHexJunctions({})
+    -- HexJunction.initHexJunctions({})
     -- Do this last after everything has been created/deleted
     ConfigGame.configGame()
+    Junction.initJunctions({parentFolder = myStuff})
 end
 
 module.addRemoteObjects = addRemoteObjects

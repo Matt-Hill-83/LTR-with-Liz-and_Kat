@@ -13,6 +13,7 @@ function module.initJunctions(props)
     local parentFolder = props.parentFolder or workspace
 
     local positioners = Utils.getDescendantsByName(parentFolder, "Junction")
+    -- local template = Utils.getFromTemplates("DogBone")
     local template = Utils.getFromTemplates("HexJunction")
 
     print('positioners' .. ' - start');
@@ -22,6 +23,11 @@ function module.initJunctions(props)
         newHex.Parent = positioner.Parent
 
         local newHexPart = newHex.PrimaryPart
+        newHexPart.Name = "eee"
+        local freeParts = Utils.freeAnchoredParts({item = newHex})
+        print('freeParts' .. ' - start');
+        print(freeParts);
+
         local positionerPart = positioner.HexIsland_001_Md_Shell.PrimaryPart
         print('newHexPart' .. ' - start');
         print(newHexPart);
@@ -35,7 +41,9 @@ function module.initJunctions(props)
                     offsetAdder = Vector3.new(0, 0, 0)
                 }
             })
-        -- positioner:Destroy()
+        positioner:Destroy()
+
+        Utils.anchorFreedParts(freeParts)
     end
 end
 
