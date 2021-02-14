@@ -3,7 +3,7 @@ local Sss = game:GetService("ServerScriptService")
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 
-local Bridge = require(Sss.Source.Bridge.Bridge)
+-- local Bridge = require(Sss.Source.Bridge.Bridge)
 
 local module = {}
 
@@ -14,7 +14,7 @@ function module.initJunctions(props)
     local template = Utils.getFromTemplates("HexJunction")
 
     for _, positioner in ipairs(positioners) do
-        Bridge.initBridge({rodParent = positioner})
+        -- Bridge.initBridge({rodParent = positioner})
 
         local newHex = template:Clone()
         newHex.Parent = positioner.Parent
