@@ -63,6 +63,7 @@ function module.initDoor(props)
             offsetX = doorPart.Position.X - adder
         end
         wall.Position = Vector3.new(offsetX, wall.Position.Y, wall.Position.Z)
+        wall.CanCollide = true
     end
 
     LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})

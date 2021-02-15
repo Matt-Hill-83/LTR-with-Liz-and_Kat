@@ -149,7 +149,8 @@ end
 local function unhideHideItems(props)
     local items = props.items
     for _, part in ipairs(items) do
-        if part:FindFirstChild("CanCollide") then part.CanCollide = true end
+        if part:IsA("BasePart") then part.CanCollide = true end
+        -- if part:FindFirstChild("CanCollide") then part.CanCollide = true end
         part.Transparency = 0
         -- 
     end
