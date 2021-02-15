@@ -14,7 +14,7 @@ function module.initJunctions(props)
     local template = Utils.getFromTemplates("HexJunction")
 
     for _, positioner in ipairs(positioners) do
-        -- Bridge.initBridge({rodParent = positioner})
+        -- Bridge.initBridges({rodParent = positioner})
 
         local newHex = template:Clone()
         newHex.Parent = positioner.Parent

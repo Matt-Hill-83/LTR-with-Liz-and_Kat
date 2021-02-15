@@ -4,7 +4,7 @@ local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 
 local module = {}
 
-function module.initBridge(props)
+function module.initBridges(props)
     local rodParent = props.rodParent or workspace
     local rods = Utils.getDescendantsByName(rodParent, "RodConstraint")
 
