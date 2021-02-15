@@ -5,6 +5,7 @@ local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local InitLetterRack = require(Sss.Source.BlockDash.InitLetterRackBD)
 local InitWord = require(Sss.Source.BlockDash.InitWordBD)
 local Entrance = require(Sss.Source.BlockDash.Entrance)
+-- local DoorKey = require(Sss.Source.BlockDash.DoorKey)
 local HandleClick = require(Sss.Source.BlockDash.HandleClick)
 local Conveyor = require(Sss.Source.Conveyor.Conveyor)
 
@@ -113,7 +114,7 @@ local function addBlockDash(sectorConfig)
 
     LetterUtils.styleLetterBlocksBD({miniGameState = miniGameState})
     initPowerUps(miniGameState)
-    -- DoorKey.init(miniGameState)
+    -- DoorKey.init({parentFolder = sectorFolder})
 end
 
 module.addBlockDash = addBlockDash

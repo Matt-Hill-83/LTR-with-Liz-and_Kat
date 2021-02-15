@@ -5,20 +5,21 @@ local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Constants = require(Sss.Source.Constants.Constants)
 local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
 local initStatues = require(Sss.Source.WordWheelIsland.InitStatues)
-
-local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
-local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
 local ConfigRemoteEvents = require(Sss.Source.AddRemoteObjects
                                        .ConfigRemoteEvents)
-local BlockDash = require(Sss.Source.BlockDash.BlockDash)
-local Entrance = require(Sss.Source.BlockDash.Entrance)
-local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
-local Door = require(Sss.Source.Door.Door)
-local HexJunction = require(Sss.Source.HexJunction.HexJunction)
-local Junction = require(Sss.Source.Junction.Junction)
-local Bridge = require(Sss.Source.Bridge.Bridge)
-local HexWall = require(Sss.Source.HexWall.HexWall)
 
+local BlockDash = require(Sss.Source.BlockDash.BlockDash)
+local Bridge = require(Sss.Source.Bridge.Bridge)
+local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
+local Door = require(Sss.Source.Door.Door)
+local DoorKey = require(Sss.Source.BlockDash.DoorKey)
+
+local Entrance = require(Sss.Source.BlockDash.Entrance)
+local HexJunction = require(Sss.Source.HexJunction.HexJunction)
+local HexWall = require(Sss.Source.HexWall.HexWall)
+local Junction = require(Sss.Source.Junction.Junction)
+local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
+local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
@@ -59,6 +60,8 @@ local function addRemoteObjects()
 
     Bridge.initBridges({parentFolder = myStuff})
     HexWall.initHexWalls({parentFolder = myStuff})
+
+    DoorKey.init({parentFolder = myStuff})
 
     for levelIndex, level in ipairs(levels) do
         -- if levelIndex == 2 then break end

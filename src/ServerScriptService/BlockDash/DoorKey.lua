@@ -8,11 +8,19 @@ local Replicator = require(Sss.Source.BlockDash.Replicator)
 
 local module = {}
 
-local function initKey(miniGameState)
-    local sectorFolder = miniGameState.sectorFolder
+local function initKey(props)
+    print('initKey' .. ' - start');
+    print(initKey);
+    local sectorFolder = workspace
+    -- local sectorFolder = props.parentFolder
 
-    local positioner = Utils.getFirstDescendantByName(sectorFolder,
-                                                      "KeyReplicatorPositioner")
+    local positionerModel = Utils.getFirstDescendantByName(sectorFolder,
+                                                           "KeyReplicatorPositioner")
+
+    local positioner = positionerModel.Positioner
+    local dummy = positionerModel.Dummy
+    dummy:Destroy()
+
     local template = Utils.getFromTemplates("KeyReplicatorTemplate")
 
     local newReplicator = template:Clone()
@@ -43,7 +51,7 @@ local function initKey(miniGameState)
 
     local function callBack(miniGameState2)
         local function closure()
-            miniGameState2.onWordLettersGone(miniGameState2)
+            -- miniGameState2.onWordLettersGone(miniGameState2)
         end
 
         local function wrapperForDelay()
