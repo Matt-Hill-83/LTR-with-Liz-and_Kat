@@ -39,7 +39,7 @@ function module.initJunctions(props)
                     offsetAdder = Vector3.new(0, 0, 0)
                 }
             })
-        -- positioner:Destroy()
+        positioner:Destroy()
 
         Utils.anchorFreedParts(freeParts)
     end
