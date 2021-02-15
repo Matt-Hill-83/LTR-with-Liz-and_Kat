@@ -22,7 +22,8 @@ function module.initHexWalls(props)
             local doorProps = {
                 positioner = positioner,
                 parentFolder = parentFolder,
-                keyName = word
+                keyName = word,
+                width = 48
             }
 
             local newDoor = Door.initDoor(doorProps)

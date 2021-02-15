@@ -39,12 +39,31 @@ function module.initDoor(props)
     local positioner = props.positioner
     local parentFolder = props.parentFolder
     local keyName = props.keyName
+    local doorWidth = props.doorWidth or 8
+    local width = props.width or 40
 
     local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
 
     local newDoor = doorTemplate:Clone()
     newDoor.Parent = parentFolder.Parent
     local doorPart = newDoor.PrimaryPart
+
+    local walls = Utils.getDescendantsByName(newDoor, "Wall")
+
+    local wallWidthX = (width - doorWidth) / 2
+
+    for wallIndex, wall in ipairs(walls) do
+        wall.Size = Vector3.new(wallWidthX, wall.Size.Y, wall.Size.Z)
+
+        local adder = (doorPart.Size.X + wall.Size.X) / 2
+        local offsetX
+        if wallIndex == 1 then
+            offsetX = doorPart.Position.X + adder
+        else
+            offsetX = doorPart.Position.X - adder
+        end
+        wall.Position = Vector3.new(offsetX, wall.Position.Y, wall.Position.Z)
+    end
 
     LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})
 
