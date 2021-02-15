@@ -3,7 +3,7 @@ local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 
 local module = {}
 
-local function init(replicator, callBack)
+local function initReplicator(replicator, callBack)
     local hitBox = Utils.getFirstDescendantByName(replicator, "HitBox")
 
     local reward
@@ -55,5 +55,5 @@ local function init(replicator, callBack)
 
 end
 
-module.init = init
+module.initReplicator = initReplicator
 return module

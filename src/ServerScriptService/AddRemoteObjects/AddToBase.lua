@@ -74,8 +74,8 @@ local function addRemoteObjects()
 
         Entrance.initEntrance(level)
 
-        local doors = Door.initDoors({parentFolder = myStuff})
-        local keys = Door.initKeys({parentFolder = level})
+        Door.initDoors({parentFolder = myStuff})
+        Door.initKeys({parentFolder = level})
 
         -- if false then
         if true then

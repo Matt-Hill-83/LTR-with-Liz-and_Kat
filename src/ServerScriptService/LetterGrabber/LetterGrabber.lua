@@ -212,7 +212,7 @@ local function initSingle(props)
         })
 
     newReplicatorPart.Anchored = true
-    Replicator.init(newReplicator, afterReplication)
+    Replicator.initReplicator(newReplicator, afterReplication)
     return newReplicator
 end
 
