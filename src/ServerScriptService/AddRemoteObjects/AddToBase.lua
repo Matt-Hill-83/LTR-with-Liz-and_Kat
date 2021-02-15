@@ -57,6 +57,7 @@ local function addRemoteObjects()
     local islandTemplate = Utils.getFromTemplates("IslandTemplate")
 
     Bridge.initBridge({rodParent = myStuff})
+
     for levelIndex, level in ipairs(levels) do
         -- if levelIndex == 2 then break end
         local islandPositioners = Utils.getByTagInParent(
