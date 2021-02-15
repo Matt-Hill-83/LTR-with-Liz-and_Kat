@@ -125,7 +125,8 @@ function module.initKeys(props)
     local keyPositioners = Utils.getByTagInParent(
                                {parent = parentFolder, tag = "KeyPositioner"})
 
-    local keyTemplate = Utils.getFromTemplates("HexLetterGemTool")
+    local keyTemplate = Utils.getFromTemplates("LetterKeyReplicatorTemplate")
+    -- local keyTemplate = Utils.getFromTemplates("HexLetterGemTool")
 
     local doors = {}
     for _, model in ipairs(keyPositioners) do
