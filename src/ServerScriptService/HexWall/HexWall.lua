@@ -17,14 +17,12 @@ function module.initHexWalls(props)
                                                      "WallProxyLabel")
 
         local word = label.Text
-        if word == "--NO DOOR--" then
+        if word == "--NO DOOR--" or word == "XXX" then
             -- 
-            -- 
-
         else
             local noGem
 
-            if word == "--NO GEM--" then
+            if word == "--NO GEM--" or word == "---" then
                 noGem = true
             else
                 noGem = false
