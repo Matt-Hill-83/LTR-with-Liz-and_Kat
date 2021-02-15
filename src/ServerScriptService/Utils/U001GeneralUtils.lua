@@ -32,13 +32,11 @@ local function createBridge(props)
 
     local newBridge = bridgeTemplate:Clone()
     newBridge.Parent = workspace
-    newBridge.Name = "ttt"
+    -- newBridge.Name = "ttt"
     local bridgePart = newBridge.PrimaryPart
 
     local Distance = (p0 - p1).Magnitude
     bridgePart.CFrame = CFrame.new(p0, p1) * CFrame.new(0, 0, -Distance / 2)
-    print('bridgePart.Size.X' .. ' - start');
-    print(bridgePart.Size.X);
 
     bridgePart.Size =
         Vector3.new(bridgePart.Size.X, bridgePart.Size.Y, Distance)
@@ -119,7 +117,7 @@ local function convertItemAndChildrenToTerrain(props)
 
     local function convert(part)
         if part:IsA("BasePart") and part.CanCollide == true then
-            part.Transparency = 1
+            -- part.Transparency = 1
             part.CanCollide = false
             game.Workspace.Terrain:FillBlock(part.CFrame, part.Size, material)
         end
