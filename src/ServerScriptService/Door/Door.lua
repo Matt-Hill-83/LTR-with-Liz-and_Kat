@@ -35,48 +35,64 @@ local function onTouch(door)
     return closure
 end
 
+function module.initDoor(props)
+    local positioner = props.positioner
+    local parentFolder = props.parentFolder
+    local keyName = props.keyName
+
+    local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
+
+    local newDoor = doorTemplate:Clone()
+    newDoor.Parent = parentFolder.Parent
+    local doorPart = newDoor.PrimaryPart
+
+    LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})
+
+    LetterUtils.createPropOnLetterBlock({
+        letterBlock = newDoor,
+        propName = "KeyName",
+        initialValue = keyName,
+        propType = "StringValue"
+    })
+
+    doorPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+                          {
+            parent = positioner,
+            child = doorPart,
+            offsetConfig = {
+                useParentNearEdge = Vector3.new(0, -1, 0),
+                useChildNearEdge = Vector3.new(0, -1, 0),
+                offsetAdder = Vector3.new(0, 0, 0)
+            }
+        })
+
+    doorPart.Touched:Connect(onTouch(newDoor))
+    doorPart.Anchored = true
+    return newDoor
+end
+
 function module.initDoors(props)
     local parentFolder = props.parentFolder
 
     local doorPositioners = Utils.getByTagInParent(
                                 {parent = parentFolder, tag = "DoorPositioner"})
-    local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
 
     local doors = {}
     for _, model in ipairs(doorPositioners) do
-        local keyName = model.name
         local positioner = model.Positioner
 
         local dummy = Utils.getFirstDescendantByName(model, "Dummy")
         if dummy then dummy:Destroy() end
 
-        local newDoor = doorTemplate:Clone()
-        newDoor.Parent = parentFolder.Parent
-        local doorPart = newDoor.PrimaryPart
-        doorPart.Name = "ggg"
-        LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})
+        local keyName = model.name
 
-        LetterUtils.createPropOnLetterBlock(
-            {
-                letterBlock = newDoor,
-                propName = "KeyName",
-                initialValue = keyName,
-                propType = "StringValue"
-            })
+        local doorProps = {
+            positioner = positioner,
+            parentFolder = parentFolder,
+            keyName = keyName
+        }
 
-        doorPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
-                              {
-                parent = positioner,
-                child = doorPart,
-                offsetConfig = {
-                    useParentNearEdge = Vector3.new(0, -1, 0),
-                    useChildNearEdge = Vector3.new(0, -1, 0),
-                    offsetAdder = Vector3.new(0, 0, 0)
-                }
-            })
-
-        doorPart.Touched:Connect(onTouch(newDoor))
-        doorPart.Anchored = true
+        local newDoor = module.initDoor(doorProps)
 
         table.insert(doors, newDoor)
     end

@@ -17,6 +17,7 @@ local Door = require(Sss.Source.Door.Door)
 local HexJunction = require(Sss.Source.HexJunction.HexJunction)
 local Junction = require(Sss.Source.Junction.Junction)
 local Bridge = require(Sss.Source.Bridge.Bridge)
+local HexWall = require(Sss.Source.HexWall.HexWall)
 
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
@@ -56,7 +57,8 @@ local function addRemoteObjects()
 
     local islandTemplate = Utils.getFromTemplates("IslandTemplate")
 
-    Bridge.initBridges({rodParent = myStuff})
+    Bridge.initBridges({parentFolder = myStuff})
+    HexWall.initHexWalls({parentFolder = myStuff})
 
     for levelIndex, level in ipairs(levels) do
         -- if levelIndex == 2 then break end
