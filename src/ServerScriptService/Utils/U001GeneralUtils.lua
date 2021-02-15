@@ -32,7 +32,6 @@ local function createBridge(props)
 
     local newBridge = bridgeTemplate:Clone()
     newBridge.Parent = workspace
-    -- newBridge.Name = "ttt"
     local bridgePart = newBridge.PrimaryPart
 
     local Distance = (p0 - p1).Magnitude

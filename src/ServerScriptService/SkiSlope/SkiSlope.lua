@@ -40,7 +40,36 @@ function module.initSlopes(props)
             newLetterBlock.CanCollide = false
         end
 
-        local strayRegions = Utils.getDescendantsByName(slope, "StrayRegion")
+        -- local strayRegions = Utils.getDescendantsByName(slope, "StrayRegion")
+
+        local strayRegions = Utils.getByTagInParent(
+                                 {parent = workspace, tag = "StrayRegion"})
+
+        print('strayRegions' .. ' - start');
+        print(strayRegions);
+        local words = {
+            "CAT", --
+            "RAT", --
+            "BAT", --
+            "HAT", --
+            "MAT", --
+            "SAT", --
+            "CAT", --
+            "RAT", --
+            "BAT", --
+            "HAT", --
+            "MAT", --
+            "SAT", --
+            "CAT", --
+            "RAT", --
+            "BAT", --
+            "HAT", --
+            "MAT", --
+            "SAT" --
+        }
+
+        local wordLength = 3
+        local requiredLetters = #words * wordLength
 
         for _, region in ipairs(strayRegions) do
 
@@ -48,16 +77,8 @@ function module.initSlopes(props)
             local strays = StrayLetterBlocks.initStraysInRegion(
                                {
                     parentFolder = slope,
-                    numBlocks = 10,
-                    words = {
-                        "CAT", --
-                        "RAT", --
-                        "BAT" --
-                        -- "HAT", --
-                        -- "MAT", --
-                        -- "SAT" --
-
-                    },
+                    numBlocks = requiredLetters * 2,
+                    words = words,
                     region = region,
                     onTouchBlock = function() end
                 })

@@ -32,8 +32,8 @@ function module.initHexWalls(props)
                 positioner = positioner,
                 parentFolder = parentFolder,
                 keyName = word,
-                width = 20,
-                -- width = 32,
+                -- width = 20,
+                width = 32,
                 noGem = noGem
             }
 

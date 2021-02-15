@@ -54,12 +54,12 @@ local function addRemoteObjects()
     local levels = levelsFolder:GetChildren()
     Utils.sortListByObjectKey(levels, "Name")
 
-    SkiSlope.initSlopes({parentFolder = myStuff})
-
     local islandTemplate = Utils.getFromTemplates("IslandTemplate")
 
     Bridge.initBridges({parentFolder = myStuff})
     HexWall.initHexWalls({parentFolder = myStuff})
+    Junction.initJunctions({parentFolder = myStuff})
+    SkiSlope.initSlopes({parentFolder = myStuff})
 
     DoorKey.init({parentFolder = myStuff})
 
@@ -116,7 +116,7 @@ local function addRemoteObjects()
 
     PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()
-    Junction.initJunctions({parentFolder = myStuff})
+    -- Junction.initJunctions({parentFolder = myStuff})
     HexJunction.initHexJunctions({})
     -- Do this last after everything has been created/deleted
     ConfigGame.configGame()
