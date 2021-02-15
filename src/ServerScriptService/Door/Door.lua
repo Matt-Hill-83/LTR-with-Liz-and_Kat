@@ -42,7 +42,8 @@ function module.initDoor(props)
     local parentFolder = props.parentFolder
     local keyName = props.keyName
     local doorWidth = props.doorWidth or 8
-    local width = props.width or 40
+    local width = props.width or 32
+    local noGem = props.noGem
 
     local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
 
@@ -68,14 +69,22 @@ function module.initDoor(props)
         wall.CanCollide = true
     end
 
-    LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})
+    if noGem then
+        newDoor.HexLetterGemTool:Destroy()
+    else
 
-    LetterUtils.createPropOnLetterBlock({
-        letterBlock = newDoor,
-        propName = "KeyName",
-        initialValue = keyName,
-        propType = "StringValue"
-    })
+        LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})
+
+        LetterUtils.createPropOnLetterBlock(
+            {
+                letterBlock = newDoor,
+                propName = "KeyName",
+                initialValue = keyName,
+                propType = "StringValue"
+            })
+
+        doorPart.Touched:Connect(onTouch(newDoor))
+    end
 
     doorPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
                           {
@@ -88,7 +97,6 @@ function module.initDoor(props)
             }
         })
 
-    doorPart.Touched:Connect(onTouch(newDoor))
     doorPart.Anchored = true
     return newDoor
 end

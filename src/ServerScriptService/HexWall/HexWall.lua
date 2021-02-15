@@ -17,14 +17,26 @@ function module.initHexWalls(props)
                                                      "WallProxyLabel")
 
         local word = label.Text
+        if word == "--NO DOOR--" then
+            -- 
+            -- 
 
-        if word ~= "---" then
+        else
+            local noGem
+
+            if word == "--NO GEM--" then
+                noGem = true
+            else
+                noGem = false
+            end
+
             local doorProps = {
                 positioner = positioner,
                 parentFolder = parentFolder,
                 keyName = word,
-                width = 20
-                -- width = 32
+                width = 20,
+                -- width = 32,
+                noGem = noGem
             }
 
             local newDoor = Door.initDoor(doorProps)
