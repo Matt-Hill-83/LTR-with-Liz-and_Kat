@@ -227,7 +227,8 @@ function module.configGame()
     InvisiWall.setAllInvisiWalls({
         parentFolder = workspace,
         thickness = 1,
-        height = 8,
+        height = 18,
+        shortHeight = 4,
         -- wallProps = {Transparency = 0.9}
         wallProps = {Transparency = 0.5}
     })

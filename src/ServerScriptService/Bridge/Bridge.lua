@@ -10,9 +10,7 @@ function module.initBridges(props)
 
     for i, rod in ipairs(rods) do
         if rod.Attachment0.Parent and rod.Attachment1.Parent then
-
             Utils.createBridge({
-                -- part = parentFolder,
                 p0 = rod.Attachment0.Parent.Position,
                 p1 = rod.Attachment1.Parent.Position,
                 templateName = "Bridge"

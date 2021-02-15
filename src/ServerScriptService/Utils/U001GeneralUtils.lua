@@ -24,7 +24,6 @@ local getInstancesByNameStub = function(props)
 end
 
 local function createBridge(props)
-    -- local part = props.part
     local templateName = props.templateName
     local p0 = props.p0
     local p1 = props.p1
@@ -38,6 +37,9 @@ local function createBridge(props)
 
     local Distance = (p0 - p1).Magnitude
     bridgePart.CFrame = CFrame.new(p0, p1) * CFrame.new(0, 0, -Distance / 2)
+    print('bridgePart.Size.X' .. ' - start');
+    print(bridgePart.Size.X);
+
     bridgePart.Size =
         Vector3.new(bridgePart.Size.X, bridgePart.Size.Y, Distance)
 
