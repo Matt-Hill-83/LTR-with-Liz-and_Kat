@@ -24,6 +24,11 @@ function module.createBridge(props)
     bridgePart.Anchored = true
     local walls = Utils.getDescendantsByName(newBridge, "Wall")
 
+    local strayRegion = Utils.getFirstDescendantByName(newBridge, "StrayRegion")
+
+    strayRegion.Size = Vector3.new(strayRegion.Size.X, strayRegion.Size.Y,
+                                   Distance)
+
     for _, wall in ipairs(walls) do
         wall.Size = Vector3.new(wall.Size.X, wall.Size.Y, Distance)
 
