@@ -6,12 +6,6 @@ local module = {}
 
 function module.initTerrain(props)
     local parentFolder = props.parentFolder or workspace
-
-    local config = {
-
-        -- 
-    }
-
     local materials = Enum.Material:GetEnumItems()
 
     for _, material in ipairs(materials) do
