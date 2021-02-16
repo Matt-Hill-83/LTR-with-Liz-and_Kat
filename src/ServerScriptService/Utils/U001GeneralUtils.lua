@@ -3,6 +3,7 @@ local CS = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
 
+local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
 local module = {}
 
@@ -23,14 +24,54 @@ local getInstancesByNameStub = function(props)
     return output
 end
 
+local function cloneModel(props)
+    print('cloneModel' .. ' - start');
+    print(cloneModel);
+    local parentTo = props.parentTo
+    local positionToPart = props.positionToPart
+    local templateName = props.templateName
+    local fromTemplate = props.fromTemplate
+    local modelToClone = props.modelToClone
+    local offsetConfig = props.offsetConfig or {
+        useParentNearEdge = Vector3.new(1, -1, 1),
+        useChildNearEdge = Vector3.new(1, -1, 1),
+        offsetAdder = Vector3.new(0, 0, 0)
+    }
+
+    if true then
+        -- if fromTemplate then
+        print('fromTemplate' .. ' - start');
+        print(fromTemplate);
+        local childTemplate = module.getFromTemplates(templateName)
+
+        local newChild = childTemplate:Clone()
+        newChild.Parent = parentTo
+        local childPart = newChild.PrimaryPart
+        local freeParts = module.freeAnchoredParts({item = newChild})
+        print('childPart' .. ' - start');
+        print(childPart);
+
+        print('positionToPart' .. ' - start');
+        print(positionToPart);
+        childPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
+                               {
+                parent = positionToPart,
+                child = childPart,
+                offsetConfig = offsetConfig
+            })
+
+        module.anchorFreedParts(freeParts)
+        childPart.Anchored = true
+        return newChild
+    end
+
+end
+
 local function freeAnchoredParts(props)
     local parent = props.item
     local anchoredParts = {}
 
     local function freeParts(part)
-        -- local hasProp = true
-        -- local hasProp = module.getFirstDescendantByName(part, "Anchored")
-        -- local hasProp = part:FindFirstChild("Anchored")
         local hasProp = part:IsA("BasePart")
 
         if hasProp and part.Anchored == true then
@@ -686,21 +727,6 @@ function addcfv3(a, b)
     local x, y, z, m11, m12, m13, m21, m22, m23, m31, m32, m33 = a:components()
     return CFrame.new(x + b.x, y + b.y, z + b.z, m11, m12, m13, m21, m22, m23,
                       m31, m32, m33);
-end
-
-function cloneModel(props)
-    local model = props.model
-    local position = props.position
-    local suffix = props.suffix
-
-    local modelClone = model:Clone()
-    modelClone.Parent = model.Parent
-    modelClone.Name = model.Name .. (suffix or "-Clone")
-    if (position) then
-        modelClone:SetPrimaryPartCFrame(position)
-        -- 
-    end
-    return modelClone
 end
 
 local function getNames(tab, name, res, lev)

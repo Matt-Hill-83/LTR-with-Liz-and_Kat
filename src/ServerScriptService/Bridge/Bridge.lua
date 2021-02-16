@@ -38,24 +38,47 @@ function module.createBridge(props)
         --     {parent = wall, material = Enum.Material.Grass})
         game.Workspace.Terrain:FillBlock(wall.CFrame, wall.Size,
                                          Enum.Material.Grass)
+
     end
+    return newBridge
 end
 
 function module.initBridges(props)
     local parentFolder = props.parentFolder or workspace
     local rods = Utils.getDescendantsByName(parentFolder, "RodConstraint")
 
+    local bridges = {}
     for i, rod in ipairs(rods) do
         if rod.Attachment0.Parent and rod.Attachment1.Parent then
-            module.createBridge({
-                p0 = rod.Attachment0.Parent.Position,
-                p1 = rod.Attachment1.Parent.Position,
-                templateName = "Bridge"
-            })
-            -- rod:Destroy()
+            local bridge = module.createBridge(
+                               {
+                    p0 = rod.Attachment0.Parent.Position,
+                    p1 = rod.Attachment1.Parent.Position,
+                    templateName = "Bridge"
+                })
+            rod:Destroy()
+
+            local rinkProps = {
+                parentTo = bridge,
+                positionToPart = bridge.PrimaryPart,
+                templateName = "Rink",
+                fromTemplate = true,
+                modelToClone = nil,
+                offsetConfig = {
+                    useParentNearEdge = Vector3.new(0, 0, 0),
+                    useChildNearEdge = Vector3.new(0, 0, 0),
+                    offsetAdder = Vector3.new(0, 20, 0)
+                }
+
+            }
+
+            local rinkModel = Utils.cloneModel(rinkProps)
+            rinkModel.Name = "yyy"
+
+            table.insert(bridges, bridge)
         end
     end
-
+    return bridges
 end
 
 return module
