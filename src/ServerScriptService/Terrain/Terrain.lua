@@ -10,6 +10,8 @@ function module.initTerrain(props)
 
     for _, material in ipairs(materials) do
         local tagName = "T-" .. material.Name
+        print('tagName' .. ' - start');
+        print(tagName);
 
         local parts = Utils.getByTagInParent(
                           {parent = parentFolder, tag = tagName})
