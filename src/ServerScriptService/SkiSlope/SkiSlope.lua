@@ -16,7 +16,7 @@ function module.initSlopes(props)
     local slopes = Utils.getByTagInParent(
                        {parent = skiSlopesFolder, tag = "SkiSlopeFolder"})
 
-    StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
+    -- StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
 
     for _, slope in ipairs(slopes) do
 

@@ -23,38 +23,6 @@ local getInstancesByNameStub = function(props)
     return output
 end
 
-local function createBridge(props)
-    local templateName = props.templateName
-    local p0 = props.p0
-    local p1 = props.p1
-
-    local bridgeTemplate = module.getFromTemplates(templateName)
-
-    local newBridge = bridgeTemplate:Clone()
-    newBridge.Parent = workspace
-    local bridgePart = newBridge.PrimaryPart
-
-    local Distance = (p0 - p1).Magnitude
-    bridgePart.CFrame = CFrame.new(p0, p1) * CFrame.new(0, 0, -Distance / 2)
-
-    bridgePart.Size =
-        Vector3.new(bridgePart.Size.X, bridgePart.Size.Y, Distance)
-
-    bridgePart.Anchored = true
-    local walls = module.getDescendantsByName(newBridge, "Wall")
-
-    for _, wall in ipairs(walls) do
-        wall.Size = Vector3.new(wall.Size.X, wall.Size.Y, Distance)
-
-        -- local parent = props.parent
-        -- local material = props.material or Enum.Material.LeafyGrass
-        -- module.convertItemAndChildrenToTerrain(
-        --     {parent = wall, material = Enum.Material.Grass})
-        game.Workspace.Terrain:FillBlock(wall.CFrame, wall.Size,
-                                         Enum.Material.Grass)
-    end
-end
-
 local function freeAnchoredParts(props)
     local parent = props.item
     local anchoredParts = {}
@@ -837,7 +805,7 @@ module.unhideHideItems = unhideHideItems
 
 module.onTouchHuman = onTouchHuman
 module.freeAnchoredParts = freeAnchoredParts
-module.createBridge = createBridge
+-- module.createBridge = createBridge
 module.anchorFreedParts = anchorFreedParts
 module.getActiveToolByToolType = getActiveToolByToolType
 module.hideFrontLabels = hideFrontLabels
