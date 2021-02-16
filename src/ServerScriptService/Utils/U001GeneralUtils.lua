@@ -25,11 +25,11 @@ local getInstancesByNameStub = function(props)
 end
 
 local function hasProperty(instance, property)
-    local clone = instance:Clone()
-    clone:ClearAllChildren()
+    -- local clone = instance:Clone()
+    -- clone:ClearAllChildren()
 
     return (pcall(function()
-        return clone[property]
+        return instance[property]
         -- 
     end))
 end

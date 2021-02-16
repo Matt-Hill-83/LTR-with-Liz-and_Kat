@@ -51,9 +51,19 @@ function module.initBridges(props)
     for i, rod in ipairs(rods) do
         local hasAtt0 = Utils.hasProperty(rod, "Attachment0")
         local hasAtt1 = Utils.hasProperty(rod, "Attachment1")
+        print('----------------------------------------------');
+        print('----------------------------------------------');
+        print('rod.Attachment0' .. ' - start');
+        print(rod.Attachment0);
 
-        if hasAtt0 and hasAtt1 then
-            if rod.Attachment0.Parent and rod.Attachment1.Parent then
+        print('rod.Attachment1' .. ' - start');
+        print(rod.Attachment1);
+
+        if hasAtt0 == true and hasAtt1 == true then
+            local hasParent0 = Utils.hasProperty(rod.Attachment0, "Parent")
+            local hasParent1 = Utils.hasProperty(rod.Attachment1, "Parent")
+
+            if hasParent0 and hasParent1 then
                 local bridge = module.createBridge(
                                    {
                         p0 = rod.Attachment0.Parent.Position,
