@@ -15,6 +15,9 @@ function module.initSlopes(props)
                                                            "SkiSlopes")
     local slopes = Utils.getByTagInParent(
                        {parent = skiSlopesFolder, tag = "SkiSlopeFolder"})
+
+    StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
+
     for _, slope in ipairs(slopes) do
 
         -- populate specific letter gems
@@ -40,56 +43,11 @@ function module.initSlopes(props)
             newLetterBlock.CanCollide = false
         end
 
-        -- local strayRegions = Utils.getDescendantsByName(slope, "StrayRegion")
+        -- 
+        -- 
 
-        local strayRegions = Utils.getByTagInParent(
-                                 {parent = workspace, tag = "StrayRegion"})
-
-        print('strayRegions' .. ' - start');
-        print(strayRegions);
-        local words = {
-            "CAT", --
-            "RAT", --
-            "BAT", --
-            "HAT", --
-            "MAT", --
-            "SAT", --
-            "CAT", --
-            "RAT", --
-            "BAT", --
-            "HAT", --
-            "MAT", --
-            "SAT", --
-            "CAT", --
-            "RAT", --
-            "BAT", --
-            "HAT", --
-            "MAT", --
-            "SAT" --
-        }
-
-        local wordLength = 3
-        local requiredLetters = #words * wordLength
-
-        for _, region in ipairs(strayRegions) do
-
-            -- Populate random letter gems
-            local strays = StrayLetterBlocks.initStraysInRegion(
-                               {
-                    parentFolder = slope,
-                    numBlocks = requiredLetters * 2,
-                    words = words,
-                    region = region,
-                    onTouchBlock = function() end
-                })
-
-            for _, stray in ipairs(strays) do
-                stray.CanCollide = true
-
-                -- stray.Size = Vector3.new(4, 4, 4)
-            end
-        end
-
+        -- 
+        -- 
         local positioners = Utils.getByTagInParent(
                                 {
                 parent = slope,

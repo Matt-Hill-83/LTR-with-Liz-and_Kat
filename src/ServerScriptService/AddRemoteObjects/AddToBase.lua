@@ -20,6 +20,8 @@ local HexWall = require(Sss.Source.HexWall.HexWall)
 local Junction = require(Sss.Source.Junction.Junction)
 local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
+local StrayLetterBlocks =
+    require(Sss.Source.StrayLetterBlocks.StrayLetterBlocks)
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
@@ -59,6 +61,7 @@ local function addRemoteObjects()
     Bridge.initBridges({parentFolder = myStuff})
     HexWall.initHexWalls({parentFolder = myStuff})
     Junction.initJunctions({parentFolder = myStuff})
+    HexJunction.initHexJunctions({})
     SkiSlope.initSlopes({parentFolder = myStuff})
 
     DoorKey.init({parentFolder = myStuff})
@@ -113,12 +116,13 @@ local function addRemoteObjects()
         end
     end
     islandTemplate:Destroy()
-
+    StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
     PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()
     -- Junction.initJunctions({parentFolder = myStuff})
-    HexJunction.initHexJunctions({})
+    -- HexJunction.initHexJunctions({})
     -- Do this last after everything has been created/deleted
+
     ConfigGame.configGame()
 end
 

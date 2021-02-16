@@ -15,6 +15,7 @@ function module.initBridges(props)
                 p1 = rod.Attachment1.Parent.Position,
                 templateName = "Bridge"
             })
+            -- rod:Destroy()
         end
     end
 

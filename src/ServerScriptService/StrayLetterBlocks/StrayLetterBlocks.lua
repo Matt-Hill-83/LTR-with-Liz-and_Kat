@@ -19,7 +19,7 @@ local function createStray(char, parentFolder)
         modelClone = letterBlockTemplate:Clone()
     else
         local letterBlockTemplate = Utils.getFirstDescendantByName(
-                                        letterBlockFolder, "BD_8_blank")
+                                        letterBlockFolder, "BD_6_blank")
         local dummyModel = Instance.new("Model", letterBlockFolder)
         letterBlockTemplate.Parent = dummyModel
         dummyModel.PrimaryPart = letterBlockTemplate
@@ -60,6 +60,56 @@ local function createStray(char, parentFolder)
     return newLetterBlock
 end
 
+local function initStraysInRegions(props)
+    local parentFolder = props.parentFolder
+    -- 
+    -- 
+    local strayRegions = Utils.getByTagInParent(
+                             {parent = parentFolder, tag = "StrayRegion"})
+
+    print('strayRegions' .. ' - start');
+    print(strayRegions);
+    local words = {
+        "CAT", --
+        "RAT", --
+        "BAT", --
+        "HAT", --
+        "MAT", --
+        "SAT" --
+        -- "CAT", --
+        -- "RAT", --
+        -- "BAT", --
+        -- "HAT", --
+        -- "MAT", --
+        -- "SAT" --
+
+    }
+
+    local wordLength = 3
+    local requiredLetters = #words * wordLength
+
+    for _, region in ipairs(strayRegions) do
+
+        -- Populate random letter gems
+        local strays = module.initStraysInRegion(
+                           {
+                parentFolder = parentFolder,
+                numBlocks = math.floor(requiredLetters * 1.2),
+                words = words,
+                region = region,
+                onTouchBlock = function() end
+            })
+
+        for _, stray in ipairs(strays) do
+            stray.CanCollide = true
+
+            -- stray.Size = Vector3.new(4, 4, 4)
+        end
+    end
+    -- 
+    -- 
+
+end
 local function initStraysInRegion(props)
     local numBlocks = props.numBlocks
     local region = props.region
@@ -120,5 +170,6 @@ end
 
 module.initStraysInRegion = initStraysInRegion
 module.createStray = createStray
+module.initStraysInRegions = initStraysInRegions
 
 return module

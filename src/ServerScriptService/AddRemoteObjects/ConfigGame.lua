@@ -229,8 +229,8 @@ function module.configGame()
         thickness = 1,
         -- height = 6,
         height = 18,
-        shortHeight = 4,
-        wallProps = {Transparency = 0.9}
+        shortHeight = 1,
+        wallProps = {Transparency = 1}
         -- wallProps = {Transparency = 0.5}
     })
 
