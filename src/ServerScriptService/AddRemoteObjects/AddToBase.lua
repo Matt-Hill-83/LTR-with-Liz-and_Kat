@@ -64,6 +64,7 @@ local function addRemoteObjects()
     Junction.initJunctions({parentFolder = myStuff})
     HexJunction.initHexJunctions({})
     SkiSlope.initSlopes({parentFolder = myStuff})
+    StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
 
     DoorKey.init({parentFolder = myStuff})
 
@@ -117,7 +118,7 @@ local function addRemoteObjects()
         end
     end
     islandTemplate:Destroy()
-    StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
+
     Rink.initRinks({parentFolder = workspace})
     PlayerStatManager.init()
     ConfigRemoteEvents.initRemoteEvents()

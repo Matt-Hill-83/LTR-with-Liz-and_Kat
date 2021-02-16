@@ -24,9 +24,17 @@ local getInstancesByNameStub = function(props)
     return output
 end
 
+local function hasProperty(instance, property)
+    local clone = instance:Clone()
+    clone:ClearAllChildren()
+
+    return (pcall(function()
+        return clone[property]
+        -- 
+    end))
+end
+
 local function cloneModel(props)
-    print('cloneModel' .. ' - start');
-    print(cloneModel);
     local parentTo = props.parentTo
     local positionToPart = props.positionToPart
     local templateName = props.templateName
@@ -40,19 +48,13 @@ local function cloneModel(props)
 
     if true then
         -- if fromTemplate then
-        print('fromTemplate' .. ' - start');
-        print(fromTemplate);
         local childTemplate = module.getFromTemplates(templateName)
 
         local newChild = childTemplate:Clone()
         newChild.Parent = parentTo
         local childPart = newChild.PrimaryPart
         local freeParts = module.freeAnchoredParts({item = newChild})
-        print('childPart' .. ' - start');
-        print(childPart);
 
-        print('positionToPart' .. ' - start');
-        print(positionToPart);
         childPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
                                {
                 parent = positionToPart,
@@ -125,7 +127,7 @@ local function convertItemAndChildrenToTerrain(props)
 
     local function convert(part)
         if part:IsA("BasePart") and part.CanCollide == true then
-            -- part.Transparency = 1
+            part.Transparency = 1
             part.CanCollide = false
             game.Workspace.Terrain:FillBlock(part.CFrame, part.Size, material)
         end
@@ -830,6 +832,7 @@ module.hideItemAndChildren2 = hideItemAndChildren2
 module.unhideHideItems = unhideHideItems
 
 module.onTouchHuman = onTouchHuman
+module.hasProperty = hasProperty
 module.freeAnchoredParts = freeAnchoredParts
 -- module.createBridge = createBridge
 module.anchorFreedParts = anchorFreedParts

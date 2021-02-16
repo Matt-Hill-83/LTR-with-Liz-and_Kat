@@ -49,33 +49,38 @@ function module.initBridges(props)
 
     local bridges = {}
     for i, rod in ipairs(rods) do
-        if rod.Attachment0.Parent and rod.Attachment1.Parent then
-            local bridge = module.createBridge(
-                               {
-                    p0 = rod.Attachment0.Parent.Position,
-                    p1 = rod.Attachment1.Parent.Position,
-                    templateName = "Bridge"
-                })
-            rod:Destroy()
+        local hasAtt0 = Utils.hasProperty(rod, "Attachment0")
+        local hasAtt1 = Utils.hasProperty(rod, "Attachment1")
 
-            local rinkProps = {
-                parentTo = bridge,
-                positionToPart = bridge.PrimaryPart,
-                templateName = "Rink",
-                fromTemplate = true,
-                modelToClone = nil,
-                offsetConfig = {
-                    useParentNearEdge = Vector3.new(0, 0, 0),
-                    useChildNearEdge = Vector3.new(0, 0, 0),
-                    offsetAdder = Vector3.new(0, 20, 0)
+        if hasAtt0 and hasAtt1 then
+            if rod.Attachment0.Parent and rod.Attachment1.Parent then
+                local bridge = module.createBridge(
+                                   {
+                        p0 = rod.Attachment0.Parent.Position,
+                        p1 = rod.Attachment1.Parent.Position,
+                        templateName = "Bridge"
+                    })
+                rod:Destroy()
+
+                local rinkProps = {
+                    parentTo = bridge,
+                    positionToPart = bridge.PrimaryPart,
+                    templateName = "Rink",
+                    fromTemplate = true,
+                    modelToClone = nil,
+                    offsetConfig = {
+                        useParentNearEdge = Vector3.new(0, 0, 0),
+                        useChildNearEdge = Vector3.new(0, 0, 0),
+                        offsetAdder = Vector3.new(0, 20, 0)
+                    }
+
                 }
 
-            }
+                local rinkModel = Utils.cloneModel(rinkProps)
+                rinkModel.Name = "yyy"
 
-            local rinkModel = Utils.cloneModel(rinkProps)
-            rinkModel.Name = "yyy"
-
-            table.insert(bridges, bridge)
+                table.insert(bridges, bridge)
+            end
         end
     end
     return bridges
