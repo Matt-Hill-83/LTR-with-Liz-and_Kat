@@ -7,10 +7,24 @@ local module = {}
 function module.initTerrain(props)
     local parentFolder = props.parentFolder or workspace
 
-    local parts = Utils.getByTagInParent({parent = parentFolder, tag = "T-Rock"})
+    local config = {
 
-    for _,part in ipairs(parts) do
-        Utils.convertItemAndChildrenToTerrain({parent = parentFolder, material = "Rock"})
+        -- 
+    }
+
+    local materials = Enum.Material:GetEnumItems()
+
+    for _, material in ipairs(materials) do
+        local tagName = "T-" .. material.Name
+
+        local parts = Utils.getByTagInParent(
+                          {parent = parentFolder, tag = tagName})
+
+        for _, part in ipairs(parts) do
+            Utils.convertItemAndChildrenToTerrain(
+                {parent = part, material = material, ignoreKids = true})
+        end
+    end
 end
 
 return module

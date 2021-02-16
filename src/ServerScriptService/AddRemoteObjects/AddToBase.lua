@@ -21,6 +21,7 @@ local Junction = require(Sss.Source.Junction.Junction)
 local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 local Rink = require(Sss.Source.Rink.Rink)
+local Terrain = require(Sss.Source.Terrain.Terrain)
 local StrayLetterBlocks =
     require(Sss.Source.StrayLetterBlocks.StrayLetterBlocks)
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
@@ -65,6 +66,7 @@ local function addRemoteObjects()
     HexJunction.initHexJunctions({})
     SkiSlope.initSlopes({parentFolder = myStuff})
     StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
+    Terrain.initTerrain({parentFolder = workspace})
 
     DoorKey.init({parentFolder = myStuff})
 

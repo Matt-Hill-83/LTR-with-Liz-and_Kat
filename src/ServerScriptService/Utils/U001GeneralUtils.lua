@@ -123,6 +123,8 @@ end
 
 local function convertItemAndChildrenToTerrain(props)
     local parent = props.parent
+    local ignoreKids = props.ignoreKids
+
     local material = props.material or Enum.Material.LeafyGrass
 
     local function convert(part)
@@ -134,8 +136,11 @@ local function convertItemAndChildrenToTerrain(props)
     end
 
     convert(parent)
-    local children = parent:GetDescendants()
-    for i, item in ipairs(children) do convert(item) end
+
+    if not ignoreKids then
+        local children = parent:GetDescendants()
+        for i, item in ipairs(children) do convert(item) end
+    end
 end
 
 local function hideFrontLabels(parent)
