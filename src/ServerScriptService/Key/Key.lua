@@ -24,7 +24,6 @@ function module.initKeys(props)
         end
 
         local newReplicator = replicator:Clone()
-        newReplicator.Name = 'ddd'
         newReplicator.Parent = parentFolder.Parent
 
         local keyPart = Utils.getFirstDescendantByName(newReplicator, 'Handle')
@@ -57,7 +56,6 @@ function module.initKeys(props)
                 }
             }
         )
-        -- hitBox.Anchored = true
         Replicator.initReplicator(newReplicator)
         -- Replicator.initReplicator(newReplicator, afterReplication)
         table.insert(keys, newReplicator)

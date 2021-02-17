@@ -34,7 +34,7 @@ function module.createBridge(props)
         -- local material = props.material or Enum.Material.LeafyGrass
         -- module.convertItemAndChildrenToTerrain(
         --     {parent = wall, material = Enum.Material.Grass})
-        game.Workspace.Terrain:FillBlock(wall.CFrame, wall.Size, Enum.Material.Grass)
+        -- game.Workspace.Terrain:FillBlock(wall.CFrame, wall.Size, Enum.Material.Grass)
     end
     return newBridge
 end

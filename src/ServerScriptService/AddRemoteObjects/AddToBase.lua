@@ -70,8 +70,6 @@ local function addRemoteObjects()
     StrayLetterBlocks.initStraysInRegions({parentFolder = workspace})
     Terrain.initTerrain({parentFolder = workspace})
 
-    -- DoorKey.init({parentFolder = myStuff})
-
     for levelIndex, level in ipairs(levels) do
         -- if levelIndex == 2 then break end
         local islandPositioners = Utils.getByTagInParent({parent = level, tag = 'IslandPositioner'})
