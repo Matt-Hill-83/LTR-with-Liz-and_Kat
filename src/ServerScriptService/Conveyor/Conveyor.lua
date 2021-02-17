@@ -61,38 +61,7 @@ local function initBeltPlate(props)
                 useChildNearEdge = Vector3.new(1, -1, 1)
             }
         })
-    -- letterPositioner.LPWeld.Enabled = true
 
-    -- 
-    -- -- 
-    -- -- 
-    -- local glassPlate = newBeltPlate.GlassPlate
-    -- local childWeldsFront = Utils.disableEnabledWelds(glassPlate)
-    -- glassPlate.Size = Vector3.new(sizeX + 0.001, rackLetterSize - 3 - 0.001,
-    --                               sizeZ + 0.001)
-    -- -- glassPlate.Size = Vector3.new(sizeX + 0.001, rackLetterSize - 1 - 0.001,
-    -- --                               sizeZ + 0.001)
-    -- glassPlate.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
-    --                         {
-    --         parent = belt,
-    --         child = glassPlate,
-    --         offsetConfig = {
-    --             useParentNearEdge = Vector3.new(0, 1, 0),
-    --             useChildNearEdge = Vector3.new(0, -1, 0),
-    --             offsetAdder = Vector3.new(0, 0, 0)
-    --         }
-    --     })
-
-    -- -- delete
-    -- -- delete
-    -- -- delete
-    -- -- delete
-    -- glassPlate.CanCollide = false
-    -- -- delete
-    -- for _, weld in ipairs(childWeldsFront) do weld.Enabled = true end
-    -- 
-    -- 
-    -- 
 
     local pc = belt.PrismaticConstraint
     if sectorConfig.freezeConveyor == true then

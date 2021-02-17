@@ -37,6 +37,8 @@ local function onTouch(door)
     return closure
 end
 
+
+
 function module.initDoor(props)
     local positioner = props.positioner
     local parentFolder = props.parentFolder

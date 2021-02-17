@@ -1,18 +1,18 @@
 local module = {}
-local Sss = game:GetService("ServerScriptService")
+local Sss = game:GetService('ServerScriptService')
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Constants = require(Sss.Source.Constants.Constants)
 local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
 local initStatues = require(Sss.Source.WordWheelIsland.InitStatues)
-local ConfigRemoteEvents = require(Sss.Source.AddRemoteObjects
-                                       .ConfigRemoteEvents)
+local ConfigRemoteEvents = require(Sss.Source.AddRemoteObjects.ConfigRemoteEvents)
 
 local BlockDash = require(Sss.Source.BlockDash.BlockDash)
 local Bridge = require(Sss.Source.Bridge.Bridge)
+local BeltJoint = require(Sss.Source.BeltJoint.BeltJoint)
 local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
 local Door = require(Sss.Source.Door.Door)
-local DoorKey = require(Sss.Source.BlockDash.DoorKey)
+-- local DoorKey = require(Sss.Source.BlockDash.DoorKey)
 
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local HexJunction = require(Sss.Source.HexJunction.HexJunction)
@@ -22,21 +22,21 @@ local PlayerStatManager = require(Sss.Source.AddRemoteObjects.PlayerStatManager)
 local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 local Rink = require(Sss.Source.Rink.Rink)
 local Terrain = require(Sss.Source.Terrain.Terrain)
-local StrayLetterBlocks =
-    require(Sss.Source.StrayLetterBlocks.StrayLetterBlocks)
+local StrayLetterBlocks = require(Sss.Source.StrayLetterBlocks.StrayLetterBlocks)
 -- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
     ConfigRemoteEvents.configRemoteEvents()
 
-    local myStuff = workspace:FindFirstChild("MyStuff")
+    local myStuff = workspace:FindFirstChild('MyStuff')
 
     local statueProps = {
         statusDefs = {
-            {sentence = {"OK", "MOM"}, character = "raven"}, {
-                sentence = {"NOT", "A", "BEE"},
-                character = "katScared",
-                songId = "6342102168"
+            {sentence = {'OK', 'MOM'}, character = 'raven'},
+            {
+                sentence = {'NOT', 'A', 'BEE'},
+                character = 'katScared',
+                songId = '6342102168'
             }, --
             -- {
             --     sentence = {"TROLL", "NEED", "GOLD"},
@@ -44,8 +44,8 @@ local function addRemoteObjects()
             --     songId = "6338745550"
             -- }, --
             {
-                sentence = {"I", "SEE", "A", "BEE"},
-                character = "lizHappy"
+                sentence = {'I', 'SEE', 'A', 'BEE'},
+                character = 'lizHappy'
                 -- songId = "6338745550"
             }
         }
@@ -53,14 +53,15 @@ local function addRemoteObjects()
 
     initStatues.initStatues(statueProps)
 
-    local blockDash = Utils.getFirstDescendantByName(myStuff, "BlockDash")
-    local levelsFolder = Utils.getFirstDescendantByName(blockDash, "Levels")
+    local blockDash = Utils.getFirstDescendantByName(myStuff, 'BlockDash')
+    local levelsFolder = Utils.getFirstDescendantByName(blockDash, 'Levels')
     local levels = levelsFolder:GetChildren()
-    Utils.sortListByObjectKey(levels, "Name")
+    Utils.sortListByObjectKey(levels, 'Name')
 
-    local islandTemplate = Utils.getFromTemplates("IslandTemplate")
+    local islandTemplate = Utils.getFromTemplates('IslandTemplate')
 
     Bridge.initBridges({parentFolder = myStuff})
+    BeltJoint.initBeltJoints({parentFolder = myStuff})
     HexWall.initHexWalls({parentFolder = myStuff})
     Junction.initJunctions({parentFolder = myStuff})
     HexJunction.initHexJunctions({})
@@ -72,15 +73,13 @@ local function addRemoteObjects()
 
     for levelIndex, level in ipairs(levels) do
         -- if levelIndex == 2 then break end
-        local islandPositioners = Utils.getByTagInParent(
-                                      {parent = level, tag = "IslandPositioner"})
+        local islandPositioners = Utils.getByTagInParent({parent = level, tag = 'IslandPositioner'})
 
         local levelConfig = LevelConfigs.levelConfigs[levelIndex]
         local sectorConfigs = levelConfig.sectorConfigs
-        Utils.sortListByObjectKey(islandPositioners, "Name")
+        Utils.sortListByObjectKey(islandPositioners, 'Name')
 
-        local myPositioners = Constants.gameConfig.singleIsland and
-                                  {islandPositioners[1]} or islandPositioners
+        local myPositioners = Constants.gameConfig.singleIsland and {islandPositioners[1]} or islandPositioners
 
         Entrance.initEntrance(level)
 
@@ -95,7 +94,7 @@ local function addRemoteObjects()
 
                 local anchoredParts = {}
                 for _, child in pairs(newIsland:GetDescendants()) do
-                    if child:IsA("BasePart") then
+                    if child:IsA('BasePart') then
                         if child.Anchored then
                             child.Anchored = false
                             table.insert(anchoredParts, child)
@@ -104,10 +103,9 @@ local function addRemoteObjects()
                 end
 
                 newIsland.Parent = myStuff
-                newIsland.Name = "Sector-" .. islandPositioner.Name
+                newIsland.Name = 'Sector-' .. islandPositioner.Name
                 if sectorConfigs then
-                    local sectorConfig =
-                        sectorConfigs[(islandIndex % #sectorConfigs) + 1]
+                    local sectorConfig = sectorConfigs[(islandIndex % #sectorConfigs) + 1]
                     sectorConfig.sectorFolder = newIsland
                     sectorConfig.islandPositioner = islandPositioner
 
@@ -133,4 +131,3 @@ end
 
 module.addRemoteObjects = addRemoteObjects
 return module
-
