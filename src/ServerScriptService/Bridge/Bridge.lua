@@ -71,6 +71,8 @@ function module.initBridges(props)
                         templateName = "Bridge"
                     })
                 rod:Destroy()
+            end
+            if rod.Color == "Bright yellow" then
 
                 local rinkProps = {
                     parentTo = bridge,
