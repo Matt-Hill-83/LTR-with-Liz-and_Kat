@@ -44,14 +44,23 @@ function module.addModels(props)
             dummy:Destroy()
         end
 
-        local itemProps = {
-            positioner = positioner,
-            parentFolder = parentFolder,
+        -- local itemProps = {
+        --     positioner = positioner,
+        --     parentFolder = parentFolder,
+        --     templateName = templateName,
+        --     offsetConfig = offsetConfig
+        -- }
+        local cloneProps = {
+            parentTo = parentFolder,
+            positionToPart = positioner,
             templateName = templateName,
+            fromTemplate = true,
+            modelToClone = nil,
             offsetConfig = offsetConfig
         }
+        local newItem = Utils.cloneModel(cloneProps)
 
-        local newItem = module.addModel(itemProps)
+        -- local newItem = module.addModel(itemProps)
 
         table.insert(newParts, newItem)
     end
