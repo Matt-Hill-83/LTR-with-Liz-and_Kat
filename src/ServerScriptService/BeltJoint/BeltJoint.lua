@@ -9,26 +9,40 @@ function module.initBeltJoint(props)
     local positioner = props.positioner
     local parentFolder = props.parentFolder
 
-    local template = Utils.getFromTemplates('BeltJoint-001')
-
-    local newItem = template:Clone()
-    newItem.Parent = parentFolder.Parent
-    local itemPart = newItem.PrimaryPart
-
-    itemPart.CFrame =
-        Utils3.setCFrameFromDesiredEdgeOffset(
-        {
-            parent = positioner,
-            child = itemPart,
-            offsetConfig = {
-                useParentNearEdge = Vector3.new(0, -1, 0),
-                useChildNearEdge = Vector3.new(0, -1, 0),
-                offsetAdder = Vector3.new(0, 0, 0)
-            }
+    local cloneProps = {
+        parentTo = parentFolder,
+        positionToPart = positioner,
+        templateName = 'BeltJoint-001',
+        fromTemplate = true,
+        modelToClone = nil,
+        offsetConfig = {
+            useParentNearEdge = Vector3.new(0, 0, 0),
+            useChildNearEdge = Vector3.new(0, 0, 0),
+            offsetAdder = Vector3.new(0, 0, 0)
         }
-    )
+    }
 
-    itemPart.Anchored = true
+    local newItem = Utils.cloneModel(cloneProps)
+    -- local template = Utils.getFromTemplates('BeltJoint-001')
+
+    -- local newItem = template:Clone()
+    -- newItem.Parent = parentFolder.Parent
+    -- local itemPart = newItem.PrimaryPart
+
+    -- itemPart.CFrame =
+    --     Utils3.setCFrameFromDesiredEdgeOffset(
+    --     {
+    --         parent = positioner,
+    --         child = itemPart,
+    --         offsetConfig = {
+    --             useParentNearEdge = Vector3.new(0, -1, 0),
+    --             useChildNearEdge = Vector3.new(0, -1, 0),
+    --             offsetAdder = Vector3.new(0, 0, 0)
+    --         }
+    --     }
+    -- )
+
+    -- itemPart.Anchored = true
     return newItem
 end
 

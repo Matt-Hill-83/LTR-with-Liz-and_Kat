@@ -1,7 +1,7 @@
-local Sss = game:GetService("ServerScriptService")
-local CS = game:GetService("CollectionService")
-local Players = game:GetService("Players")
-local HttpService = game:GetService("HttpService")
+local Sss = game:GetService('ServerScriptService')
+local CS = game:GetService('CollectionService')
+local Players = game:GetService('Players')
+local HttpService = game:GetService('HttpService')
 
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
 local Const4 = require(Sss.Source.Constants.Const_04_Characters)
@@ -18,20 +18,19 @@ local getInstancesByNameStub = function(props)
 
         if match then
             table.insert(output, item)
-            --
+        --
         end
     end
     return output
 end
 
 local function hasProperty(instance, property)
-    -- local clone = instance:Clone()
-    -- clone:ClearAllChildren()
-
-    return (pcall(function()
-        return instance[property]
-        -- 
-    end))
+    return (pcall(
+        function()
+            return instance[property]
+            --
+        end
+    ))
 end
 
 local function cloneModel(props)
@@ -40,11 +39,13 @@ local function cloneModel(props)
     local templateName = props.templateName
     local fromTemplate = props.fromTemplate
     local modelToClone = props.modelToClone
-    local offsetConfig = props.offsetConfig or {
-        useParentNearEdge = Vector3.new(1, -1, 1),
-        useChildNearEdge = Vector3.new(1, -1, 1),
-        offsetAdder = Vector3.new(0, 0, 0)
-    }
+    local offsetConfig =
+        props.offsetConfig or
+        {
+            useParentNearEdge = Vector3.new(1, -1, 1),
+            useChildNearEdge = Vector3.new(1, -1, 1),
+            offsetAdder = Vector3.new(0, 0, 0)
+        }
 
     if true then
         -- if fromTemplate then
@@ -55,18 +56,19 @@ local function cloneModel(props)
         local childPart = newChild.PrimaryPart
         local freeParts = module.freeAnchoredParts({item = newChild})
 
-        childPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
-                               {
+        childPart.CFrame =
+            Utils3.setCFrameFromDesiredEdgeOffset(
+            {
                 parent = positionToPart,
                 child = childPart,
                 offsetConfig = offsetConfig
-            })
+            }
+        )
 
         module.anchorFreedParts(freeParts)
         childPart.Anchored = true
         return newChild
     end
-
 end
 
 local function freeAnchoredParts(props)
@@ -74,7 +76,7 @@ local function freeAnchoredParts(props)
     local anchoredParts = {}
 
     local function freeParts(part)
-        local hasProp = part:IsA("BasePart")
+        local hasProp = part:IsA('BasePart')
 
         if hasProp and part.Anchored == true then
             part.Anchored = false
@@ -84,14 +86,16 @@ local function freeAnchoredParts(props)
 
     freeParts(parent)
     local children = parent:GetDescendants()
-    for _, item in ipairs(children) do freeParts(item) end
+    for _, item in ipairs(children) do
+        freeParts(item)
+    end
     return anchoredParts
 end
 
 local function anchorFreedParts(items)
     for _, item in pairs(items) do
         item.Anchored = true
-        -- 
+        --
     end
 end
 
@@ -100,16 +104,16 @@ local function hideItemAndChildren2(props)
     local hiddenParts = {}
 
     local function hideItem2(part)
-        if part:IsA("BasePart") and part.Transparency ~= 1 then
+        if part:IsA('BasePart') and part.Transparency ~= 1 then
             part.Transparency = 1
             part.CanCollide = false
             table.insert(hiddenParts, part)
         end
-        if part:IsA("Decal") and part.Transparency ~= 1 then
+        if part:IsA('Decal') and part.Transparency ~= 1 then
             part.Transparency = 1
             table.insert(hiddenParts, part)
         end
-        if part:IsA("TextLabel") and part.Transparency ~= 1 then
+        if part:IsA('TextLabel') and part.Transparency ~= 1 then
             part.Transparency = 1
             table.insert(hiddenParts, part)
         end
@@ -117,7 +121,9 @@ local function hideItemAndChildren2(props)
 
     hideItem2(parent)
     local children = parent:GetDescendants()
-    for i, item in ipairs(children) do hideItem2(item) end
+    for i, item in ipairs(children) do
+        hideItem2(item)
+    end
     return hiddenParts
 end
 
@@ -128,7 +134,7 @@ local function convertItemAndChildrenToTerrain(props)
     local material = props.material or Enum.Material.LeafyGrass
 
     local function convert(part)
-        if part:IsA("BasePart") and part.CanCollide == true then
+        if part:IsA('BasePart') and part.CanCollide == true then
             part.Transparency = 1
             part.CanCollide = false
             game.Workspace.Terrain:FillBlock(part.CFrame, part.Size, material)
@@ -139,7 +145,9 @@ local function convertItemAndChildrenToTerrain(props)
 
     if not ignoreKids then
         local children = parent:GetDescendants()
-        for i, item in ipairs(children) do convert(item) end
+        for i, item in ipairs(children) do
+            convert(item)
+        end
     end
 end
 
@@ -147,8 +155,8 @@ local function hideFrontLabels(parent)
     local hiddenParts = {}
 
     local function hideItem2(part)
-        if part:IsA("TextLabel") and part.Transparency ~= 1 then
-            if part.Text == "Front" or part.Text == "Label" then
+        if part:IsA('TextLabel') and part.Transparency ~= 1 then
+            if part.Text == 'Front' or part.Text == 'Label' then
                 part.Visible = false
                 table.insert(hiddenParts, part)
             end
@@ -157,17 +165,21 @@ local function hideFrontLabels(parent)
 
     hideItem2(parent)
     local children = parent:GetDescendants()
-    for i, item in ipairs(children) do hideItem2(item) end
+    for i, item in ipairs(children) do
+        hideItem2(item)
+    end
     return hiddenParts
 end
 
 local function unhideHideItems(props)
     local items = props.items
     for _, part in ipairs(items) do
-        if part:IsA("BasePart") then part.CanCollide = true end
+        if part:IsA('BasePart') then
+            part.CanCollide = true
+        end
         -- if part:FindFirstChild("CanCollide") then part.CanCollide = true end
         part.Transparency = 0
-        -- 
+        --
     end
 end
 
@@ -188,9 +200,13 @@ end
 local function onTouchHuman(touchedBlock, callBack)
     local db = {value = false}
     local function closure(otherPart)
-        if not otherPart.Parent then return end
-        local humanoid = otherPart.Parent:FindFirstChildWhichIsA("Humanoid")
-        if not humanoid then return end
+        if not otherPart.Parent then
+            return
+        end
+        local humanoid = otherPart.Parent:FindFirstChildWhichIsA('Humanoid')
+        if not humanoid then
+            return
+        end
 
         if not db.value then
             db.value = true
@@ -202,21 +218,27 @@ local function onTouchHuman(touchedBlock, callBack)
     return closure
 end
 
-function getUuid() return HttpService:GenerateGUID(false) end
+function getUuid()
+    return HttpService:GenerateGUID(false)
+end
 
 local function destroyTools(player, toolNameStub)
     local children2 = player.Character:GetChildren()
     for _, child in ipairs(children2) do
         local pattern = toolNameStub
         local found = string.match(child.Name, pattern)
-        if found and child:IsA("Tool") then child:Destroy() end
+        if found and child:IsA('Tool') then
+            child:Destroy()
+        end
     end
 
     local children = player.Backpack:GetChildren()
     for _, child in ipairs(children) do
         local pattern = toolNameStub
         local found = string.match(child.Name, pattern)
-        if found and child:IsA("Tool") then child:Destroy() end
+        if found and child:IsA('Tool') then
+            child:Destroy()
+        end
     end
 end
 
@@ -225,7 +247,9 @@ local function getActiveTool(player, toolNameStub)
     for _, child in ipairs(children2) do
         local pattern = toolNameStub
         local found = string.match(child.Name, pattern)
-        if found and child:IsA("Tool") then return child end
+        if found and child:IsA('Tool') then
+            return child
+        end
     end
     return false
 end
@@ -233,11 +257,13 @@ end
 local function getActiveToolByToolType(player, toolType)
     local children2 = player.Character:GetChildren()
     for _, child in ipairs(children2) do
-        local isTool = child:IsA("Tool")
-        local hasProp = module.getFirstDescendantByName(child, "ToolType")
+        local isTool = child:IsA('Tool')
+        local hasProp = module.getFirstDescendantByName(child, 'ToolType')
         if hasProp and isTool then
             local correctType = child.ToolType.Value == toolType
-            if correctType then return child end
+            if correctType then
+                return child
+            end
         end
     end
     return false
@@ -247,7 +273,7 @@ local function listIncludes(tab, val)
     for _, value in ipairs(tab) do
         if value == val then
             return true
-            -- 
+        --
         end
     end
 
@@ -256,11 +282,13 @@ end
 
 local function playSound(soundId, emitterSize)
     if (soundId) then
-        local sound = Instance.new("Sound", workspace)
-        sound.SoundId = "rbxassetid://" .. soundId
+        local sound = Instance.new('Sound', workspace)
+        sound.SoundId = 'rbxassetid://' .. soundId
         sound.EmitterSize = emitterSize or 5
         sound.Looped = false
-        if not sound.IsPlaying then sound:Play() end
+        if not sound.IsPlaying then
+            sound:Play()
+        end
     end
 end
 
@@ -268,7 +296,7 @@ local function getItemByUuid(items, uuid)
     for _, item in ipairs(items) do
         if item.Uuid == uuid then
             return item
-            -- 
+        --
         end
     end
     return nil
@@ -277,9 +305,8 @@ end
 local function removeListItemByUuid(items, uuid)
     for index, item in ipairs(items) do
         if item.uuid == uuid then
-
             table.remove(items, index)
-            -- 
+        --
         end
         -- if item.Uuid ~= uuid then table.insert(newList, item) end
     end
@@ -298,15 +325,20 @@ end
 
 function tablelength(T)
     local count = 0
-    for _ in pairs(T) do count = count + 1 end
+    for _ in pairs(T) do
+        count = count + 1
+    end
     return count
 end
 
 local function sortListByObjectKey(list, keyName)
-    table.sort(list, function(left, right)
-        return left[keyName] < right[keyName]
-        -- 
-    end)
+    table.sort(
+        list,
+        function(left, right)
+            return left[keyName] < right[keyName]
+            --
+        end
+    )
 end
 
 function applyDecalsToCharacterFromWord(props)
@@ -319,10 +351,8 @@ function applyDecalsToCharacterFromWord(props)
         local imageId = Const4.wordConfigs[word]['imageId']
         if imageId then
             local decalUri = 'rbxassetid://' .. imageId
-            local decalFront = getFirstDescendantByName(part,
-                                                        "CharacterDecalFront")
-            local decalBack = getFirstDescendantByName(part,
-                                                       "CharacterDecalBack")
+            local decalFront = getFirstDescendantByName(part, 'CharacterDecalFront')
+            local decalBack = getFirstDescendantByName(part, 'CharacterDecalBack')
             decalFront.Image = decalUri
             decalBack.Image = decalUri
             found = true
@@ -333,11 +363,10 @@ end
 
 function applyLabelsToCharacter(props)
     local part = props.part
-    local text = props.text or "no label"
+    local text = props.text or 'no label'
 
-    local charLabelFront = module.getFirstDescendantByName(part,
-                                                           "CharLabelFront")
-    local charLabelBack = module.getFirstDescendantByName(part, "CharLabelBack")
+    local charLabelFront = module.getFirstDescendantByName(part, 'CharLabelFront')
+    local charLabelBack = module.getFirstDescendantByName(part, 'CharLabelBack')
     charLabelFront.Text = text
     charLabelBack.Text = text
 end
@@ -350,15 +379,14 @@ function applyDecalsToCharacterFromConfigName(props)
 
     if imageId then
         local decalUri = 'rbxassetid://' .. imageId
-        local decalFront = getFirstDescendantByName(part, "CharacterDecalFront")
-        local decalBack = getFirstDescendantByName(part, "CharacterDecalBack")
+        local decalFront = getFirstDescendantByName(part, 'CharacterDecalFront')
+        local decalBack = getFirstDescendantByName(part, 'CharacterDecalBack')
         decalFront.Image = decalUri
         decalBack.Image = decalUri
     end
 
     local displayName = module.getDisplayNameFromName({name = configName})
     applyLabelsToCharacter({part = part, text = displayName})
-
 end
 
 local function getPlayerFromHumanoid(humanoid)
@@ -371,7 +399,7 @@ local function getKeysFromDict(dict)
     local keyset = {}
     for k, v in pairs(dict) do
         keyset[#keyset + 1] = k
-        -- 
+        --
     end
     return keyset
 end
@@ -389,29 +417,29 @@ function enableChildWelds(props)
     local part = props.part
     local enabled = props.enabled
 
-    local allWelds = module.getDescendantsByType(part, "Weld")
+    local allWelds = module.getDescendantsByType(part, 'Weld')
     for i, weld in ipairs(allWelds) do
         weld.Enabled = enabled
-        -- 
+        --
     end
-    local allWelds2 = module.getDescendantsByType(part, "WeldConstraint")
+    local allWelds2 = module.getDescendantsByType(part, 'WeldConstraint')
     for i, weld in ipairs(allWelds2) do
         weld.Enabled = enabled
-        -- 
+        --
     end
 end
 
 local function disableEnabledWelds(part)
     local welds = {}
 
-    local allWelds = module.getDescendantsByType(part, "Weld")
+    local allWelds = module.getDescendantsByType(part, 'Weld')
     for _, weld in ipairs(allWelds) do
         if weld.Enabled then
             weld.Enabled = false
             table.insert(welds, weld)
         end
     end
-    local allWelds2 = module.getDescendantsByType(part, "WeldConstraint")
+    local allWelds2 = module.getDescendantsByType(part, 'WeldConstraint')
     for _, weld in ipairs(allWelds2) do
         if weld.Enabled then
             weld.Enabled = false
@@ -426,7 +454,11 @@ function genRandom(min, max)
     return math.floor(rand)
 end
 
-function module.clearTable(tbl) for key in pairs(tbl) do tbl[key] = nil end end
+function module.clearTable(tbl)
+    for key in pairs(tbl) do
+        tbl[key] = nil
+    end
+end
 
 function module.setPropsByTag(props)
     local tag = props.tag
@@ -435,7 +467,7 @@ function module.setPropsByTag(props)
     local items = CS:GetTagged(tag)
     for i, item in ipairs(items) do
         mergeTables(item, theProps)
-        -- 
+        --
     end
 end
 
@@ -448,7 +480,7 @@ function module.getByTagInParent(props)
     for i, item in ipairs(items) do
         if item:IsDescendantOf(parent) then
             table.insert(output, item)
-            -- 
+        --
         end
     end
     return output
@@ -459,7 +491,7 @@ function getFirstDescendantByName(parent, name)
     for i = 1, #model do
         if model[i].Name == name then
             return model[i]
-            -- 
+        --
         end
     end
 end
@@ -471,7 +503,7 @@ function getDescendantsByName(parent, name)
     for i, item in ipairs(items) do
         if item.Name == name then
             table.insert(output, item)
-            -- 
+        --
         end
     end
     return output
@@ -484,7 +516,7 @@ function module.getDescendantsByType(parent, type)
     for i, item in pairs(items) do
         if item:IsA(type) then
             table.insert(output, item)
-            -- 
+        --
         end
     end
     return output
@@ -495,22 +527,38 @@ function hideItem(part, hide)
     local visible = not hide
     local enabled = not hide
 
-    if part:IsA("BasePart") then part.Transparency = transparency end
-    if part:IsA("Decal") then part.Transparency = transparency end
+    if part:IsA('BasePart') then
+        part.Transparency = transparency
+    end
+    if part:IsA('Decal') then
+        part.Transparency = transparency
+    end
 
-    if part:IsA("ScrollingFrame") then part.Visible = visible end
-    if part:IsA("TextLabel") then part.Visible = visible end
-    if part:IsA("TextButton") then part.Visible = visible end
+    if part:IsA('ScrollingFrame') then
+        part.Visible = visible
+    end
+    if part:IsA('TextLabel') then
+        part.Visible = visible
+    end
+    if part:IsA('TextButton') then
+        part.Visible = visible
+    end
 
-    if part:IsA("SurfaceGui") then part.Enabled = enabled end
+    if part:IsA('SurfaceGui') then
+        part.Enabled = enabled
+    end
 end
 
 function setChildrenProps(parent, props)
-    if parent:IsA("BasePart") then mergeTables(parent, props) end
+    if parent:IsA('BasePart') then
+        mergeTables(parent, props)
+    end
 
     local children = parent:GetDescendants()
     for i, item in ipairs(children) do
-        if item:IsA("BasePart") then mergeTables(item, props) end
+        if item:IsA('BasePart') then
+            mergeTables(item, props)
+        end
     end
 end
 
@@ -520,7 +568,9 @@ function hideItemAndChildren(props)
 
     hideItem(parent, hide)
     local children = parent:GetDescendants()
-    for i, item in ipairs(children) do hideItem(item, hide) end
+    for i, item in ipairs(children) do
+        hideItem(item, hide)
+    end
 end
 
 function sizeWalls(props)
@@ -529,20 +579,20 @@ function sizeWalls(props)
 
     local children = parent:GetDescendants()
     for i, item in ipairs(children) do
-        if item:isA("Part") then item.CanCollide = false end
-    end
-    for i, item in ipairs(children) do
-        if item:isA("Part") then
-            local posY = item.Position.Y - item.Size.Y / 2
-            local newPosY = posY + (height / 2)
-            item.Size = Vector3.new(item.Size.X, height, item.Size.Z)
-            item.Position = Vector3.new(item.Position.X, newPosY,
-                                        item.Position.Z)
-
+        if item:isA('Part') then
+            item.CanCollide = false
         end
     end
     for i, item in ipairs(children) do
-        if item:isA("Part") then
+        if item:isA('Part') then
+            local posY = item.Position.Y - item.Size.Y / 2
+            local newPosY = posY + (height / 2)
+            item.Size = Vector3.new(item.Size.X, height, item.Size.Z)
+            item.Position = Vector3.new(item.Position.X, newPosY, item.Position.Z)
+        end
+    end
+    for i, item in ipairs(children) do
+        if item:isA('Part') then
             item.CanCollide = true
             item.Anchored = true
         end
@@ -553,7 +603,7 @@ function setItemHeight(props)
     local item = props.item
     local height = props.height
 
-    if item:isA("Part") then
+    if item:isA('Part') then
         local posY = item.Position.Y - item.Size.Y / 2
         local newPosY = posY + (height / 2)
         item.Size = Vector3.new(item.Size.X, height, item.Size.Z)
@@ -566,22 +616,22 @@ function sizeWalls2(props)
     local height = props.height
 
     for i, item in ipairs(items) do
-        if item:isA("Part") then item.CanCollide = false end
-    end
-
-    for i, item in ipairs(items) do
-        if item:isA("Part") then
-            local posY = item.Position.Y - item.Size.Y / 2
-            local newPosY = posY + (height / 2)
-            item.Size = Vector3.new(item.Size.X, height, item.Size.Z)
-            item.Position = Vector3.new(item.Position.X, newPosY,
-                                        item.Position.Z)
-
+        if item:isA('Part') then
+            item.CanCollide = false
         end
     end
 
     for i, item in ipairs(items) do
-        if item:isA("Part") then
+        if item:isA('Part') then
+            local posY = item.Position.Y - item.Size.Y / 2
+            local newPosY = posY + (height / 2)
+            item.Size = Vector3.new(item.Size.X, height, item.Size.Z)
+            item.Position = Vector3.new(item.Position.X, newPosY, item.Position.Z)
+        end
+    end
+
+    for i, item in ipairs(items) do
+        if item:isA('Part') then
             item.CanCollide = true
             item.Anchored = true
         end
@@ -592,7 +642,7 @@ function module.hideItemAndChildrenByName(props)
     local name = props.name
     local hide = props.hide
 
-    local myStuff = workspace:FindFirstChild("MyStuff")
+    local myStuff = workspace:FindFirstChild('MyStuff')
     local item = getFirstDescendantByName(myStuff, name)
     hideItemAndChildren({item = item, hide = hide})
 end
@@ -602,19 +652,18 @@ function module.setWallHeightByList(props)
     local height = props.height
 
     sizeWalls2({items = items, height = height})
-
 end
 
 function module.setWallHeightbyParentModelName(props)
     local name = props.name
     local height = props.height
 
-    local myStuff = workspace:FindFirstChild("MyStuff")
+    local myStuff = workspace:FindFirstChild('MyStuff')
     local items = getDescendantsByName(myStuff, name)
 
     for i, item in ipairs(items) do
         sizeWalls({item = item, height = height})
-        -- 
+        --
     end
 end
 
@@ -622,7 +671,7 @@ function module.setItemAndChildrenPropsByName(myProps)
     local name = myProps.name
     local props = myProps.props
 
-    local myStuff = workspace:FindFirstChild("MyStuff")
+    local myStuff = workspace:FindFirstChild('MyStuff')
     local item = getFirstDescendantByName(myStuff, name)
     setChildrenProps(item, props)
 end
@@ -641,7 +690,7 @@ function module.getOrCreateFolder(props)
     local runtimeQuestsFolder = getFirstDescendantByName(parent, name)
 
     if not runtimeQuestsFolder then
-        runtimeQuestsFolder = Instance.new("Folder", parent)
+        runtimeQuestsFolder = Instance.new('Folder', parent)
         runtimeQuestsFolder.Name = name
         runtimeQuestsFolder = getFirstDescendantByName(parent, name)
     end
@@ -651,32 +700,36 @@ end
 
 function module.reportPlayerLocation()
     -- local Players = game:GetService("Players")
-    Players.PlayerAdded:Connect(function(player)
-        player.CharacterAdded:Connect(function(character)
-            local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
-            while humanoidRootPart do
-                local test2 = workspace.CurrentCamera.CFrame.Position
-                wait(4)
-            end
-        end)
-    end)
+    Players.PlayerAdded:Connect(
+        function(player)
+            player.CharacterAdded:Connect(
+                function(character)
+                    local humanoidRootPart = character:WaitForChild('HumanoidRootPart')
+                    while humanoidRootPart do
+                        local test2 = workspace.CurrentCamera.CFrame.Position
+                        wait(4)
+                    end
+                end
+            )
+        end
+    )
 end
 
 function module.getDecalIdFromName(props)
     local name = props.name
-    if (Const4.characters[name] and Const4.characters[name]["decalId"]) then
-        return Const4.characters[name]["decalId"]
+    if (Const4.characters[name] and Const4.characters[name]['decalId']) then
+        return Const4.characters[name]['decalId']
     else
-
-        if (name ~= "blank" and name ~= "empty" and name ~= "") then end
+        if (name ~= 'blank' and name ~= 'empty' and name ~= '') then
+        end
         return '5999465084'
     end
 end
 
 function module.getDisplayNameFromName(props)
     local name = props.name
-    if (Const4.characters[name] and Const4.characters[name]["displayName"]) then
-        return Const4.characters[name]["displayName"]
+    if (Const4.characters[name] and Const4.characters[name]['displayName']) then
+        return Const4.characters[name]['displayName']
     else
         return name
     end
@@ -689,19 +742,19 @@ function module.deleteChildrenByName(props)
     for i, item in pairs(children) do
         if item.Name == childName then
             item:Destroy()
-            --
+        --
         end
     end
 end
 
 function getFromMyStuff(name)
-    local myStuff = workspace:FindFirstChild("MyStuff")
+    local myStuff = workspace:FindFirstChild('MyStuff')
     return getFirstDescendantByName(myStuff, name)
 end
 
 function module.getFromTemplates(name)
-    local myStuff = workspace:FindFirstChild("MyStuff")
-    local myTemplates = myStuff:FindFirstChild("MyTemplates")
+    local myStuff = workspace:FindFirstChild('MyStuff')
+    local myTemplates = myStuff:FindFirstChild('MyTemplates')
     return getFirstDescendantByName(myTemplates, name)
 end
 
@@ -711,10 +764,11 @@ function module.unAttachAllChildParts(parent)
     for i = 1, #items do
         if items[i]:IsA('Part') then
             local item = items[i]
-            if item.Anchored == true then table.insert(output, item) end
-            --
+            if item.Anchored == true then
+                table.insert(output, item)
+            end
+        --
         end
-
     end
     return output
 end
@@ -725,24 +779,25 @@ function module.getDescendantsByNameMatch(parent, name)
     for i = 1, #descendants do
         local child = descendants[i]
         local match = string.match(child.Name, name)
-        if match then table.insert(output, child) end
+        if match then
+            table.insert(output, child)
+        end
     end
     return output
 end
 
 function addcfv3(a, b)
     local x, y, z, m11, m12, m13, m21, m22, m23, m31, m32, m33 = a:components()
-    return CFrame.new(x + b.x, y + b.y, z + b.z, m11, m12, m13, m21, m22, m23,
-                      m31, m32, m33);
+    return CFrame.new(x + b.x, y + b.y, z + b.z, m11, m12, m13, m21, m22, m23, m31, m32, m33)
 end
 
 local function getNames(tab, name, res, lev)
-    res = res or {[tab] = "ROOT"}
+    res = res or {[tab] = 'ROOT'}
     local pls = {}
     lev = lev or 0
     for k, v in pairs(tab) do
-        if type(v) == "table" and not res[v] then
-            local n = name .. "." .. tostring(k)
+        if type(v) == 'table' and not res[v] then
+            local n = name .. '.' .. tostring(k)
             res[v] = n
             pls[v] = n
         end
@@ -757,38 +812,44 @@ end
 function tableToString(tab, a, b, c, d)
     a, b = a or 0, b or {[tab] = true}
     local name = b[tab]
-    local white = ("\t"):rep(a + 1)
-    if not c then c, d = getNames(tab, "ROOT") end
-    local res = {"{"}
+    local white = ('\t'):rep(a + 1)
+    if not c then
+        c, d = getNames(tab, 'ROOT')
+    end
+    local res = {'{'}
     for k, v in pairs(tab) do
         local value
-        if type(v) == "table" then
+        if type(v) == 'table' then
             if d[v] == a and not b[v] then
                 b[v] = true
                 value = tableToString(v, a + 1, b, c, d)
             else
                 value = c[v]
             end
-        elseif type(v) == "string" then
-            value = '"' .. v:gsub("\n", "\\n"):gsub("\t", "\\t") .. '"'
+        elseif type(v) == 'string' then
+            value = '"' .. v:gsub('\n', '\\n'):gsub('\t', '\\t') .. '"'
         else
             value = tostring(v)
         end
-        table.insert(res, white .. tostring(k) .. " = " .. value)
+        table.insert(res, white .. tostring(k) .. ' = ' .. value)
     end
     white = white:sub(2)
-    table.insert(res, white .. "}")
-    return table.concat(res, "\n")
+    table.insert(res, white .. '}')
+    return table.concat(res, '\n')
 end
 
-function mergeTables(t1, t2) for k, v in pairs(t2) do t1[k] = v end end
+function mergeTables(t1, t2)
+    for k, v in pairs(t2) do
+        t1[k] = v
+    end
+end
 
 local function addPadding(props)
     local parent = props.parent
     local padding = props.padding
     local inPx = props.inPx
 
-    local uIPadding = Instance.new("UIPadding", parent)
+    local uIPadding = Instance.new('UIPadding', parent)
 
     if inPx then
         uIPadding.PaddingBottom = UDim.new(0, padding)
@@ -845,7 +906,6 @@ module.getActiveToolByToolType = getActiveToolByToolType
 module.hideFrontLabels = hideFrontLabels
 module.getListItemByPropValue = getListItemByPropValue
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord
-module.applyDecalsToCharacterFromConfigName =
-    applyDecalsToCharacterFromConfigName
+module.applyDecalsToCharacterFromConfigName = applyDecalsToCharacterFromConfigName
 
 return module
