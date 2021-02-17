@@ -131,10 +131,13 @@ end
 
 function module.initKeys(props)
     local parentFolder = props.parentFolder
-
+    print('parentFolder' .. ' - start');
+    print(parentFolder);
     local keyPositioners = Utils.getByTagInParent(
                                {parent = parentFolder, tag = "KeyPositioner"})
 
+    print('keyPositioners' .. ' - start');
+    print(keyPositioners);
     local replicator = Utils.getFromTemplates("LetterKeyReplicatorTemplate")
     -- local replicator = Utils.getFromTemplates("HexLetterGemTool")
 
@@ -173,10 +176,10 @@ function module.initKeys(props)
                 offsetConfig = {
                     useParentNearEdge = Vector3.new(0, -1, 0),
                     useChildNearEdge = Vector3.new(0, -1, 0),
-                    offsetAdder = Vector3.new(0, -8, 0)
+                    offsetAdder = Vector3.new(0, 0, 0)
                 }
             })
-        hitBox.Anchored = true
+        -- hitBox.Anchored = true
         Replicator.initReplicator(newReplicator)
         -- Replicator.initReplicator(newReplicator, afterReplication)
         -- table.insert(doors, newReplicator)

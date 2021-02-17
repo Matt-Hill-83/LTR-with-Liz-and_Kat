@@ -10,7 +10,8 @@ local module = {}
 
 local function initKey(props)
     print('initKey' .. ' - start');
-    print(initKey);
+    print('initKey' .. ' - start');
+    print('initKey' .. ' - start');
     local sectorFolder = workspace
     -- local sectorFolder = props.parentFolder
 
