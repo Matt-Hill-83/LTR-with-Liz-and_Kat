@@ -1,4 +1,4 @@
-local Sss = game:GetService("ServerScriptService")
+local Sss = game:GetService('ServerScriptService')
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Utils3 = require(Sss.Source.Utils.U003PartsUtils)
@@ -23,11 +23,19 @@ local function onTouch(door)
     local db = {value = false}
 
     local function closure(key)
-        local humanoid = key.Parent.Parent:FindFirstChildWhichIsA("Humanoid")
-        if not humanoid then return end
-        if not key:FindFirstChild("KeyName") then return end
-        if key.KeyName.Value ~= door.KeyName.Value then return end
-        if db.value == true then return end
+        local humanoid = key.Parent.Parent:FindFirstChildWhichIsA('Humanoid')
+        if not humanoid then
+            return
+        end
+        if not key:FindFirstChild('KeyName') then
+            return
+        end
+        if key.KeyName.Value ~= door.KeyName.Value then
+            return
+        end
+        if db.value == true then
+            return
+        end
 
         db.value = true
         local player = Utils.getPlayerFromHumanoid(humanoid)
@@ -37,8 +45,6 @@ local function onTouch(door)
     return closure
 end
 
-
-
 function module.initDoor(props)
     local positioner = props.positioner
     local parentFolder = props.parentFolder
@@ -47,13 +53,13 @@ function module.initDoor(props)
     local width = props.width or 32
     local noGem = props.noGem
 
-    local doorTemplate = Utils.getFromTemplates("GemLetterDoor")
+    local doorTemplate = Utils.getFromTemplates('GemLetterDoor')
 
     local newDoor = doorTemplate:Clone()
     newDoor.Parent = parentFolder.Parent
     local doorPart = newDoor.PrimaryPart
 
-    local walls = Utils.getDescendantsByName(newDoor, "Wall")
+    local walls = Utils.getDescendantsByName(newDoor, 'Wall')
 
     local wallWidthX = (width - doorWidth) / 2
 
@@ -74,22 +80,23 @@ function module.initDoor(props)
     if noGem then
         newDoor.HexLetterGemTool:Destroy()
     else
-
         LetterUtils.applyLetterText({letterBlock = newDoor, char = keyName})
 
         LetterUtils.createPropOnLetterBlock(
             {
                 letterBlock = newDoor,
-                propName = "KeyName",
+                propName = 'KeyName',
                 initialValue = keyName,
-                propType = "StringValue"
-            })
+                propType = 'StringValue'
+            }
+        )
 
         doorPart.Touched:Connect(onTouch(newDoor))
     end
 
-    doorPart.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
-                          {
+    doorPart.CFrame =
+        Utils3.setCFrameFromDesiredEdgeOffset(
+        {
             parent = positioner,
             child = doorPart,
             offsetConfig = {
@@ -97,7 +104,8 @@ function module.initDoor(props)
                 useChildNearEdge = Vector3.new(0, -1, 0),
                 offsetAdder = Vector3.new(0, 0, 0)
             }
-        })
+        }
+    )
 
     doorPart.Anchored = true
     return newDoor
@@ -106,15 +114,16 @@ end
 function module.initDoors(props)
     local parentFolder = props.parentFolder
 
-    local doorPositioners = Utils.getByTagInParent(
-                                {parent = parentFolder, tag = "DoorPositioner"})
+    local doorPositioners = Utils.getByTagInParent({parent = parentFolder, tag = 'DoorPositioner'})
 
     local doors = {}
     for _, model in ipairs(doorPositioners) do
         local positioner = model.Positioner
 
-        local dummy = Utils.getFirstDescendantByName(model, "Dummy")
-        if dummy then dummy:Destroy() end
+        local dummy = Utils.getFirstDescendantByName(model, 'Dummy')
+        if dummy then
+            dummy:Destroy()
+        end
 
         local keyName = model.name
 
@@ -131,63 +140,4 @@ function module.initDoors(props)
     return doors
 end
 
-function module.initKeys(props)
-    local parentFolder = props.parentFolder
-    print('parentFolder' .. ' - start');
-    print(parentFolder);
-    local keyPositioners = Utils.getByTagInParent(
-                               {parent = parentFolder, tag = "KeyPositioner"})
-
-    print('keyPositioners' .. ' - start');
-    print(keyPositioners);
-    local replicator = Utils.getFromTemplates("LetterKeyReplicatorTemplate")
-    -- local replicator = Utils.getFromTemplates("HexLetterGemTool")
-
-    -- local doors = {}
-    for _, model in ipairs(keyPositioners) do
-        local keyName = model.name
-        local positioner = model.Positioner
-
-        local dummy = Utils.getFirstDescendantByName(model, "Dummy")
-        if dummy then dummy:Destroy() end
-
-        local newReplicator = replicator:Clone()
-        newReplicator.Name = "ddd"
-        newReplicator.Parent = parentFolder.Parent
-        -- local keyPart = newReplicator.PrimaryPart
-
-        local keyPart = Utils.getFirstDescendantByName(newReplicator, "Handle")
-        LetterUtils.applyLetterText({
-            letterBlock = newReplicator,
-            char = keyName
-        })
-
-        LetterUtils.createPropOnLetterBlock(
-            {
-                letterBlock = keyPart,
-                propName = "KeyName",
-                initialValue = keyName,
-                propType = "StringValue"
-            })
-
-        local hitBox = newReplicator.PrimaryPart
-        hitBox.CFrame = Utils3.setCFrameFromDesiredEdgeOffset(
-                            {
-                parent = positioner,
-                child = hitBox,
-                offsetConfig = {
-                    useParentNearEdge = Vector3.new(0, -1, 0),
-                    useChildNearEdge = Vector3.new(0, -1, 0),
-                    offsetAdder = Vector3.new(0, 0, 0)
-                }
-            })
-        -- hitBox.Anchored = true
-        Replicator.initReplicator(newReplicator)
-        -- Replicator.initReplicator(newReplicator, afterReplication)
-        -- table.insert(doors, newReplicator)
-    end
-    -- return doors
-end
-
 return module
-

@@ -12,6 +12,7 @@ local Bridge = require(Sss.Source.Bridge.Bridge)
 local BeltJoint = require(Sss.Source.BeltJoint.BeltJoint)
 local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
 local Door = require(Sss.Source.Door.Door)
+local Key = require(Sss.Source.Key.Key)
 -- local DoorKey = require(Sss.Source.BlockDash.DoorKey)
 
 local Entrance = require(Sss.Source.BlockDash.Entrance)
@@ -84,7 +85,7 @@ local function addRemoteObjects()
         Entrance.initEntrance(level)
 
         Door.initDoors({parentFolder = myStuff})
-        Door.initKeys({parentFolder = level})
+        Key.initKeys({parentFolder = level})
 
         -- if false then
         if true then
