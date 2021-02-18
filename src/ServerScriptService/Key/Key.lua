@@ -25,8 +25,9 @@ function module.initKey(positionerModel, parentFolder)
 
     local newReplicatorPart = newReplicator.PrimaryPart
 
+    local rewardTemplate = Utils.getFromTemplates('TestKey')
     -- local rewardTemplate = Utils.getFromTemplates('Test-iii')
-    local rewardTemplate = Utils.getFromTemplates('HexLetterGemTool')
+    -- local rewardTemplate = Utils.getFromTemplates('HexLetterGemTool')
     local rewardFolder = newReplicator.Reward
     local rewards = rewardFolder:getChildren()
     for _, reward in ipairs(rewards) do
