@@ -8,7 +8,11 @@ local AddModelFromPositioner = require(Sss.Source.AddModelFromPositioner.AddMode
 local Replicator = require(Sss.Source.BlockDash.Replicator)
 local module = {}
 
-function module.initKey(positionerModel, parentFolder)
+function module.initKey(props)
+    local rewardTemplate = props.rewardTemplate
+    local positionerModel = props.positionerModel
+    local parentFolder = props.parentFolder
+
     local newReplicator =
         AddModelFromPositioner.addModel(
         {
@@ -25,8 +29,7 @@ function module.initKey(positionerModel, parentFolder)
 
     local newReplicatorPart = newReplicator.PrimaryPart
 
-    local rewardTemplate = Utils.getFromTemplates('TestKey')
-    -- local rewardTemplate = Utils.getFromTemplates('Test-iii')
+    -- local rewardTemplate = Utils.getFromTemplates('ColorKey')
     -- local rewardTemplate = Utils.getFromTemplates('HexLetterGemTool')
     local rewardFolder = newReplicator.Reward
     local rewards = rewardFolder:getChildren()
@@ -96,7 +99,14 @@ function module.initKeys(props)
 
     local keys = {}
     for _, positionerModel in ipairs(keyPositioners) do
-        local newReplicator = module.initKey(positionerModel, parentFolder)
+        local replicatorProps = {
+            rewardTemplate = Utils.getFromTemplates('HexLetterGemTool'),
+            -- rewardTemplate = Utils.getFromTemplates('ColorKey'),
+            positionerModel = positionerModel,
+            parentFolder = parentFolder
+        }
+
+        local newReplicator = module.initKey(replicatorProps)
 
         Replicator.initReplicator(newReplicator)
         table.insert(keys, newReplicator)
