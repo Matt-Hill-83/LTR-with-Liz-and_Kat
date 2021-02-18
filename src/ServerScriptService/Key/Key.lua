@@ -18,20 +18,6 @@ function module.initKeys(props)
 
         local positioner = model.Positioner
 
-        -- local newReplicator =
-        --     AddModelFromPositioner.addModel(
-        --     {
-        --         parentFolder = props.parentFolder,
-        -- templateName = 'LetterKeyReplicatorTemplate',
-        --         positioner = positioner,
-        --         offsetConfig = {
-        --             useParentNearEdge = Vector3.new(0, -1, 0),
-        --             useChildNearEdge = Vector3.new(0, -1, 0),
-        --             offsetAdder = Vector3.new(0, 0, 0)
-        --         }
-        --     }
-        -- )
-
         local cloneProps = {
             parentTo = parentFolder,
             positionToPart = positioner,
@@ -64,7 +50,6 @@ function module.initKeys(props)
             }
         )
         Replicator.initReplicator(newReplicator)
-        -- Replicator.initReplicator(newReplicator, afterReplication)
         table.insert(keys, newReplicator)
     end
     return keys
