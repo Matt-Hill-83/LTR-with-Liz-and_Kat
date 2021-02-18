@@ -5,15 +5,34 @@ local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local module = {}
 
 function module.initStatueGates(props)
-    local parentFolder = props.parentFolder or workspace
+    local hexConfigs = props.configs
+
+    local parentFolder = props.parentFolder
     local statueGates = Utils.getDescendantsByName(parentFolder, 'StatueGate')
 
-    print('statueGates' .. ' - start')
-    print(statueGates)
+    local hexIslandsFolder = Utils.getFirstDescendantByName(parentFolder, 'HexIslands')
+    local hexIslandFolders = hexIslandsFolder:getDescendants()
+    Utils.sortListByObjectKey(hexIslandFolders, 'Name')
 
-    local bridges = {}
+    for hexIndex, hexIsland in ipairs(hexIslandFolders) do
+        local hexConfig = hexConfigs[hexIndex]
 
-    return bridges
+        local statueConfigs = hexConfig.statueConfigs
+
+        print('statueConfigs' .. ' - start')
+        print(statueConfigs)
+        print('hexConfigs' .. ' - start')
+        print(hexConfigs)
+        print('statueGates' .. ' - start')
+        print(statueGates)
+        if not statueConfigs then
+            return
+        end
+
+        local bridges = {}
+
+        return bridges
+    end
 end
 
 return module

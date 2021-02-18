@@ -9,8 +9,6 @@ local GemUtils = require(Sss.Source.Utils.U006LetterGemUtils)
 local module = {}
 
 local function initStatue(positionerModel, statusDef)
-    -- for statueIndex, positionerModel in ipairs(statuePositioners) do
-    -- local statusDef = statusDefs[(statueIndex % #statusDefs) + 1]
     local statueTemplate = Utils.getFromTemplates('StatueTemplate')
 
     local sentence = statusDef.sentence
@@ -103,22 +101,16 @@ local function initStatue(positionerModel, statusDef)
 
         gemPart.Touched:Connect(Utils.onTouchHuman(gemPart, GemUtils.partTouched))
     end
-    -- sentencePositioner:Destroy()
-    -- positionerModel:Destroy()
-    -- end
 end
 
 local function initStatues(props)
     local statusDefs = props.statusDefs
     local statuePositioners = CS:GetTagged('StatuePositioner')
 
-    -- local statueTemplate = Utils.getFromTemplates('StatueTemplate')
-
     for statueIndex, positionerModel in ipairs(statuePositioners) do
         local statusDef = statusDefs[(statueIndex % #statusDefs) + 1]
         module.initStatue(positionerModel, statusDef)
     end
-    -- statueTemplate:Destroy()
 end
 
 module.initStatues = initStatues

@@ -1,4 +1,3 @@
-local module = {}
 local Sss = game:GetService('ServerScriptService')
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
@@ -24,6 +23,8 @@ local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 local Rink = require(Sss.Source.Rink.Rink)
 local Terrain = require(Sss.Source.Terrain.Terrain)
 local StrayLetterBlocks = require(Sss.Source.StrayLetterBlocks.StrayLetterBlocks)
+
+local module = {}
 
 local function addRemoteObjects()
     ConfigRemoteEvents.configRemoteEvents()
@@ -51,7 +52,7 @@ local function addRemoteObjects()
         }
     }
 
-    Statue.initStatues(statueProps)
+    -- Statue.initStatues(statueProps)
 
     local blockDash = Utils.getFirstDescendantByName(myStuff, 'BlockDash')
     local levelsFolder = Utils.getFirstDescendantByName(blockDash, 'Levels')
@@ -70,16 +71,19 @@ local function addRemoteObjects()
     Terrain.initTerrain({parentFolder = workspace})
 
     for levelIndex, level in ipairs(levels) do
+        print('levelIndex' .. ' - start')
+        print(levelIndex)
         -- if levelIndex == 2 then break end
         local islandPositioners = Utils.getByTagInParent({parent = level, tag = 'IslandPositioner'})
 
         local levelConfig = LevelConfigs.levelConfigs[levelIndex]
         local sectorConfigs = levelConfig.sectorConfigs
+        local hexIslandConfigs = levelConfig.hexIslandConfigs
         Utils.sortListByObjectKey(islandPositioners, 'Name')
 
         local myPositioners = Constants.gameConfig.singleIsland and {islandPositioners[1]} or islandPositioners
 
-        StatueGate.initStatueGates({parentFolder = level})
+        StatueGate.initStatueGates({parentFolder = level, configs = hexIslandConfigs})
 
         Entrance.initEntrance(level)
 
