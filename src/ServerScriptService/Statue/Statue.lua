@@ -4,7 +4,6 @@ local CS = game:GetService('CollectionService')
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local InitWord = require(Sss.Source.WordWheelIsland.InitWord)
 local LetterGem = require(Sss.Source.LetterGem.LetterGem)
-local LetterUtils = require(Sss.Source.Utils.U004LetterUtils)
 local GemUtils = require(Sss.Source.Utils.U006LetterGemUtils)
 
 local module = {}
@@ -67,7 +66,6 @@ local function initStatues(props)
         base.Size = Vector3.new(sentenceLength, base.Size.Y, base.Size.Z)
 
         local offsetX = sentenceLength / 2
-        -- local currentWordPosition = {value = 0}
         local currentWordPosition = {value = -letterWidth}
 
         local hexLetterGem = Utils.getFromTemplates('HexLetterGem')
