@@ -480,7 +480,6 @@ function module.getByTagInParent(props)
     for i, item in ipairs(items) do
         if item:IsDescendantOf(parent) then
             table.insert(output, item)
-        --
         end
     end
     return output

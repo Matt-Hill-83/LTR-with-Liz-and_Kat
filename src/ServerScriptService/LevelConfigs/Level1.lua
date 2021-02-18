@@ -67,8 +67,6 @@ local sectorConfigs = {
     sector6Config --
 }
 
-local test = {{Liz1 = 1}, 2, 3}
-
 local hexIslandConfigs = {
     {
         hexNum = 1
