@@ -4,23 +4,6 @@ local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 
 local module = {}
 
-function module.addModel(props)
-    local positioner = props.positioner
-    local parentFolder = props.parentFolder
-    local templateName = props.templateName
-    local offsetConfig = props.offsetConfig
-
-    local cloneProps = {
-        parentTo = parentFolder,
-        positionToPart = positioner,
-        templateName = templateName,
-        fromTemplate = true,
-        modelToClone = nil,
-        offsetConfig = offsetConfig
-    }
-    return Utils.cloneModel(cloneProps)
-end
-
 function module.addModels(props)
     local defaultOffsetConfig = {
         useParentNearEdge = Vector3.new(0, 0, 0),
@@ -44,12 +27,6 @@ function module.addModels(props)
             dummy:Destroy()
         end
 
-        -- local itemProps = {
-        --     positioner = positioner,
-        --     parentFolder = parentFolder,
-        --     templateName = templateName,
-        --     offsetConfig = offsetConfig
-        -- }
         local cloneProps = {
             parentTo = parentFolder,
             positionToPart = positioner,
@@ -58,13 +35,37 @@ function module.addModels(props)
             modelToClone = nil,
             offsetConfig = offsetConfig
         }
-        local newItem = Utils.cloneModel(cloneProps)
 
-        -- local newItem = module.addModel(itemProps)
+        local newItem = Utils.cloneModel(cloneProps)
 
         table.insert(newParts, newItem)
     end
     return newParts
+end
+
+function module.addModel(props)
+    local defaultOffsetConfig = {
+        useParentNearEdge = Vector3.new(0, 0, 0),
+        useChildNearEdge = Vector3.new(0, 0, 0),
+        offsetAdder = Vector3.new(0, 0, 0)
+    }
+
+    local parentFolder = props.parentFolder or workspace
+    local positioner = props.positioner
+    local templateName = props.templateName
+    local offsetConfig = props.offsetConfig or defaultOffsetConfig
+
+    local cloneProps = {
+        parentTo = parentFolder,
+        positionToPart = positioner,
+        templateName = templateName,
+        fromTemplate = true,
+        modelToClone = nil,
+        offsetConfig = offsetConfig
+    }
+
+    local newItem = Utils.cloneModel(cloneProps)
+    return newItem
 end
 
 return module

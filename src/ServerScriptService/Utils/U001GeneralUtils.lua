@@ -56,6 +56,10 @@ local function cloneModel(props)
         local childPart = newChild.PrimaryPart
         local freeParts = module.freeAnchoredParts({item = newChild})
 
+        -- local childWelds = module.disableEnabledWelds(childPart)
+        -- local parentWelds = module.disableEnabledWelds(positionToPart)
+        print('positionToPart' .. ' - start')
+        print(positionToPart)
         childPart.CFrame =
             Utils3.setCFrameFromDesiredEdgeOffset(
             {
@@ -65,8 +69,16 @@ local function cloneModel(props)
             }
         )
 
+        -- for _, weld in ipairs(childWelds) do
+        --     weld.Enabled = true
+        -- end
+
+        -- for _, weld in ipairs(parentWelds) do
+        --     weld.Enabled = true
+        -- end
+
         module.anchorFreedParts(freeParts)
-        childPart.Anchored = true
+        -- childPart.Anchored = true
         return newChild
     end
 end
