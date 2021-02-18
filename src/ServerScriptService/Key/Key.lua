@@ -18,24 +18,34 @@ function module.initKeys(props)
 
         local positioner = model.Positioner
 
-        local newReplicator =
-            AddModelFromPositioner.addModel(
-            {
-                parentFolder = props.parentFolder,
-                templateName = 'LetterKeyReplicatorTemplate',
-                positioner = positioner,
-                offsetConfig = {
-                    useParentNearEdge = Vector3.new(0, -1, 0),
-                    useChildNearEdge = Vector3.new(0, -1, 0),
-                    offsetAdder = Vector3.new(0, 0, 0)
-                }
+        -- local newReplicator =
+        --     AddModelFromPositioner.addModel(
+        --     {
+        --         parentFolder = props.parentFolder,
+        -- templateName = 'LetterKeyReplicatorTemplate',
+        --         positioner = positioner,
+        --         offsetConfig = {
+        --             useParentNearEdge = Vector3.new(0, -1, 0),
+        --             useChildNearEdge = Vector3.new(0, -1, 0),
+        --             offsetAdder = Vector3.new(0, 0, 0)
+        --         }
+        --     }
+        -- )
+
+        local cloneProps = {
+            parentTo = parentFolder,
+            positionToPart = positioner,
+            templateName = 'LetterKeyReplicatorTemplate',
+            fromTemplate = true,
+            modelToClone = nil,
+            offsetConfig = {
+                useParentNearEdge = Vector3.new(0, -1, 0),
+                useChildNearEdge = Vector3.new(0, -1, 0),
+                offsetAdder = Vector3.new(0, 0, 0)
             }
-        )
-        -- local newReplicator = newReplicators[1]
-        newReplicator.Name = 'ttt'
-        --
-        --
-        --
+        }
+
+        local newReplicator = Utils.cloneModel(cloneProps)
 
         local keyPart = Utils.getFirstDescendantByName(newReplicator, 'Handle')
         LetterUtils.applyLetterText(
