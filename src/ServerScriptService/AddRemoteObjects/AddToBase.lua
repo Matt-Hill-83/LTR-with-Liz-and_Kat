@@ -4,7 +4,7 @@ local Sss = game:GetService('ServerScriptService')
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 local Constants = require(Sss.Source.Constants.Constants)
 local LevelConfigs = require(Sss.Source.LevelConfigs.LevelConfigs)
-local initStatues = require(Sss.Source.WordWheelIsland.InitStatues)
+-- local initStatues = require(Sss.Source.WordWheelIsland.InitStatues)
 local ConfigRemoteEvents = require(Sss.Source.AddRemoteObjects.ConfigRemoteEvents)
 
 local BlockDash = require(Sss.Source.BlockDash.BlockDash)
@@ -12,8 +12,9 @@ local Bridge = require(Sss.Source.Bridge.Bridge)
 local BeltJoint = require(Sss.Source.BeltJoint.BeltJoint)
 local ConfigGame = require(Sss.Source.AddRemoteObjects.ConfigGame)
 local Door = require(Sss.Source.Door.Door)
+local StatueGate = require(Sss.Source.StatueGate.StatueGate)
 local Key = require(Sss.Source.Key.Key)
--- local DoorKey = require(Sss.Source.BlockDash.DoorKey)
+local Statue = require(Sss.Source.Statue.Statue)
 
 local Entrance = require(Sss.Source.BlockDash.Entrance)
 local HexJunction = require(Sss.Source.HexJunction.HexJunction)
@@ -24,7 +25,6 @@ local SkiSlope = require(Sss.Source.SkiSlope.SkiSlope)
 local Rink = require(Sss.Source.Rink.Rink)
 local Terrain = require(Sss.Source.Terrain.Terrain)
 local StrayLetterBlocks = require(Sss.Source.StrayLetterBlocks.StrayLetterBlocks)
--- local RenderWordGrid = require(Sss.Source.Utils.RenderWordGrid_S)
 
 local function addRemoteObjects()
     ConfigRemoteEvents.configRemoteEvents()
@@ -52,7 +52,7 @@ local function addRemoteObjects()
         }
     }
 
-    initStatues.initStatues(statueProps)
+    Statue.initStatues(statueProps)
 
     local blockDash = Utils.getFirstDescendantByName(myStuff, 'BlockDash')
     local levelsFolder = Utils.getFirstDescendantByName(blockDash, 'Levels')
@@ -79,6 +79,8 @@ local function addRemoteObjects()
         Utils.sortListByObjectKey(islandPositioners, 'Name')
 
         local myPositioners = Constants.gameConfig.singleIsland and {islandPositioners[1]} or islandPositioners
+
+        StatueGate.initStatueGates({parentFolder = level})
 
         Entrance.initEntrance(level)
 
