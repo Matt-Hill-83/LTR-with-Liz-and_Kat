@@ -25,13 +25,6 @@ function module.initKey(positionerModel, parentFolder)
     local keyPart = Utils.getFirstDescendantByName(newReplicator, 'Handle')
     local keyName = positionerModel.name
 
-    -- local dummy = Utils.getFirstDescendantByName(positionerModel, 'Dummy')
-    -- if dummy then
-    --     dummy:Destroy()
-    -- end
-
-    print('keyName' .. ' - start')
-    print(keyName)
     LetterUtils.applyLetterText(
         {
             letterBlock = newReplicator,
@@ -47,7 +40,12 @@ function module.initKey(positionerModel, parentFolder)
             propType = 'StringValue'
         }
     )
-    newReplicator.Name = 'jjj'
+
+    local tool = Utils.getFirstDescendantByType(newReplicator, 'Tool')
+
+    if tool then
+        tool.Name = keyName
+    end
     return newReplicator
 end
 

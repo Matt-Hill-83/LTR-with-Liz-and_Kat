@@ -522,6 +522,19 @@ function module.getDescendantsByType(parent, type)
     return output
 end
 
+local function getFirstDescendantByType(parent, type)
+    local items = parent:GetDescendants()
+    local output
+
+    for i, item in pairs(items) do
+        if item:IsA(type) then
+            output = item
+            break
+        end
+    end
+    return output
+end
+
 function hideItem(part, hide)
     local transparency = hide and 1 or 0
     local visible = not hide
@@ -905,6 +918,7 @@ module.anchorFreedParts = anchorFreedParts
 module.getActiveToolByToolType = getActiveToolByToolType
 module.hideFrontLabels = hideFrontLabels
 module.getListItemByPropValue = getListItemByPropValue
+module.getFirstDescendantByType = getFirstDescendantByType
 module.applyDecalsToCharacterFromWord = applyDecalsToCharacterFromWord
 module.applyDecalsToCharacterFromConfigName = applyDecalsToCharacterFromConfigName
 
