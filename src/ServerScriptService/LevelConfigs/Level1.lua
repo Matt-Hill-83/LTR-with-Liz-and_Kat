@@ -77,7 +77,7 @@ local hexIslandConfigs = {
             Liz = {
                 sentence = {'I', 'SEE', 'A', 'BEE'},
                 character = 'lizHappy',
-                songId = '6342102168',
+                -- songId = '6342102168',
                 keyColor = Colors.colors.yellow
             }
         }

@@ -29,8 +29,6 @@ function module.initKey(props)
 
     local newReplicatorPart = newReplicator.PrimaryPart
 
-    -- local rewardTemplate = Utils.getFromTemplates('ColorKey')
-    -- local rewardTemplate = Utils.getFromTemplates('HexLetterGemTool')
     local rewardFolder = newReplicator.Reward
     local rewards = rewardFolder:getChildren()
     for _, reward in ipairs(rewards) do

@@ -1,5 +1,6 @@
 local Sss = game:GetService('ServerScriptService')
 local Statue = require(Sss.Source.Statue.Statue)
+local Key = require(Sss.Source.Key.Key)
 
 local Utils = require(Sss.Source.Utils.U001GeneralUtils)
 
@@ -33,15 +34,23 @@ function module.initStatueGates(props)
                     print('statuePositioners' .. ' - start')
                     print(statuePositioners)
                     for _, statuePositioner in ipairs(statuePositioners) do
-                        print('statuePositioner.Name' .. ' - start')
-                        print(statuePositioner.Name)
-
                         local statueName = statuePositioner.Name
-
                         local config = statueConfigs[statueName]
+                        Statue.initStatue(statuePositioner, config)
                         print('config' .. ' - start')
                         print(config)
-                        Statue.initStatue(statuePositioner, config)
+
+                        local keyPositioners = Utils.getByTagInParent({parent = gate, tag = 'KeyPositioner-Key'})
+                        local keyPositioner = keyPositioners[1]
+
+                        local replicatorProps = {
+                            -- rewardTemplate = Utils.getFromTemplates('HexLetterGemTool'),
+                            rewardTemplate = Utils.getFromTemplates('ColorKey'),
+                            positionerModel = keyPositioner,
+                            parentFolder = parentFolder
+                        }
+
+                        local newReplicator = Key.initKey(replicatorProps)
                     end
                 end
             end
