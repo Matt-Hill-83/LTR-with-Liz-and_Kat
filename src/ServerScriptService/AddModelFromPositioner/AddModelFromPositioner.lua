@@ -51,9 +51,16 @@ function module.addModel(props)
     }
 
     local parentFolder = props.parentFolder or workspace
-    local positioner = props.positioner
+    local positionerModel = props.positionerModel
     local templateName = props.templateName
     local offsetConfig = props.offsetConfig or defaultOffsetConfig
+
+    local dummy = Utils.getFirstDescendantByName(positionerModel, 'Dummy')
+    if dummy then
+        dummy:Destroy()
+    end
+
+    local positioner = positionerModel.Positioner
 
     local cloneProps = {
         parentTo = parentFolder,
